@@ -21,5 +21,25 @@ namespace accomodationSoftware
         public string Expiredate { get; set; } //not shure about the type
 
 
+        public Customer()
+        {
+
+        }
+
+        public Customer(string title, string surname, string firstname, DateTime birthday, string street,
+            string postcode, string city, string country, string cardholder, string cardnumber, string expire)
+        {
+            Title = title;
+            Surname = surname;
+            Firstname = firstname;
+            Birthday = birthday;
+            Street = street;
+            Postcode = postcode;
+            City = city;
+            Country = country;
+            CardholderName = cardholder;
+            Cardnumber = cardnumber;
+            Expiredate = expire;
+        }
     }
 }
