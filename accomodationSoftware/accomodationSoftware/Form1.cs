@@ -15,6 +15,7 @@ namespace accomodationSoftware
         public Form1()
         {
             InitializeComponent();
+            MessageBox.Show("hi ihr ficker!");
         }
     }
 }
