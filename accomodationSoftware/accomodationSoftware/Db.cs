@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace accomodationSoftware
         }
         public void createDB()
         {
-            SQLiteConnection.CreateFile("tourismus.db");
+            //SQLiteConnection.CreateFile("tourismus.db");
 
             SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
             connection.Open();
