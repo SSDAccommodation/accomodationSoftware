@@ -12,62 +12,52 @@ using System.Collections;
 using System.Data.SQLite;
 using accomodationSoftware;
 
-namespace addCustomer
+namespace accomodationSoftware
 {
     public partial class accomodationInfo : Form
     {
         public int accommodation_id { get; set; }
         public int user_id { get; set; }
-
-
+        public Db db { get; set; }
+        public Accomodation ac;
         public accomodationInfo()
         {
             InitializeComponent();
-            /*
+
+            accommodation_id = 1;
+            user_id = 1;
+
+            db = new Db();
+            //db.createDB();
+            //method that returns the accommodation_id
             try
             {
-
-                int accId = 1;
-
-                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
-                connection.Open();
-
-
-                SQLiteCommand cmd = new SQLiteCommand("select * from accommodations where acc_id =  " + accId, connection);
-                SQLiteDataReader reader = cmd.ExecuteReader();
-
-                if (reader.HasRows)
-                    while (reader.Read())
-                    {
-                        string name = reader.GetString(reader.GetOrdinal("acc_name"));
-                        string adress_city = reader.GetString(reader.GetOrdinal("acc_adress_city"));
-                        string adress_county = reader.GetString(reader.GetOrdinal("acc_adress_county"));
-                        string adress_postcode = reader.GetString(reader.GetOrdinal("acc_adress_postcode"));
-                        string adress_street = reader.GetString(reader.GetOrdinal("acc_adress_street"));
-                        string adress_number = reader.GetString(reader.GetOrdinal("acc_adress_number"));
-                        string description = reader.GetString(reader.GetOrdinal("acc_description"));
-                        string picture_url = reader.GetString(reader.GetOrdinal("acc_picture_url"));
-                        //MessageBox.Show(string.Format("{0}, {1}, {2}", name, adress_city, picture_url));
-                        accommodation_id = accId;
-                    // Insert real user here
-                        user_id = 1;
-
-                        //Daten in form einfügen
-                        l_hotelname.Text = name;
-                        rtb_address.Text = name + "\n" + adress_street + " " + adress_number + "\n" + adress_city + "\n" + adress_postcode + "\n" + adress_county;
-                        rtb_description.Text = description;
-                        pb_hotel.Load("pictures\\" + picture_url);
-                    }
-
-                connection.Close();
-                
+                ac = db.searchAccomodation(accommodation_id, user_id);
             }
-            catch (Exception et)
+            catch (Exception e)
             {
-                MessageBox.Show(et.ToString());
-            }*/
-            
+                Console.WriteLine(e.ToString());
+            }
+            showAccommodationData(ac);
+
+
         }
+
+        public void showAccommodationData(Accomodation acc)
+        {
+            ac = acc;
+
+            //Daten in form einfügen
+            l_hotelname.Text = ac.Name;
+            rtb_address.Text = ac.Name + "\n" + ac.Adress_street + " " + ac.Adress_number + "\n" + ac.Adress_city + "\n" + ac.Adress_postcode + "\n" + ac.Adress_county;
+            rtb_description.Text = ac.Description;
+            pb_hotel.Load("pictures\\" + ac.Picture_url);
+
+
+
+        }
+
+
 
         private void b_ok_Click(object sender, EventArgs e)
         {

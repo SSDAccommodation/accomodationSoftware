@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace accomodationSoftware
 {
-    class Db
+    public class Db
     {
         public Db()
         {
@@ -15,13 +15,13 @@ namespace accomodationSoftware
         }
         public void createDB()
         {
-            //SQLiteConnection.CreateFile("tourismus.db");
+            SQLiteConnection.CreateFile("tourismus.db");
 
             SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
             connection.Open();
 
             SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = String.Format("create table customer (cust_id integer not null primary key autoincrement, "+
+            command.CommandText = String.Format("create table if not exists customer (cust_id integer not null primary key autoincrement, "+
                 " title varchar(10) NOT NULL, firstname varchar(30) NOT NULL, surname varchar(30) NOT NULL, "+
                 "birthday date NOT NULL, street varchar(40) NOT NULL, postcode varchar(10) NOT NULL, "+
                 "city varchar(50) DEFAULT NULL, country varchar(50) DEFAULT NULL, "+
@@ -62,23 +62,27 @@ namespace accomodationSoftware
                 Console.WriteLine(et.ToString());
             }
         }
-        public void searchAccomodation()
+        public Accomodation searchAccomodation(int acc_id, int customer_id)
         {
+            
             try
             {
-
-                int accId = 1;
-
+                
+                int accommodation_id = acc_id;
+                int user_id = customer_id;
+                Accomodation ac = null;
                 SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
                 connection.Open();
 
 
-                SQLiteCommand cmd = new SQLiteCommand("select * from accommodations where acc_id =  " + accId, connection);
+                SQLiteCommand cmd = new SQLiteCommand("select * from accommodations where acc_id =  " + accommodation_id, connection);
                 SQLiteDataReader reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
+                {
                     while (reader.Read())
                     {
+
                         string name = reader.GetString(reader.GetOrdinal("acc_name"));
                         string adress_city = reader.GetString(reader.GetOrdinal("acc_adress_city"));
                         string adress_county = reader.GetString(reader.GetOrdinal("acc_adress_county"));
@@ -87,25 +91,23 @@ namespace accomodationSoftware
                         string adress_number = reader.GetString(reader.GetOrdinal("acc_adress_number"));
                         string description = reader.GetString(reader.GetOrdinal("acc_description"));
                         string picture_url = reader.GetString(reader.GetOrdinal("acc_picture_url"));
+                        ac = new Accomodation(name, adress_city, adress_county, adress_postcode, adress_street, adress_number, description, picture_url);
                         //MessageBox.Show(string.Format("{0}, {1}, {2}", name, adress_city, picture_url));
-                        accommodation_id = accId;
-                        // Insert real user here
-                        user_id = 1;
 
-                        //Daten in form einfügen
-                        l_hotelname.Text = name;
-                        rtb_address.Text = name + "\n" + adress_street + " " + adress_number + "\n" + adress_city + "\n" + adress_postcode + "\n" + adress_county;
-                        rtb_description.Text = description;
-                        pb_hotel.Load("pictures\\" + picture_url);
+
+                        
                     }
 
+                }
                 connection.Close();
-
+                return ac;
+                
             }
             catch (Exception et)
             {
                 Console.WriteLine(et.ToString());
-            }
+            } 
+            return null;
         }
     }
 }

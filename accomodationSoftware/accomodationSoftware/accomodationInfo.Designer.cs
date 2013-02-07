@@ -1,4 +1,4 @@
-﻿namespace addCustomer
+﻿namespace accomodationSoftware
 {
     partial class accomodationInfo
     {

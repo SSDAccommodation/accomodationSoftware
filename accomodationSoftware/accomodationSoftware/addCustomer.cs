@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 using System.Data.SQLite;
 
-namespace addCustomer
+namespace accomodationSoftware
 {
     public partial class new_customer : Form
     {
