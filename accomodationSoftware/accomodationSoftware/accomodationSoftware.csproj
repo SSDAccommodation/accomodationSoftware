@@ -45,17 +45,39 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accomodation.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="Facility.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="accomodationInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="accomodationInfo.Designer.cs">
+      <DependentUpon>accomodationInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="addCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addCustomer.Designer.cs">
+      <DependentUpon>addCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="bookingDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="bookingDetails.Designer.cs">
+      <DependentUpon>bookingDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer.cs" />
+    <Compile Include="Db.cs" />
+    <Compile Include="Facility.cs" />
     <Compile Include="Institution.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="accomodationInfo.resx">
+      <DependentUpon>accomodationInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="addCustomer.resx">
+      <DependentUpon>addCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="bookingDetails.resx">
+      <DependentUpon>bookingDetails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
