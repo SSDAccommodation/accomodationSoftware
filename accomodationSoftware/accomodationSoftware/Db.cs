@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace accomodationSoftware
 {
@@ -32,9 +33,7 @@ namespace accomodationSoftware
 
             connection.Close();  
         }
-        public void insertNewCustomer(string title, string firstname, string surname, string byear, 
-            string bmonth, string bday, string street, string postcode, string city, string country, 
-            string cardholder, string creditnum, string expiremonth, string expireyear)
+        public void insertNewCustomer(Customer c)
         {
             try
             {
@@ -44,10 +43,10 @@ namespace accomodationSoftware
                 string myInsertQuery = 
                     "INSERT INTO customer (title, firstname, surname, birthday, street, postcode, city, country,"+
                     " cardholder_name, creditcard_number, expdate_month, expdate_year )";
-                myInsertQuery += " VALUES('" + title + "','" + firstname + "','" + 
-                    surname + "','" + byear + "-" + bmonth + "-" + bday + "','" + 
-                    street + "','" + postcode + "','" + city + "','" + country + "','" + 
-                    cardholder + "','" + creditnum + "','" + expiremonth + "','" + expireyear + "')";
+                myInsertQuery += " VALUES('" + c.Title + "','" + c.Firstname + "','" + 
+                    c.Surname + "','" + c.Birthday + "','" + 
+                    c.Street + "','" + c.Postcode + "','" + c.City + "','" + c.Country + "','" + 
+                    c.CardholderName + "','" + c.Cardnumber + "','" + c.Expiremonth + "','" + c.Expireyear + "')";
 
 
                 SQLiteCommand command = new SQLiteCommand(connection);
@@ -56,11 +55,13 @@ namespace accomodationSoftware
                 command.ExecuteNonQuery();
 
                 connection.Close();
+                MessageBox.Show("A new user" + c.Firstname + " " + c.Surname + "has been created!");
             }
             catch (Exception et)
             {
                 Console.WriteLine(et.ToString());
             }
+            
         }
         public Accomodation searchAccomodation(int acc_id, int customer_id)
         {

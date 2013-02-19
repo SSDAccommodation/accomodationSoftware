@@ -18,10 +18,13 @@ namespace accomodationSoftware
     {
         
         public string Bmonth { get; set; }
+        public Customer Customer { get; set; }
+        public Db Db;
 
         public new_customer()
         {
             InitializeComponent();
+            Db = new Db();
 
             //overwrites the db
             //dberstellen();
@@ -73,28 +76,10 @@ namespace accomodationSoftware
                         break;   
                 }
                 //create customer
+                Customer = new Customer(cb_title.Text, tb_surname.Text, tb_firstname.Text, cb_byear.Text + "-" + Bmonth +
+                    "-" + cb_bday.Text, tb_street.Text, tb_postcode.Text, tb_city.Text, cb_country.Text, tb_cardholder.Text, tb_creditnum.Text, cb_expiremonth.Text, cb_expireyear.Text);//title,surname,firstname,birthday,street,postcode,city,country,cardholder,cardnumber,expire);
                 // call method in db
-                /*
-                try
-                {
-                    SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
-                    connection.Open();
-
-                    string myInsertQuery = "INSERT INTO customer (title, firstname, surname, birthday, street, postcode, city, country, cardholder_name, creditcard_number, expdate_month, expdate_year )";
-                    myInsertQuery += " VALUES('" + cb_title.Text + "','" + tb_firstname.Text + "','" + tb_surname.Text + "','" + cb_byear.Text + "-" + Bmonth + "-" + cb_bday.Text + "','" + tb_street.Text + "','" + tb_postcode.Text + "','" + tb_city.Text + "','" + cb_country.Text + "','" + tb_cardholder.Text + "','" + tb_creditnum.Text + "','" + cb_expiremonth.Text + "','" + cb_expireyear.Text + "')";
-
-
-                    SQLiteCommand command = new SQLiteCommand(connection);
-
-                    command.CommandText = myInsertQuery;
-                    command.ExecuteNonQuery();
-
-                    connection.Close();
-                }
-                catch (Exception et)
-                {
-                    MessageBox.Show(et.ToString());
-                }*/
+                Db.insertNewCustomer(Customer);
             }
 
         }
