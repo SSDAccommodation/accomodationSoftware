@@ -37,6 +37,8 @@
             this.lv_rooms = new System.Windows.Forms.ListView();
             this.b_bookselected = new System.Windows.Forms.Button();
             this.b_cancel = new System.Windows.Forms.Button();
+            this.ch_roomid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_roomno = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gB_pickadate.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,6 +102,9 @@
             // 
             // lv_rooms
             // 
+            this.lv_rooms.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ch_roomid,
+            this.ch_roomno});
             this.lv_rooms.Location = new System.Drawing.Point(12, 107);
             this.lv_rooms.Name = "lv_rooms";
             this.lv_rooms.Size = new System.Drawing.Size(406, 382);
@@ -123,6 +128,14 @@
             this.b_cancel.TabIndex = 8;
             this.b_cancel.Text = "Cancel";
             this.b_cancel.UseVisualStyleBackColor = true;
+            // 
+            // ch_roomid
+            // 
+            this.ch_roomid.Text = "Room ID";
+            // 
+            // ch_roomno
+            // 
+            this.ch_roomno.Text = "Room Number";
             // 
             // bookingDetails
             // 
@@ -155,5 +168,7 @@
         private System.Windows.Forms.ListView lv_rooms;
         private System.Windows.Forms.Button b_bookselected;
         private System.Windows.Forms.Button b_cancel;
+        private System.Windows.Forms.ColumnHeader ch_roomid;
+        private System.Windows.Forms.ColumnHeader ch_roomno;
     }
 }

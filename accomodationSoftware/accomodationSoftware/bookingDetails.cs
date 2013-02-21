@@ -33,21 +33,26 @@ namespace accomodationSoftware
             accommodation_id = acc_id;
             user_id = u_id;
 
-            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
-            connection.Open();
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
 
 
-            SQLiteCommand cmd = new SQLiteCommand("select * from accommodations where acc_id =  " + accommodation_id, connection);
-            SQLiteDataReader reader = cmd.ExecuteReader();
+                SQLiteCommand cmd = new SQLiteCommand("select * from accommodations where acc_id =  " + accommodation_id, connection);
+                SQLiteDataReader reader = cmd.ExecuteReader();
 
-            if (reader.HasRows)
-                while (reader.Read())
-                {
-                 
-                    l_hotelName_bd.Text = reader.GetString(reader.GetOrdinal("acc_name"));
-                }
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
 
-            connection.Close();
+                        l_hotelName_bd.Text = reader.GetString(reader.GetOrdinal("acc_name"));
+                    }
+
+                connection.Close();
+            }catch(Exception e){
+                System.Console.WriteLine(e.ToString());
+            }
 
         }
 
@@ -110,12 +115,13 @@ namespace accomodationSoftware
             reader = cmd.ExecuteReader();
             try
             {
-            if (reader.HasRows)
-                while (reader.Read())
-                {
-                    MessageBox.Show(reader.GetInt32(reader.GetOrdinal("room_id"))+"-"+ reader.GetInt32(reader.GetOrdinal("room_number")));
-                    rooms.Add(reader.GetInt32(reader.GetOrdinal("room_id")),reader.GetInt32(reader.GetOrdinal("room_number")));
-                }
+                rooms.Clear();
+                if (reader.HasRows)
+                    while (reader.Read()) 
+                    {
+                        System.Console.WriteLine(reader.GetInt32(reader.GetOrdinal("room_id")) + "-" + reader.GetInt32(reader.GetOrdinal("room_number")));
+                        rooms.Add(reader.GetInt32(reader.GetOrdinal("room_id")), reader.GetInt32(reader.GetOrdinal("room_number")));
+                    } 
             }
             catch (Exception e)
             {
@@ -126,6 +132,7 @@ namespace accomodationSoftware
                 connection.Close();
 
                 DateTime roomDate = DateTime.Now;
+                
                 for (int i = 0; i < startDateRoom.Count; i++)
                 {
                     for (DateTime rdate = startDateRoom[i]; rdate <= endDateRoom[i]; rdate = rdate.AddDays(1))
@@ -139,9 +146,12 @@ namespace accomodationSoftware
                             }
                         }
 
-                        populateLV();
                     }
+                    
                 }
+                populateLV();
+                 
+
             }
             catch(Exception e)
             {
@@ -150,6 +160,7 @@ namespace accomodationSoftware
         }
         private void populateLV()
         {
+            lv_rooms.Clear();
             try
             {
                 List<int> temp = new List<int>();
@@ -157,9 +168,14 @@ namespace accomodationSoftware
                 List<int> temp2 = new List<int>();
                 temp2.AddRange(rooms.Values);
 
+
                 for (int i = 0; i < temp.Count; i++)
                 {
+
                     lv_rooms.Items.Add(temp[i] + " " + temp2[i]+"\n");
+                    lv_rooms.Items.Add("");
+                    lv_rooms.Items.Add("");
+                    lv_rooms.Items.Add("");
                 }
             }
             catch (Exception e)

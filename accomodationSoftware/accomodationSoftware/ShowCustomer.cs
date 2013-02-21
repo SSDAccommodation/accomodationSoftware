@@ -28,7 +28,7 @@ namespace accomodationSoftware
 
         public void showCust(ArrayList a)
         {
-            customerListView.Items.Add("title");
+            customerListView.Items.AddRange("");
         }
 
 

@@ -18,22 +18,27 @@ namespace accomodationSoftware
         }
         public void createDB()
         {
-            SQLiteConnection.CreateFile("tourismus.db");
+            try
+            {
+                //SQLiteConnection.CreateFile("tourismus.db");
 
-            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
-            connection.Open();
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
 
-            SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = String.Format("create table if not exists customer (cust_id integer not null primary key autoincrement, "+
-                " title varchar(10) NOT NULL, firstname varchar(30) NOT NULL, surname varchar(30) NOT NULL, "+
-                "birthday date NOT NULL, street varchar(40) NOT NULL, postcode varchar(10) NOT NULL, "+
-                "city varchar(50) DEFAULT NULL, country varchar(50) DEFAULT NULL, "+
-                "cardholder_name varchar(50) DEFAULT NULL, creditcard_number integer DEFAULT NULL, "+
-                "expdate_month varchar(20) NOT NULL, expdate_year varchar(4) NOT NULL)", "Adressen");
-            command.ExecuteNonQuery();
+                SQLiteCommand command = new SQLiteCommand(connection);
+                command.CommandText = String.Format("create table if not exists customer (cust_id integer not null primary key autoincrement, " +
+                    " title varchar(10) NOT NULL, firstname varchar(30) NOT NULL, surname varchar(30) NOT NULL, " +
+                    "birthday date NOT NULL, street varchar(40) NOT NULL, postcode varchar(10) NOT NULL, " +
+                    "city varchar(50) DEFAULT NULL, country varchar(50) DEFAULT NULL, " +
+                    "cardholder_name varchar(50) DEFAULT NULL, creditcard_number integer DEFAULT NULL, " +
+                    "expdate_month varchar(20) NOT NULL, expdate_year varchar(4) NOT NULL)", "Adressen");
+                command.ExecuteNonQuery();
 
 
-            connection.Close();  
+                connection.Close();
+            }catch(Exception e){
+                System.Console.WriteLine(e.ToString());
+            }
         }
         public void insertNewCustomer(Customer c)
         {
