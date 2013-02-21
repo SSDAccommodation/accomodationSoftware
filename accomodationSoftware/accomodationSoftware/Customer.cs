@@ -8,6 +8,7 @@ namespace accomodationSoftware
 {
     public class Customer
     {
+        public int custi_id { get; set; } // for further need
         public string Title { get; set; }
         public string Surname { get; set; }
         public string Firstname { get; set; }
@@ -18,7 +19,7 @@ namespace accomodationSoftware
         public string Country { get; set; }
         public string CardholderName { get; set; }
         public string Cardnumber { get; set; }
-        public string Expiremonth { get; set; } //not shure about the type
+        public string Expiremonth { get; set; } 
         public string Expireyear { get; set; }
 
         public Customer()
