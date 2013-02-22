@@ -28,31 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.customerListView = new System.Windows.Forms.ListView();
+            this.dg_customer = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_customer)).BeginInit();
             this.SuspendLayout();
             // 
-            // customerListView
+            // dg_customer
             // 
-            this.customerListView.Location = new System.Drawing.Point(13, 13);
-            this.customerListView.Name = "customerListView";
-            this.customerListView.Size = new System.Drawing.Size(340, 336);
-            this.customerListView.TabIndex = 0;
-            this.customerListView.UseCompatibleStateImageBehavior = false;
+            this.dg_customer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_customer.Location = new System.Drawing.Point(12, 12);
+            this.dg_customer.Name = "dg_customer";
+            this.dg_customer.Size = new System.Drawing.Size(341, 337);
+            this.dg_customer.TabIndex = 0;
             // 
             // ShowCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(365, 361);
-            this.Controls.Add(this.customerListView);
+            this.Controls.Add(this.dg_customer);
             this.Name = "ShowCustomer";
             this.Text = "ShowCustomer";
+            ((System.ComponentModel.ISupportInitialize)(this.dg_customer)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListView customerListView;
+        private System.Windows.Forms.DataGridView dg_customer;
+
     }
 }

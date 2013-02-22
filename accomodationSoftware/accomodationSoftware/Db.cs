@@ -121,8 +121,10 @@ namespace accomodationSoftware
 
         public ArrayList getCustomers()
         {
+
             ArrayList customerList = new ArrayList();
-            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+            try{
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
                 connection.Open();
 
 
@@ -136,20 +138,20 @@ namespace accomodationSoftware
                         //title, firstname, surname, birthday, street, postcode, city, country, cardholder_name, creditcard_number, expdate_month, expdate_year
 
 
-String title = reader.GetString(reader.GetOrdinal("title"));
-String surname = reader.GetString(reader.GetOrdinal("surname"));
-String firstname = reader.GetString(reader.GetOrdinal("firstname"));
-String birthday = reader.GetString(reader.GetOrdinal("birthday"));
-String street = reader.GetString(reader.GetOrdinal("street"));
-String postcode = reader.GetString(reader.GetOrdinal("postcode"));
-String city = reader.GetString(reader.GetOrdinal("city"));
-String country = reader.GetString(reader.GetOrdinal("country"));
-String cardholder = reader.GetString(reader.GetOrdinal("cardholder_name"));
-int creditcardnumber = reader.GetInt32(reader.GetOrdinal("creditcard_number"));
-String expdatemonth = reader.GetString(reader.GetOrdinal("expdate_month"));
-String expdateyear = reader.GetString(reader.GetOrdinal("expdate_year"));
+                        String title = reader.GetString(reader.GetOrdinal("title"));
+                        String surname = reader.GetString(reader.GetOrdinal("surname"));
+                        String firstname = reader.GetString(reader.GetOrdinal("firstname"));
+                        String birthday = reader.GetString(reader.GetOrdinal("birthday"));
+                        String street = reader.GetString(reader.GetOrdinal("street"));
+                        String postcode = reader.GetString(reader.GetOrdinal("postcode"));
+                        String city = reader.GetString(reader.GetOrdinal("city"));
+                        String country = reader.GetString(reader.GetOrdinal("country"));
+                        String cardholder = reader.GetString(reader.GetOrdinal("cardholder_name"));
+                        int creditcardnumber = reader.GetInt32(reader.GetOrdinal("creditcard_number"));//issue
+                        String expdatemonth = reader.GetString(reader.GetOrdinal("expdate_month"));
+                        String expdateyear = reader.GetString(reader.GetOrdinal("expdate_year"));
 
-Customer c = new Customer(title, surname, firstname, birthday, street, postcode, city, country, cardholder, "" + creditcardnumber, expdatemonth, expdateyear);
+                        Customer c = new Customer(title, surname, firstname, birthday, street, postcode, city, country, cardholder, "" + creditcardnumber, expdatemonth, expdateyear);
                         c.custi_id = reader.GetInt32(reader.GetOrdinal("cust_id"));
                         customerList.Add(c);
 
@@ -157,9 +159,12 @@ Customer c = new Customer(title, surname, firstname, birthday, street, postcode,
 
                 }
                 connection.Close();
-
-                return customerList;
-         }
+            }
+            catch(Exception e){
+                System.Console.WriteLine(e.ToString());
+            }
+            return customerList;
+        }
 
         
 
