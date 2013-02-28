@@ -33,12 +33,78 @@ namespace accomodationSoftware
                     "cardholder_name varchar(50) DEFAULT NULL, creditcard_number integer DEFAULT NULL, " +
                     "expdate_month varchar(20) NOT NULL, expdate_year varchar(4) NOT NULL)", "Adressen");
                 command.ExecuteNonQuery();
-
-
+                command.CommandText = String.Format("create table if not exists accommodations (acc_id integer primary key autoincrement," +
+                    " acc_name varchar(40) not null, acc_adress_city varchar(50) not null, "+
+                    "acc_adress_county varchar(50) not null, acc_adress_postcode varchar(6) not null, "+
+                    "acc_adress_street varchar(50) not null,acc_adress_number varchar(5) not null, "+
+                    "acc_description  varchar(800) not null,acc_picture_url varchar(80) not null)");
+                command.ExecuteNonQuery();
+                command.CommandText = String.Format("create table if not exists rooms (room_id integer primary key autoincrement, "+
+                    "room_number integer not null, acc_id integer references accommodations not null,bedcount integer not null)");
+                command.ExecuteNonQuery();
+                command.CommandText = String.Format("create table if not exists bookings(book_id integer primary key autoincrement, "+
+                    "acc_id integer references accommodations not null, room_id integer references rooms, "+
+                    "room_number integer references rooms, cust_id integer references customer, "+
+                    "start_date date not null, end_date date not null)");
+                command.ExecuteNonQuery();
                 connection.Close();
+             
+                //insertTestValues();
             }catch(Exception e){
                 System.Console.WriteLine(e.ToString());
             }
+        }
+        public void insertTestValues()
+        {
+            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+            connection.Open();
+
+            SQLiteCommand command = new SQLiteCommand(connection);
+            //insert accomodations
+            command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, " +
+                "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
+                "acc_picture_url) values ('super hotel', 'southampton', 'hampshire', 'SO13', " +
+                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg');");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(101, 1, 2);");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(102, 1, 2);");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(103, 1, 3);");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(104, 1, 4);");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(105, 1, 3);");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(106, 1, 4);");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(1, 2, 2);");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(2, 2, 2);");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(3, 2, 3);");
+            command.ExecuteNonQuery();
+            //insert rooms
+            command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(4, 2, 3);");
+            command.ExecuteNonQuery();
+            //insert bookings
+            command.CommandText = String.Format("insert into bookings (acc_id, room_id, room_number, " +
+                "cust_id, start_date, end_date) values(1, 1, 101, 1, '2013-01-13', '2013-02-01');");
+            command.ExecuteNonQuery();
+            //insert bookings
+            command.CommandText = String.Format("insert into bookings (acc_id, room_id, room_number, " +
+                "cust_id, start_date, end_date) values(1, 1, 101, 1, '2013-01-13', '2013-02-01');");
+            command.ExecuteNonQuery();
+            connection.Close();
         }
         public void insertNewCustomer(Customer c)
         {
