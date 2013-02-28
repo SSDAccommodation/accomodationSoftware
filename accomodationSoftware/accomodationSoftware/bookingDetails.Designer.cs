@@ -34,12 +34,11 @@
             this.l_startDate = new System.Windows.Forms.Label();
             this.l_endDate = new System.Windows.Forms.Label();
             this.gB_pickadate = new System.Windows.Forms.GroupBox();
-            this.lv_rooms = new System.Windows.Forms.ListView();
             this.b_bookselected = new System.Windows.Forms.Button();
             this.b_cancel = new System.Windows.Forms.Button();
-            this.ch_roomid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_roomno = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dgv_bookings = new System.Windows.Forms.DataGridView();
             this.gB_pickadate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_bookings)).BeginInit();
             this.SuspendLayout();
             // 
             // dTP_startDate
@@ -100,17 +99,6 @@
             this.gB_pickadate.TabStop = false;
             this.gB_pickadate.Text = "Pick a Date";
             // 
-            // lv_rooms
-            // 
-            this.lv_rooms.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ch_roomid,
-            this.ch_roomno});
-            this.lv_rooms.Location = new System.Drawing.Point(12, 107);
-            this.lv_rooms.Name = "lv_rooms";
-            this.lv_rooms.Size = new System.Drawing.Size(406, 382);
-            this.lv_rooms.TabIndex = 6;
-            this.lv_rooms.UseCompatibleStateImageBehavior = false;
-            // 
             // b_bookselected
             // 
             this.b_bookselected.Location = new System.Drawing.Point(251, 495);
@@ -129,22 +117,22 @@
             this.b_cancel.Text = "Cancel";
             this.b_cancel.UseVisualStyleBackColor = true;
             // 
-            // ch_roomid
+            // dgv_bookings
             // 
-            this.ch_roomid.Text = "Room ID";
-            // 
-            // ch_roomno
-            // 
-            this.ch_roomno.Text = "Room Number";
+            this.dgv_bookings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_bookings.Location = new System.Drawing.Point(12, 119);
+            this.dgv_bookings.Name = "dgv_bookings";
+            this.dgv_bookings.Size = new System.Drawing.Size(406, 361);
+            this.dgv_bookings.TabIndex = 9;
             // 
             // bookingDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 524);
+            this.Controls.Add(this.dgv_bookings);
             this.Controls.Add(this.b_cancel);
             this.Controls.Add(this.b_bookselected);
-            this.Controls.Add(this.lv_rooms);
             this.Controls.Add(this.gB_pickadate);
             this.Controls.Add(this.l_hotelName_bd);
             this.Name = "bookingDetails";
@@ -152,6 +140,7 @@
             this.Load += new System.EventHandler(this.bookingDetails_Load);
             this.gB_pickadate.ResumeLayout(false);
             this.gB_pickadate.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_bookings)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,10 +154,8 @@
         private System.Windows.Forms.Label l_startDate;
         private System.Windows.Forms.Label l_endDate;
         private System.Windows.Forms.GroupBox gB_pickadate;
-        private System.Windows.Forms.ListView lv_rooms;
         private System.Windows.Forms.Button b_bookselected;
         private System.Windows.Forms.Button b_cancel;
-        private System.Windows.Forms.ColumnHeader ch_roomid;
-        private System.Windows.Forms.ColumnHeader ch_roomno;
+        private System.Windows.Forms.DataGridView dgv_bookings;
     }
 }

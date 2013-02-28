@@ -33,8 +33,15 @@ namespace accomodationSoftware
             accommodation_id = acc_id;
             user_id = u_id;
 
+            dgv_bookings.ColumnCount = 2;
+            dgv_bookings.Columns[0].Name = "Room ID";
+            dgv_bookings.Columns[1].Name = "Room Number";
+            dgv_bookings.Columns[0].Width = dgv_bookings.Width / 2 - 22;
+            dgv_bookings.Columns[1].Width = dgv_bookings.Width / 2 - 21;
+
             try
             {
+                // mario: i would like to put all db stuff into the db class
                 SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
                 connection.Open();
 
@@ -160,7 +167,8 @@ namespace accomodationSoftware
         }
         private void populateLV()
         {
-            lv_rooms.Clear();
+            dgv_bookings.RowCount = 1;
+            dgv_bookings.Rows.Clear();
             try
             {
                 List<int> temp = new List<int>();
@@ -171,11 +179,8 @@ namespace accomodationSoftware
 
                 for (int i = 0; i < temp.Count; i++)
                 {
-
-                    lv_rooms.Items.Add(temp[i] + " " + temp2[i]+"\n");
-                    lv_rooms.Items.Add("");
-                    lv_rooms.Items.Add("");
-                    lv_rooms.Items.Add("");
+                    System.Console.WriteLine("" + temp[i]+ " - " + temp2[i]);
+                    dgv_bookings.Rows.Add(new string[]{""+temp[i],""+temp2[i]});
                 }
             }
             catch (Exception e)

@@ -28,6 +28,7 @@ namespace accomodationSoftware
 
         public void showCust(ArrayList a)
         {
+            string[] temp = new string[12];
             try
             {
                 dg_customer.ColumnCount = 12;
@@ -44,21 +45,22 @@ namespace accomodationSoftware
                 dg_customer.Columns[10].Name = "Expiremonth";
                 dg_customer.Columns[11].Name = "Expireyear";
 
-                    foreach (Customer c in a)
-                    {
-                        dg_customer.Rows.Add(c.Title);
-                        dg_customer.Rows.Add(c.Firstname);
-                        dg_customer.Rows.Add(c.Surname);
-                        dg_customer.Rows.Add(c.Birthday);
-                        dg_customer.Rows.Add(c.Street);
-                        dg_customer.Rows.Add(c.Postcode);
-                        dg_customer.Rows.Add(c.City);
-                        dg_customer.Rows.Add(c.Country);
-                        dg_customer.Rows.Add(c.CardholderName);
-                        dg_customer.Rows.Add(c.Cardnumber);
-                        dg_customer.Rows.Add(c.Expiremonth);
-                        dg_customer.Rows.Add(c.Expireyear);
-                    }
+                foreach (Customer c in a)
+                {
+                    temp[0] = (c.Title);
+                    temp[1] = (c.Firstname);
+                    temp[2] = (c.Surname);
+                    temp[3] = (c.Birthday);
+                    temp[4] = (c.Street);
+                    temp[5] = (c.Postcode);
+                    temp[6] = (c.City);
+                    temp[7] = (c.Country);
+                    temp[8] = (c.CardholderName);
+                    temp[9] = (c.Cardnumber);
+                    temp[10] = (c.Expiremonth);
+                    temp[11] = (c.Expireyear);
+                    dg_customer.Rows.Add(temp);
+                }
             }
             catch(Exception e){
                 System.Console.WriteLine(e.ToString());
