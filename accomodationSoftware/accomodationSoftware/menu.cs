@@ -27,12 +27,14 @@ namespace accomodationSoftware
 
         private void Add_customer_button_Click(object sender, EventArgs e)
         {
+            this.Hide();
             new_customer accForm = new new_customer();
             accForm.Show();
         }
 
         private void accInfoButton_Click(object sender, EventArgs e)
         {
+            this.Hide();
             accomodationInfo accForm = new accomodationInfo();
             accForm.Show();
         }
@@ -41,13 +43,15 @@ namespace accomodationSoftware
         {
             if (accommodation_id != 0 && user_id != 0)
             {
-                bookingDetails bookForm = new bookingDetails(accommodation_id, user_id);
-                bookForm.Show();
+                this.Hide();
+                //bookingDetails bookForm = new bookingDetails(accommodation_id, user_id);
+                //bookForm.Show();
             }
         }
 
         private void showCustomerButton_Click(object sender, EventArgs e)
         {
+            this.Hide();
             ShowCustomer showCust = new ShowCustomer();
             showCust.Show();
         }

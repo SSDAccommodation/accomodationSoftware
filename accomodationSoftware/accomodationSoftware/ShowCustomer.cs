@@ -14,20 +14,21 @@ namespace accomodationSoftware
     {
 
         public Db Db;
-        
-        
+        public List<Customer> CustomerList { get; set; }
+        public Customer CurrentCustomer { get; set; }
         
         public ShowCustomer()
         {
             InitializeComponent();
             Db = new Db();
-             
-            showCust(Db.getCustomers());
+            CustomerList = new List<Customer>();
+            b_acc.Visible = false;
         }
 
 
-        public void showCust(ArrayList a)
+        public void showCust(List<Customer> a)
         {
+            CustomerList = a;
             string[] temp = new string[12];
             try
             {
@@ -66,6 +67,31 @@ namespace accomodationSoftware
                 System.Console.WriteLine(e.ToString());
             }
             }
+
+        private void b_search_Click(object sender, EventArgs e)
+        {
+            showCust(Db.getCustomers(tb_surname.Text));
+        }
+
+        private void dg_customer_DoubleClick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < CustomerList.Count; i++)
+            {
+                if (dg_customer.CurrentRow.Cells[2].Value.Equals(CustomerList[i].Surname))
+                {
+                    CurrentCustomer = CustomerList[i];
+                }
+
+            }
+            b_acc.Visible = true;
+        }
+
+        private void b_acc_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            accomodationInfo accForm = new accomodationInfo(CurrentCustomer);
+            accForm.Show();
+        }
 
 
     }

@@ -14,24 +14,26 @@ namespace accomodationSoftware
 {
     public partial class bookingDetails : Form
     {
-        public DateTime startD, endD;
-
+        public DateTime StartD { get; set; }
+        public DateTime EndD { get; set; }
         public List<DateTime> startDateRoom { get; set; }
         public List<DateTime> endDateRoom { get; set; }
         public List<int> roomId { get; set; }
         public Dictionary<int,int> rooms {get; set;}
-        public int accommodation_id {get; set;}
+        public string accommodation_id {get; set;}
         public int user_id { get; set; }
+        public Customer CurrentCustomer { get; set; }
+        public Accomodation CurrentAccomodation { get; set; }
 
-        public bookingDetails(int acc_id, int u_id)
+        public bookingDetails(Accomodation a, Customer c)
         {
             InitializeComponent();
             startDateRoom = new List<DateTime>();
             endDateRoom = new List<DateTime>();
             roomId = new List<int>();
             rooms = new Dictionary<int, int>();
-            accommodation_id = acc_id;
-            user_id = u_id;
+            accommodation_id = a.ID;
+            user_id = c.custi_id;
 
             dgv_bookings.ColumnCount = 2;
             dgv_bookings.Columns[0].Name = "Room ID";
@@ -67,20 +69,20 @@ namespace accomodationSoftware
         {
             dTP_startDate.Value = DateTime.Today;
             dTP_endDate.Value = DateTime.Today;
-            startD = dTP_startDate.Value;
+            StartD = dTP_startDate.Value;
         }
 
         private void dTP_startDate_ValueChanged(object sender, EventArgs e)
         {
-            startD = dTP_startDate.Value;
-            if (endD < startD)
-                dTP_endDate.Value = startD; 
+            StartD = dTP_startDate.Value;
+            if (EndD < StartD)
+                dTP_endDate.Value = StartD; 
             dbDateCheck();
         }
 
         private void dTP_endDate_ValueChanged(object sender, EventArgs e)
         {
-            endD = dTP_endDate.Value;
+            EndD = dTP_endDate.Value;
             dbDateCheck();
         }
         private void dbDateCheck()
@@ -92,8 +94,6 @@ namespace accomodationSoftware
 
             SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
             connection.Open();
-
-
             SQLiteCommand cmd = new SQLiteCommand("select room_id, start_date, end_date from bookings where acc_id =  " + accommodation_id, connection);
             SQLiteDataReader reader = cmd.ExecuteReader();
             try
@@ -110,14 +110,9 @@ namespace accomodationSoftware
             {
                 MessageBox.Show(e.ToString());
             }
-
             connection.Close();
-
-
             //SQLiteConnection connection2 = new SQLiteConnection("Data Source=tourismus.db");
             connection.Open();
-
-
             cmd = new SQLiteCommand("select room_id, room_number from rooms where acc_id =  " + accommodation_id, connection);
             reader = cmd.ExecuteReader();
             try
@@ -126,7 +121,6 @@ namespace accomodationSoftware
                 if (reader.HasRows)
                     while (reader.Read()) 
                     {
-                        System.Console.WriteLine(reader.GetInt32(reader.GetOrdinal("room_id")) + "-" + reader.GetInt32(reader.GetOrdinal("room_number")));
                         rooms.Add(reader.GetInt32(reader.GetOrdinal("room_id")), reader.GetInt32(reader.GetOrdinal("room_number")));
                     } 
             }
@@ -137,7 +131,6 @@ namespace accomodationSoftware
             try
             {
                 connection.Close();
-
                 DateTime roomDate = DateTime.Now;
                 
                 for (int i = 0; i < startDateRoom.Count; i++)
@@ -145,20 +138,16 @@ namespace accomodationSoftware
                     for (DateTime rdate = startDateRoom[i]; rdate <= endDateRoom[i]; rdate = rdate.AddDays(1))
                     {
                         roomDate = rdate;
-                        for (DateTime date = startD; date <= endD; date = date.AddDays(1))
+                        for (DateTime date = StartD; date <= EndD; date = date.AddDays(1))
                         {
                             if (date == roomDate)
                             {
                                 rooms.Remove(roomId[i]);
                             }
                         }
-
-                    }
-                    
+                    }  
                 }
                 populateLV();
-                 
-
             }
             catch(Exception e)
             {
@@ -179,7 +168,6 @@ namespace accomodationSoftware
 
                 for (int i = 0; i < temp.Count; i++)
                 {
-                    System.Console.WriteLine("" + temp[i]+ " - " + temp2[i]);
                     dgv_bookings.Rows.Add(new string[]{""+temp[i],""+temp2[i]});
                 }
             }
@@ -187,6 +175,12 @@ namespace accomodationSoftware
             {
                 MessageBox.Show(e.ToString());
             }
+        }
+        private void b_bookselected_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Details det = new Details(CurrentCustomer,CurrentAccomodation,StartD,EndD,dgv_bookings.CurrentRow.Cells[0].Value.ToString());
+            det.Show();
         }
     }
 }

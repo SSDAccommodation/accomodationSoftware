@@ -9,7 +9,7 @@ namespace accomodationSoftware
     public abstract class Institution
     {
         public string Name { get; set; }
-
+        public string ID { get; set; }
         public string Adress_city { get; set; }
         public string Adress_county { get; set; }
         public string Adress_postcode { get; set; }
@@ -21,8 +21,9 @@ namespace accomodationSoftware
 
         public void giveFeedback() { }
 
-        public Institution(string city, string name, string addcount, string postcode, string street, string number, string description, string feedback)
+        public Institution(string id, string city, string name, string addcount, string postcode, string street, string number, string description, string feedback)
         {
+            ID = id;
             Name = name;
             Adress_city = city;
             Adress_county = addcount;

@@ -107,6 +107,7 @@
             this.b_bookselected.TabIndex = 7;
             this.b_bookselected.Text = "Book Selected";
             this.b_bookselected.UseVisualStyleBackColor = true;
+            this.b_bookselected.Click += new System.EventHandler(this.b_bookselected_Click);
             // 
             // b_cancel
             // 

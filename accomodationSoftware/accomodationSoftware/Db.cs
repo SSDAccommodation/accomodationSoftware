@@ -136,14 +136,11 @@ namespace accomodationSoftware
             }
             
         }
-        public Accomodation searchAccomodation(int acc_id, int customer_id)
+        public Accomodation searchAccomodation(string acc_id)
         {
-            
             try
             {
-                
-                int accommodation_id = acc_id;
-                int user_id = customer_id;
+                string accommodation_id = acc_id;
                 Accomodation ac = null;
                 SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
                 connection.Open();
@@ -156,7 +153,6 @@ namespace accomodationSoftware
                 {
                     while (reader.Read())
                     {
-
                         string name = reader.GetString(reader.GetOrdinal("acc_name"));
                         string adress_city = reader.GetString(reader.GetOrdinal("acc_adress_city"));
                         string adress_county = reader.GetString(reader.GetOrdinal("acc_adress_county"));
@@ -165,11 +161,7 @@ namespace accomodationSoftware
                         string adress_number = reader.GetString(reader.GetOrdinal("acc_adress_number"));
                         string description = reader.GetString(reader.GetOrdinal("acc_description"));
                         string picture_url = reader.GetString(reader.GetOrdinal("acc_picture_url"));
-                        ac = new Accomodation(name, adress_city, adress_county, adress_postcode, adress_street, adress_number, description, picture_url);
-                        //MessageBox.Show(string.Format("{0}, {1}, {2}", name, adress_city, picture_url));
-
-
-                        
+                        ac = new Accomodation(""+acc_id,name, adress_city, adress_county, adress_postcode, adress_street, adress_number, description, picture_url);   
                     }
 
                 }
@@ -183,18 +175,16 @@ namespace accomodationSoftware
             } 
             return null;
         }
-
-
-        public ArrayList getCustomers()
+        public List<Customer> getCustomers(string sur)
         {
 
-            ArrayList customerList = new ArrayList();
+            List<Customer> customerList = new List<Customer>();
             try{
                 SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
                 connection.Open();
 
 
-                SQLiteCommand cmd = new SQLiteCommand("select * from customer", connection);
+                SQLiteCommand cmd = new SQLiteCommand("select * from customer where surname = '"+sur+"'", connection);
                 SQLiteDataReader reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)

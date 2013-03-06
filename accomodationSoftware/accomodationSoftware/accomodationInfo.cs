@@ -16,15 +16,16 @@ namespace accomodationSoftware
 {
     public partial class accomodationInfo : Form
     {
-        public int accommodation_id { get; set; }
+        public string accommodation_id { get; set; }
         public int user_id { get; set; }
         public Db db { get; set; }
         public Accomodation ac;
+        public Customer CurrentCustomer { get; set; }
+
         public accomodationInfo()
         {
             InitializeComponent();
-
-            accommodation_id = 1;
+            accommodation_id = "" +1;
             user_id = 1;
 
             db = new Db();
@@ -32,15 +33,33 @@ namespace accomodationSoftware
             //method that returns the accommodation_id
             try
             {
-                ac = db.searchAccomodation(accommodation_id, user_id);
+                ac = db.searchAccomodation(accommodation_id);
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+            showAccommodationData(ac);
+        }
+        public accomodationInfo(Customer c)
+        {
+            InitializeComponent();
+            CurrentCustomer = c;
+            accommodation_id = ""+1;
+            user_id = c.custi_id;
+
+            db = new Db();
+            //db.createDB();
+            //method that returns the accommodation_id
+            try
+            {
+                ac = db.searchAccomodation(accommodation_id);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
             showAccommodationData(ac);
-
-
         }
 
         public void showAccommodationData(Accomodation acc)
@@ -53,8 +72,6 @@ namespace accomodationSoftware
             rtb_description.Text = ac.Description;
             pb_hotel.Load("pictures\\" + ac.Picture_url);
 
-
-
         }
 
 
@@ -66,7 +83,8 @@ namespace accomodationSoftware
 
         private void b_bookingDetails_Click(object sender, EventArgs e)
         {
-            bookingDetails bookForm = new bookingDetails(accommodation_id, user_id);
+            this.Hide();
+            bookingDetails bookForm = new bookingDetails(db.searchAccomodation(accommodation_id), CurrentCustomer);
             bookForm.Show();
         }
 

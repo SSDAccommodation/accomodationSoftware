@@ -91,7 +91,7 @@ namespace accomodationSoftware
 
         private void accShow_Click(object sender, EventArgs e)
         {
-           
+            this.Hide();
             accomodationInfo accForm = new accomodationInfo();
             accForm.Show();
         }
