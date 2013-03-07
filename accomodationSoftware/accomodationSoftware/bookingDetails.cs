@@ -24,6 +24,7 @@ namespace accomodationSoftware
         public int user_id { get; set; }
         public Customer CurrentCustomer { get; set; }
         public Accomodation CurrentAccomodation { get; set; }
+        public Db Database { get; set; }
 
         public bookingDetails(Accomodation a, Customer c)
         {
@@ -34,34 +35,14 @@ namespace accomodationSoftware
             rooms = new Dictionary<int, int>();
             accommodation_id = a.ID;
             user_id = c.custi_id;
-
+            Database = new Db();
             dgv_bookings.ColumnCount = 2;
             dgv_bookings.Columns[0].Name = "Room ID";
             dgv_bookings.Columns[1].Name = "Room Number";
             dgv_bookings.Columns[0].Width = dgv_bookings.Width / 2 - 22;
             dgv_bookings.Columns[1].Width = dgv_bookings.Width / 2 - 21;
-
-            try
-            {
-                // mario: i would like to put all db stuff into the db class
-                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
-                connection.Open();
-
-
-                SQLiteCommand cmd = new SQLiteCommand("select * from accommodations where acc_id =  " + accommodation_id, connection);
-                SQLiteDataReader reader = cmd.ExecuteReader();
-
-                if (reader.HasRows)
-                    while (reader.Read())
-                    {
-
-                        l_hotelName_bd.Text = reader.GetString(reader.GetOrdinal("acc_name"));
-                    }
-
-                connection.Close();
-            }catch(Exception e){
-                System.Console.WriteLine(e.ToString());
-            }
+            l_hotelName_bd.Text = Database.getHotelNameDb(accommodation_id);
+            
 
         }
 
@@ -77,7 +58,6 @@ namespace accomodationSoftware
             StartD = dTP_startDate.Value;
             if (EndD < StartD)
                 dTP_endDate.Value = StartD; 
-            dbDateCheck();
         }
 
         private void dTP_endDate_ValueChanged(object sender, EventArgs e)
@@ -91,46 +71,14 @@ namespace accomodationSoftware
             //SELECT startdate, enddate, beadnumber, romm_id FROM tourismus.rooms Where hotelID = XXX
             //       10-01-2013,12-01-2013, 2      , 101
             //       15-01-2013,20.01-2013, 3      , 102      rooms not yet booked (103,104,105)
-
-            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
-            connection.Open();
-            SQLiteCommand cmd = new SQLiteCommand("select room_id, start_date, end_date from bookings where acc_id =  " + accommodation_id, connection);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            try
-            {
-                if (reader.HasRows)
-                    while (reader.Read())
-                    {
-                        roomId.Add(reader.GetInt32(reader.GetOrdinal("room_id")));
-                        startDateRoom.Add(reader.GetDateTime(reader.GetOrdinal("start_date")));
-                        endDateRoom.Add(reader.GetDateTime(reader.GetOrdinal("end_date")));                
-                    }
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-            connection.Close();
+            roomId = Database.getBookingRoomId(accommodation_id);
+            startDateRoom = Database.getbookingStartDateRoom(accommodation_id);
+            endDateRoom = Database.getbookingEndDateRoom(accommodation_id);
+            rooms = Database.getBookingRooms(accommodation_id);
             //SQLiteConnection connection2 = new SQLiteConnection("Data Source=tourismus.db");
-            connection.Open();
-            cmd = new SQLiteCommand("select room_id, room_number from rooms where acc_id =  " + accommodation_id, connection);
-            reader = cmd.ExecuteReader();
+            
             try
             {
-                rooms.Clear();
-                if (reader.HasRows)
-                    while (reader.Read()) 
-                    {
-                        rooms.Add(reader.GetInt32(reader.GetOrdinal("room_id")), reader.GetInt32(reader.GetOrdinal("room_number")));
-                    } 
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-            try
-            {
-                connection.Close();
                 DateTime roomDate = DateTime.Now;
                 
                 for (int i = 0; i < startDateRoom.Count; i++)

@@ -233,9 +233,129 @@ namespace accomodationSoftware
             return customerList;
         }
 
-        
 
 
 
+
+
+        public string getHotelNameDb(string accommodation_id)
+        {
+            String s = "";
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+
+
+                SQLiteCommand cmd = new SQLiteCommand("select * from accommodations where acc_id =  " + accommodation_id, connection);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+
+                        s = reader.GetString(reader.GetOrdinal("acc_name"));
+                    }
+
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+            return s;
+        }
+
+        public List<int> getBookingRoomId(string accommodation_id)
+        {
+            List<int> l = new List<int>();
+            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+            connection.Open();
+            SQLiteCommand cmd = new SQLiteCommand("select room_id FROM bookings where acc_id =  " + accommodation_id, connection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            try
+            {
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        l.Add(reader.GetInt32(reader.GetOrdinal("room_id")));
+                    }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            connection.Close();
+            return l;
+        }
+
+        public List<DateTime> getbookingStartDateRoom(string accommodation_id)
+        {
+            List<DateTime> l = new List<DateTime>();
+            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+            connection.Open();
+            SQLiteCommand cmd = new SQLiteCommand("start_date from bookings where acc_id =  " + accommodation_id, connection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            try
+            {
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        l.Add(reader.GetDateTime(reader.GetOrdinal("start_date")));
+                    }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            connection.Close();
+            return l;
+        }
+
+        public List<DateTime> getbookingEndDateRoom(string accommodation_id)
+        {
+            List<DateTime> l = new List<DateTime>();
+            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+            connection.Open();
+            SQLiteCommand cmd = new SQLiteCommand("end_date from bookings where acc_id =  " + accommodation_id, connection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            try
+            {
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        l.Add(reader.GetDateTime(reader.GetOrdinal("start_date")));
+                    }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            connection.Close();
+            return l;
+        }
+
+        internal Dictionary<int, int> getBookingRooms(string accommodation_id)
+        {
+            Dictionary<int,int> d = new Dictionary<int, int>();
+            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+            connection.Open();
+            SQLiteCommand cmd = new SQLiteCommand("select room_id, room_number from rooms where acc_id =  " + accommodation_id, connection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            try
+            {
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        d.Add(reader.GetInt32(reader.GetOrdinal("room_id")), reader.GetInt32(reader.GetOrdinal("room_number")));
+                    }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            connection.Close();
+            return d;
+        }
     }
 }
