@@ -34,6 +34,7 @@ namespace accomodationSoftware
             try
             {
                 ac = db.searchAccomodation(accommodation_id);
+                Console.WriteLine(ac.ID);
             }
             catch (Exception e)
             {
@@ -54,6 +55,7 @@ namespace accomodationSoftware
             try
             {
                 ac = db.searchAccomodation(accommodation_id);
+                
             }
             catch (Exception e)
             {
@@ -68,6 +70,7 @@ namespace accomodationSoftware
 
             //Daten in form einfügen
             l_hotelname.Text = ac.Name;
+            
             rtb_address.Text = ac.Name + "\n" + ac.Adress_street + " " + ac.Adress_number + "\n" + ac.Adress_city + "\n" + ac.Adress_postcode + "\n" + ac.Adress_county;
             rtb_description.Text = ac.Description;
             pb_hotel.Load("pictures\\" + ac.Picture_url);
