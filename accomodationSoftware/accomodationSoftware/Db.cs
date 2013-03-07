@@ -294,7 +294,7 @@ namespace accomodationSoftware
             List<DateTime> l = new List<DateTime>();
             SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
             connection.Open();
-            SQLiteCommand cmd = new SQLiteCommand("start_date from bookings where acc_id =  " + accommodation_id, connection);
+            SQLiteCommand cmd = new SQLiteCommand("select start_date from bookings where acc_id =  " + accommodation_id, connection);
             SQLiteDataReader reader = cmd.ExecuteReader();
             try
             {
@@ -317,14 +317,14 @@ namespace accomodationSoftware
             List<DateTime> l = new List<DateTime>();
             SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
             connection.Open();
-            SQLiteCommand cmd = new SQLiteCommand("end_date from bookings where acc_id =  " + accommodation_id, connection);
+            SQLiteCommand cmd = new SQLiteCommand("select end_date from bookings where acc_id =  " + accommodation_id, connection);
             SQLiteDataReader reader = cmd.ExecuteReader();
             try
             {
                 if (reader.HasRows)
                     while (reader.Read())
                     {
-                        l.Add(reader.GetDateTime(reader.GetOrdinal("start_date")));
+                        l.Add(reader.GetDateTime(reader.GetOrdinal("end_date")));
                     }
             }
             catch (Exception e)

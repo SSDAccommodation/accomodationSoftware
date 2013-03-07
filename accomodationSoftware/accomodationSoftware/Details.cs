@@ -27,10 +27,19 @@ namespace accomodationSoftware
             EndD = end;
             RoomID = roomID;
             populateDetails();
+
+
+            
+
         }
         private void populateDetails()
         {
             //fill ListView
+            lv_details.Items.Add(CurrentCustomer.Surname + ", " + CurrentCustomer.Firstname);
+            lv_details.Items.Add("Accommodation: " + CurrentAccomodation.Name);
+            lv_details.Items.Add("From: " + StartD);
+            lv_details.Items.Add("To: " + EndD);
+            
         }
 
         private void b_book_Click(object sender, EventArgs e)

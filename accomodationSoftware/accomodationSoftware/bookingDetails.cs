@@ -33,6 +33,9 @@ namespace accomodationSoftware
             endDateRoom = new List<DateTime>();
             roomId = new List<int>();
             rooms = new Dictionary<int, int>();
+            CurrentCustomer = c;
+            CurrentAccomodation = a;
+
             accommodation_id = a.ID;
             user_id = c.custi_id;
             Database = new Db();
@@ -127,7 +130,13 @@ namespace accomodationSoftware
         private void b_bookselected_Click(object sender, EventArgs e)
         {
             this.Hide();
+            Console.WriteLine(CurrentCustomer.Surname);
+            Console.WriteLine(CurrentAccomodation.Name);
+            Console.WriteLine(StartD);
+            Console.WriteLine(EndD);
+            Console.WriteLine(dgv_bookings.CurrentRow.Cells[0].Value.ToString());
             Details det = new Details(CurrentCustomer,CurrentAccomodation,StartD,EndD,dgv_bookings.CurrentRow.Cells[0].Value.ToString());
+           
             det.Show();
         }
     }

@@ -40,6 +40,7 @@
             this.lv_details.Size = new System.Drawing.Size(259, 200);
             this.lv_details.TabIndex = 0;
             this.lv_details.UseCompatibleStateImageBehavior = false;
+            this.lv_details.View = System.Windows.Forms.View.List;
             // 
             // b_book
             // 
