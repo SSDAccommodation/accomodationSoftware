@@ -66,6 +66,17 @@ namespace accomodationSoftware
                 "acc_picture_url) values ('super hotel', 'southampton', 'hampshire', 'SO13', " +
                 "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg');");
             command.ExecuteNonQuery();
+            //insert accomodations
+            command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, "+
+                "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
+                "acc_picture_url) values ('mega hotel', 'southampton', 'hampshire', 'SO13', " +
+                "'Main Street', '45', 'One of the nicest hotels with lots of rooms', 'hotel2.jpg');");
+            command.ExecuteNonQuery();
+            //insert customers
+            command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
+                "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" + 
+                " values('Mr', 'Peter', 'Parker', '2010-03-4', 'ParkStreet', 'SO14', 'Southampton', 'United Kingdom', 'Peter Parker', '700000', 'March', '2015');");
+            command.ExecuteNonQuery();
             //insert rooms
             command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(101, 1, 2);");
             command.ExecuteNonQuery();
