@@ -1,6 +1,6 @@
 ﻿namespace accomodationSoftware
 {
-    partial class new_customer
+    partial class AddCustomer
     {
         /// <summary>
         /// Erforderliche Designervariable.

@@ -14,14 +14,14 @@ using System.Data.SQLite;
 
 namespace accomodationSoftware
 {
-    public partial class new_customer : Form
+    public partial class AddCustomer : Form
     {
         
         public string Bmonth { get; set; }
         public Customer Customer { get; set; }
         public Db Db;
 
-        public new_customer()
+        public AddCustomer()
         {
             InitializeComponent();
             Db = new Db();

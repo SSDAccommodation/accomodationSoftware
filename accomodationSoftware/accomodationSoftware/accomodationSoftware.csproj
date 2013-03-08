@@ -73,11 +73,11 @@
     <Compile Include="accomodationInfo.Designer.cs">
       <DependentUpon>accomodationInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="addCustomer.cs">
+    <Compile Include="AddCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="addCustomer.Designer.cs">
-      <DependentUpon>addCustomer.cs</DependentUpon>
+    <Compile Include="AddCustomer.Designer.cs">
+      <DependentUpon>AddCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="bookingDetails.cs">
       <SubType>Form</SubType>
@@ -112,8 +112,8 @@
     <EmbeddedResource Include="accomodationInfo.resx">
       <DependentUpon>accomodationInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="addCustomer.resx">
-      <DependentUpon>addCustomer.cs</DependentUpon>
+    <EmbeddedResource Include="AddCustomer.resx">
+      <DependentUpon>AddCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="bookingDetails.resx">
       <DependentUpon>bookingDetails.cs</DependentUpon>

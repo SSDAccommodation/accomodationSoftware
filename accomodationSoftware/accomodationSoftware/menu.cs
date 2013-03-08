@@ -15,20 +15,90 @@ namespace accomodationSoftware
 
         public int accommodation_id { get; set; }
         public int user_id { get; set; }
-
+        //showCustomer start
+        public Db Db;
+        public List<Customer> CustomerList { get; set; }
+        public Customer CurrentCustomer { get; set; }
+        //bookingDetails start
+        public DateTime StartD { get; set; }
+        public DateTime EndD { get; set; }
+        public List<DateTime> startDateRoom { get; set; }
+        public List<DateTime> endDateRoom { get; set; }
+        public List<int> roomId { get; set; }
+        public Dictionary<int, int> rooms { get; set; }
+        public Accomodation CurrentAccomodation { get; set; }
+        //bookingDetails end
         public Menu()
         {
             InitializeComponent();
-            accommodation_id = 0;
-            user_id = 0;
-
-           
+            accommodation_id = 1;
+            user_id = 1;
+            //showCustomer start
+            Db = new Db();
+            CustomerList = new List<Customer>();
+            //showCustomer end
+            //bookingdetails start
+            startDateRoom = new List<DateTime>();
+            endDateRoom = new List<DateTime>();
+            roomId = new List<int>();
+            rooms = new Dictionary<int, int>();
+            dgv_bookings.ColumnCount = 2;
+            dgv_bookings.Columns[0].Name = "Room ID";
+            dgv_bookings.Columns[1].Name = "Room Number";
+            dgv_bookings.Columns[0].Width = dgv_bookings.Width / 2 - 22;
+            dgv_bookings.Columns[1].Width = dgv_bookings.Width / 2 - 21;
+            l_hotelName_bd.Text = Db.getHotelNameDb(accommodation_id+"");
+            dTP_startDate.Value = DateTime.Today;
+            dTP_endDate.Value = DateTime.Today;
+            StartD = dTP_startDate.Value;
+            //bookingdetails end
         }
+        public void showCust(List<Customer> a)
+        {
+            CustomerList = a;
+            string[] temp = new string[12];
+            try
+            {
+                dg_customer.ColumnCount = 12;
+                dg_customer.Columns[0].Name = "Title";
+                dg_customer.Columns[1].Name = "Firstname";
+                dg_customer.Columns[2].Name = "Surname";
+                dg_customer.Columns[3].Name = "Birthday";
+                dg_customer.Columns[4].Name = "Street";
+                dg_customer.Columns[5].Name = "Postcode";
+                dg_customer.Columns[6].Name = "City";
+                dg_customer.Columns[7].Name = "Country";
+                dg_customer.Columns[8].Name = "Cardholder Name";
+                dg_customer.Columns[9].Name = "Cardnumber";
+                dg_customer.Columns[10].Name = "Expiremonth";
+                dg_customer.Columns[11].Name = "Expireyear";
 
+                foreach (Customer c in a)
+                {
+                    temp[0] = (c.Title);
+                    temp[1] = (c.Firstname);
+                    temp[2] = (c.Surname);
+                    temp[3] = (c.Birthday);
+                    temp[4] = (c.Street);
+                    temp[5] = (c.Postcode);
+                    temp[6] = (c.City);
+                    temp[7] = (c.Country);
+                    temp[8] = (c.CardholderName);
+                    temp[9] = (c.Cardnumber);
+                    temp[10] = (c.Expiremonth);
+                    temp[11] = (c.Expireyear);
+                    dg_customer.Rows.Add(temp);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+        }//showCustomer end
         private void Add_customer_button_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new_customer accForm = new new_customer();
+            AddCustomer accForm = new AddCustomer();
             accForm.Show();
         }
 
@@ -55,7 +125,119 @@ namespace accomodationSoftware
             ShowCustomer showCust = new ShowCustomer();
             showCust.Show();
         }
+        //showCustomer start
+        private void b_search_Click(object sender, EventArgs e)
+        {
+            showCust(Db.getCustomers(tb_surname.Text));
+        }
 
+        private void b_addcustomer_Click(object sender, EventArgs e)
+        {
+            AddCustomer addCustomerForm = new AddCustomer();
+            addCustomerForm.ShowDialog();
+        }
+
+        private void b_selectcustomer_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < CustomerList.Count; i++)
+            {
+                if (dg_customer.CurrentRow.Cells[2].Value.Equals(CustomerList[i].Surname))
+                {
+                    CurrentCustomer = CustomerList[i];
+                }
+
+            }
+            p_showcustomer.Hide();
+            p_accomodations.Show();
+        }//showCustomer end
+        //SearchAccomodation start
+        private void b_accosearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b_selectaccomodation_Click(object sender, EventArgs e)
+        {
+
+        }//SearchAccomodation end
+        //bookingdetails start
+        private void dTP_startDate_ValueChanged(object sender, EventArgs e)
+        {
+            StartD = dTP_startDate.Value;
+            if (EndD < StartD)
+                dTP_endDate.Value = StartD; 
+        }
+
+        private void dTP_endDate_ValueChanged(object sender, EventArgs e)
+        {
+            EndD = dTP_endDate.Value;
+            dbDateCheck();
+        }
+        private void dbDateCheck()
+        {
+            //Check Db for selected Date
+            //SELECT startdate, enddate, beadnumber, romm_id FROM tourismus.rooms Where hotelID = XXX
+            //       10-01-2013,12-01-2013, 2      , 101
+            //       15-01-2013,20.01-2013, 3      , 102      rooms not yet booked (103,104,105)
+            roomId = Db.getBookingRoomId(accommodation_id+"");
+            startDateRoom = Db.getbookingStartDateRoom(accommodation_id+"");
+            endDateRoom = Db.getbookingEndDateRoom(accommodation_id+"");
+            rooms = Db.getBookingRooms(accommodation_id+"");
+            //SQLiteConnection connection2 = new SQLiteConnection("Data Source=tourismus.db");
+
+            try
+            {
+                DateTime roomDate = DateTime.Now;
+
+                for (int i = 0; i < startDateRoom.Count; i++)
+                {
+                    for (DateTime rdate = startDateRoom[i]; rdate <= endDateRoom[i]; rdate = rdate.AddDays(1))
+                    {
+                        roomDate = rdate;
+                        for (DateTime date = StartD; date <= EndD; date = date.AddDays(1))
+                        {
+                            if (date == roomDate)
+                            {
+                                rooms.Remove(roomId[i]);
+                            }
+                        }
+                    }
+                }
+                populateBookingDgv();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+        }
+        private void populateBookingDgv()
+        {
+            dgv_bookings.RowCount = 1;
+            dgv_bookings.Rows.Clear();
+            try
+            {
+                List<int> temp = new List<int>();
+                temp.AddRange(rooms.Keys);
+                List<int> temp2 = new List<int>();
+                temp2.AddRange(rooms.Values);
+
+
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    dgv_bookings.Rows.Add(new string[] { "" + temp[i], "" + temp2[i] });
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+        }
+
+        private void b_bookselected_Click(object sender, EventArgs e)
+        {
+            Details det = new Details(CurrentCustomer, CurrentAccomodation, StartD, EndD, dgv_bookings.CurrentRow.Cells[0].Value.ToString());
+            det.ShowDialog();
+        }//bookingdetails end
 
     }
 }
