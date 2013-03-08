@@ -100,7 +100,7 @@
             this.accInfoButton.Name = "accInfoButton";
             this.accInfoButton.Size = new System.Drawing.Size(150, 23);
             this.accInfoButton.TabIndex = 1;
-            this.accInfoButton.Text = "Accommodation info";
+            this.accInfoButton.Text = "Show Accommodations";
             this.accInfoButton.UseVisualStyleBackColor = true;
             this.accInfoButton.Click += new System.EventHandler(this.accInfoButton_Click);
             // 
@@ -1044,10 +1044,10 @@
             this.Controls.Add(this.accInfoButton);
             this.Controls.Add(this.Add_customer_button);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.p_showcustomer);
             this.Controls.Add(this.p_accomodations);
             this.Controls.Add(this.p_bookingdetails);
             this.Controls.Add(this.p_accomodationinfo);
+            this.Controls.Add(this.p_showcustomer);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Menu";
             this.Text = "menu";

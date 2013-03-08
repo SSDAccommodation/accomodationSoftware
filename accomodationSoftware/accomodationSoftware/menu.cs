@@ -20,6 +20,8 @@ namespace accomodationSoftware
         public List<Customer> CustomerList { get; set; }
         public List<Customer> AllcustomerList { get; set; }
         public Customer CurrentCustomer { get; set; }
+        //show accommodations
+        public List<Accomodation> AllAccommodationsList { get; set; }
         //bookingDetails start
         public DateTime StartD { get; set; }
         public DateTime EndD { get; set; }
@@ -38,6 +40,7 @@ namespace accomodationSoftware
             Db = new Db();
             CustomerList = new List<Customer>();
             AllcustomerList = Db.getAllCustomers();// all customers are now in this list for searching
+            AllAccommodationsList = Db.getAllAccommodations();// all accommodations are now in this list for searching
             //showCustomer end
             //bookingdetails start
             startDateRoom = new List<DateTime>();
@@ -107,11 +110,17 @@ namespace accomodationSoftware
 
         private void accInfoButton_Click(object sender, EventArgs e)
         {
+            p_accomodationinfo.Hide();
+            p_accomodations.Show();
+            p_bookingdetails.Hide();
+            p_showcustomer.Hide();
+            showAccommodations(Db.getAllAccommodations());
+            
             //this.Hide();
             //accomodationInfo accForm = new accomodationInfo();
             //accForm.Show();
         }
-
+        
         private void bookingButton_Click(object sender, EventArgs e)
         {
             if (accommodation_id != 0 && user_id != 0)
@@ -122,6 +131,9 @@ namespace accomodationSoftware
             }
         }
 
+
+
+        
         private void showCustomerButton_Click(object sender, EventArgs e)
         {
             //hide the panels that are not needed and show the right one(here its p_showcustomer)
@@ -141,7 +153,7 @@ namespace accomodationSoftware
 
             List<Customer> foundlist = new List<Customer>();
 
-            foreach (Customer item in AllcustomerList)
+            foreach (Customer item in Db.getAllCustomers())
             {
                 if (item.Surname.ToLower().Contains(searchquery.ToLower()))
                     foundlist.Add(item);
@@ -181,18 +193,63 @@ namespace accomodationSoftware
             p_accomodations.Show();
         }//showCustomer end
         //SearchAccomodation start
+        public void showAccommodations(List<Accomodation> a)
+        {
+            List<Accomodation> AccommodationList = a;
+            string[] temp = new string[6];
+            try
+            {
+                dgv_searchaccomodation.RowCount = 1; //to clear the data grid
+                dgv_searchaccomodation.ColumnCount = 6;
+                dgv_searchaccomodation.Columns[0].Name = "Name";
+                dgv_searchaccomodation.Columns[1].Name = "City";
+                dgv_searchaccomodation.Columns[2].Name = "County";
+                dgv_searchaccomodation.Columns[3].Name = "Postcode";
+                dgv_searchaccomodation.Columns[4].Name = "Street";
+                dgv_searchaccomodation.Columns[5].Name = "Number";
+
+
+                foreach (Accomodation ac in a)
+                {
+                    temp[0] = (ac.Name);
+                    temp[1] = (ac.Adress_city);
+                    temp[2] = (ac.Adress_county);
+                    temp[3] = (ac.Adress_postcode);
+                    temp[4] = (ac.Adress_street);
+                    temp[5] = (ac.Adress_number);
+                    dgv_searchaccomodation.Rows.Add(temp);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+        }
+        // searches through all the accommodations
+        public List<Accomodation> accommodationSearch()
+        {
+            String searchquery = tb_accosearchname.Text;
+
+            List<Accomodation> foundlist = new List<Accomodation>();
+
+            foreach (Accomodation item in Db.getAllAccommodations())
+            {
+                if (item.Name.ToLower().Contains(searchquery.ToLower()))
+                    foundlist.Add(item);
+            }
+            return foundlist;
+        }
+
         private void b_accosearch_Click(object sender, EventArgs e)
         {
-
+            showAccommodations(accommodationSearch());
         }
 
         private void b_selectaccomodation_Click(object sender, EventArgs e)
         {
-            p_accomodationinfo.Show();
-            p_accomodations.Hide();
-            p_bookingdetails.Hide();
-            p_showcustomer.Hide();
-        }//SearchAccomodation end
+           
+        }
+        //SearchAccomodation end
         //bookingdetails start
         private void dTP_startDate_ValueChanged(object sender, EventArgs e)
         {

@@ -305,8 +305,46 @@ namespace accomodationSoftware
             }
             return allCustomerList;
         }
+        //returning all accommodations in a list
+        public List<Accomodation> getAllAccommodations()
+        {
 
+            List<Accomodation> allAccommodationList = new List<Accomodation>();
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
 
+                Accomodation ac = null;
+                SQLiteCommand cmd = new SQLiteCommand("select * from accommodations", connection);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int acc_id = reader.GetInt32(reader.GetOrdinal("acc_id"));
+                        string name = reader.GetString(reader.GetOrdinal("acc_name"));
+                        string adress_city = reader.GetString(reader.GetOrdinal("acc_adress_city"));
+                        string adress_county = reader.GetString(reader.GetOrdinal("acc_adress_county"));
+                        string adress_postcode = reader.GetString(reader.GetOrdinal("acc_adress_postcode"));
+                        string adress_street = reader.GetString(reader.GetOrdinal("acc_adress_street"));
+                        string adress_number = reader.GetString(reader.GetOrdinal("acc_adress_number"));
+                        string description = reader.GetString(reader.GetOrdinal("acc_description"));
+                        string picture_url = reader.GetString(reader.GetOrdinal("acc_picture_url"));
+                        ac = new Accomodation("" + acc_id, name, adress_city, adress_county, adress_postcode, adress_street, adress_number, description, picture_url);
+                        allAccommodationList.Add(ac);
+                    }
+
+                }
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+            return allAccommodationList;
+        }
 
 
 
