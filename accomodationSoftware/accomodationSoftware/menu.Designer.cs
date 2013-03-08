@@ -38,7 +38,14 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.p_showcustomer = new System.Windows.Forms.Panel();
+            this.b_addcustomer = new System.Windows.Forms.Button();
+            this.b_selectcustomer = new System.Windows.Forms.Button();
+            this.b_search = new System.Windows.Forms.Button();
+            this.tb_surname = new System.Windows.Forms.TextBox();
+            this.l_surname = new System.Windows.Forms.Label();
+            this.dg_customer = new System.Windows.Forms.DataGridView();
             this.p_accomodations = new System.Windows.Forms.Panel();
+            this.ll_accosearchback = new System.Windows.Forms.LinkLabel();
             this.tb_accosearchname = new System.Windows.Forms.TextBox();
             this.cb_accosearchcity = new System.Windows.Forms.ComboBox();
             this.cb_accosearchcountry = new System.Windows.Forms.ComboBox();
@@ -48,21 +55,15 @@
             this.b_accosearch = new System.Windows.Forms.Button();
             this.l_accocountry = new System.Windows.Forms.Label();
             this.dgv_searchaccomodation = new System.Windows.Forms.DataGridView();
-            this.b_addcustomer = new System.Windows.Forms.Button();
-            this.b_selectcustomer = new System.Windows.Forms.Button();
-            this.b_search = new System.Windows.Forms.Button();
-            this.tb_surname = new System.Windows.Forms.TextBox();
-            this.l_surname = new System.Windows.Forms.Label();
-            this.dg_customer = new System.Windows.Forms.DataGridView();
             this.p_accomodationinfo = new System.Windows.Forms.Panel();
-            this.ll_accosearchback = new System.Windows.Forms.LinkLabel();
-            this.ll_showaccoinfoback = new System.Windows.Forms.LinkLabel();
             this.b_bookingDetails = new System.Windows.Forms.Button();
-            this.rtb_description = new System.Windows.Forms.RichTextBox();
-            this.rtb_address = new System.Windows.Forms.RichTextBox();
+            this.ll_showaccoinfoback = new System.Windows.Forms.LinkLabel();
             this.l_hotelname = new System.Windows.Forms.Label();
             this.pb_hotel = new System.Windows.Forms.PictureBox();
+            this.rtb_address = new System.Windows.Forms.RichTextBox();
+            this.rtb_description = new System.Windows.Forms.RichTextBox();
             this.p_bookingdetails = new System.Windows.Forms.Panel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.dgv_bookings = new System.Windows.Forms.DataGridView();
             this.b_bookselected = new System.Windows.Forms.Button();
             this.gB_pickadate = new System.Windows.Forms.GroupBox();
@@ -71,12 +72,11 @@
             this.dTP_startDate = new System.Windows.Forms.DateTimePicker();
             this.dTP_endDate = new System.Windows.Forms.DateTimePicker();
             this.l_hotelName_bd = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             this.p_showcustomer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_customer)).BeginInit();
             this.p_accomodations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_searchaccomodation)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dg_customer)).BeginInit();
             this.p_accomodationinfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_hotel)).BeginInit();
             this.p_bookingdetails.SuspendLayout();
@@ -177,6 +177,62 @@
             this.p_showcustomer.Size = new System.Drawing.Size(742, 511);
             this.p_showcustomer.TabIndex = 5;
             // 
+            // b_addcustomer
+            // 
+            this.b_addcustomer.Location = new System.Drawing.Point(525, 481);
+            this.b_addcustomer.Name = "b_addcustomer";
+            this.b_addcustomer.Size = new System.Drawing.Size(98, 23);
+            this.b_addcustomer.TabIndex = 14;
+            this.b_addcustomer.Text = "Add Customer";
+            this.b_addcustomer.UseVisualStyleBackColor = true;
+            this.b_addcustomer.Click += new System.EventHandler(this.b_addcustomer_Click);
+            // 
+            // b_selectcustomer
+            // 
+            this.b_selectcustomer.Location = new System.Drawing.Point(629, 481);
+            this.b_selectcustomer.Name = "b_selectcustomer";
+            this.b_selectcustomer.Size = new System.Drawing.Size(98, 23);
+            this.b_selectcustomer.TabIndex = 13;
+            this.b_selectcustomer.Text = "Select Customer";
+            this.b_selectcustomer.UseVisualStyleBackColor = true;
+            this.b_selectcustomer.Click += new System.EventHandler(this.b_selectcustomer_Click);
+            // 
+            // b_search
+            // 
+            this.b_search.Location = new System.Drawing.Point(249, 45);
+            this.b_search.Name = "b_search";
+            this.b_search.Size = new System.Drawing.Size(75, 23);
+            this.b_search.TabIndex = 8;
+            this.b_search.Text = "Search";
+            this.b_search.UseVisualStyleBackColor = true;
+            this.b_search.Click += new System.EventHandler(this.b_search_Click);
+            // 
+            // tb_surname
+            // 
+            this.tb_surname.Location = new System.Drawing.Point(72, 47);
+            this.tb_surname.Name = "tb_surname";
+            this.tb_surname.Size = new System.Drawing.Size(171, 20);
+            this.tb_surname.TabIndex = 7;
+            this.tb_surname.TextChanged += new System.EventHandler(this.b_search_Click);
+            this.tb_surname.KeyDown += new System.Windows.Forms.KeyEventHandler(this.b_search_ENTER);
+            // 
+            // l_surname
+            // 
+            this.l_surname.AutoSize = true;
+            this.l_surname.Location = new System.Drawing.Point(14, 50);
+            this.l_surname.Name = "l_surname";
+            this.l_surname.Size = new System.Drawing.Size(52, 13);
+            this.l_surname.TabIndex = 6;
+            this.l_surname.Text = "Surname:";
+            // 
+            // dg_customer
+            // 
+            this.dg_customer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_customer.Location = new System.Drawing.Point(17, 73);
+            this.dg_customer.Name = "dg_customer";
+            this.dg_customer.Size = new System.Drawing.Size(710, 402);
+            this.dg_customer.TabIndex = 5;
+            // 
             // p_accomodations
             // 
             this.p_accomodations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -197,6 +253,19 @@
             this.p_accomodations.Size = new System.Drawing.Size(741, 511);
             this.p_accomodations.TabIndex = 10;
             this.p_accomodations.Visible = false;
+            // 
+            // ll_accosearchback
+            // 
+            this.ll_accosearchback.AutoSize = true;
+            this.ll_accosearchback.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ll_accosearchback.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.ll_accosearchback.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ll_accosearchback.Location = new System.Drawing.Point(10, 4);
+            this.ll_accosearchback.Name = "ll_accosearchback";
+            this.ll_accosearchback.Size = new System.Drawing.Size(38, 39);
+            this.ll_accosearchback.TabIndex = 28;
+            this.ll_accosearchback.TabStop = true;
+            this.ll_accosearchback.Text = "<";
             // 
             // tb_accosearchname
             // 
@@ -783,60 +852,6 @@
             this.dgv_searchaccomodation.Size = new System.Drawing.Size(710, 405);
             this.dgv_searchaccomodation.TabIndex = 15;
             // 
-            // b_addcustomer
-            // 
-            this.b_addcustomer.Location = new System.Drawing.Point(525, 481);
-            this.b_addcustomer.Name = "b_addcustomer";
-            this.b_addcustomer.Size = new System.Drawing.Size(98, 23);
-            this.b_addcustomer.TabIndex = 14;
-            this.b_addcustomer.Text = "Add Customer";
-            this.b_addcustomer.UseVisualStyleBackColor = true;
-            this.b_addcustomer.Click += new System.EventHandler(this.b_addcustomer_Click);
-            // 
-            // b_selectcustomer
-            // 
-            this.b_selectcustomer.Location = new System.Drawing.Point(629, 481);
-            this.b_selectcustomer.Name = "b_selectcustomer";
-            this.b_selectcustomer.Size = new System.Drawing.Size(98, 23);
-            this.b_selectcustomer.TabIndex = 13;
-            this.b_selectcustomer.Text = "Select Customer";
-            this.b_selectcustomer.UseVisualStyleBackColor = true;
-            this.b_selectcustomer.Click += new System.EventHandler(this.b_selectcustomer_Click);
-            // 
-            // b_search
-            // 
-            this.b_search.Location = new System.Drawing.Point(249, 45);
-            this.b_search.Name = "b_search";
-            this.b_search.Size = new System.Drawing.Size(75, 23);
-            this.b_search.TabIndex = 8;
-            this.b_search.Text = "Search";
-            this.b_search.UseVisualStyleBackColor = true;
-            this.b_search.Click += new System.EventHandler(this.b_search_Click);
-            // 
-            // tb_surname
-            // 
-            this.tb_surname.Location = new System.Drawing.Point(72, 47);
-            this.tb_surname.Name = "tb_surname";
-            this.tb_surname.Size = new System.Drawing.Size(171, 20);
-            this.tb_surname.TabIndex = 7;
-            // 
-            // l_surname
-            // 
-            this.l_surname.AutoSize = true;
-            this.l_surname.Location = new System.Drawing.Point(14, 50);
-            this.l_surname.Name = "l_surname";
-            this.l_surname.Size = new System.Drawing.Size(52, 13);
-            this.l_surname.TabIndex = 6;
-            this.l_surname.Text = "Surname:";
-            // 
-            // dg_customer
-            // 
-            this.dg_customer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dg_customer.Location = new System.Drawing.Point(17, 73);
-            this.dg_customer.Name = "dg_customer";
-            this.dg_customer.Size = new System.Drawing.Size(710, 402);
-            this.dg_customer.TabIndex = 5;
-            // 
             // p_accomodationinfo
             // 
             this.p_accomodationinfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -854,18 +869,14 @@
             this.p_accomodationinfo.TabIndex = 27;
             this.p_accomodationinfo.Visible = false;
             // 
-            // ll_accosearchback
+            // b_bookingDetails
             // 
-            this.ll_accosearchback.AutoSize = true;
-            this.ll_accosearchback.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ll_accosearchback.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.ll_accosearchback.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ll_accosearchback.Location = new System.Drawing.Point(10, 4);
-            this.ll_accosearchback.Name = "ll_accosearchback";
-            this.ll_accosearchback.Size = new System.Drawing.Size(38, 39);
-            this.ll_accosearchback.TabIndex = 28;
-            this.ll_accosearchback.TabStop = true;
-            this.ll_accosearchback.Text = "<";
+            this.b_bookingDetails.Location = new System.Drawing.Point(627, 481);
+            this.b_bookingDetails.Name = "b_bookingDetails";
+            this.b_bookingDetails.Size = new System.Drawing.Size(99, 23);
+            this.b_bookingDetails.TabIndex = 35;
+            this.b_bookingDetails.Text = "Booking Details";
+            this.b_bookingDetails.UseVisualStyleBackColor = true;
             // 
             // ll_showaccoinfoback
             // 
@@ -879,35 +890,6 @@
             this.ll_showaccoinfoback.TabIndex = 29;
             this.ll_showaccoinfoback.TabStop = true;
             this.ll_showaccoinfoback.Text = "<";
-            // 
-            // b_bookingDetails
-            // 
-            this.b_bookingDetails.Location = new System.Drawing.Point(627, 481);
-            this.b_bookingDetails.Name = "b_bookingDetails";
-            this.b_bookingDetails.Size = new System.Drawing.Size(99, 23);
-            this.b_bookingDetails.TabIndex = 35;
-            this.b_bookingDetails.Text = "Booking Details";
-            this.b_bookingDetails.UseVisualStyleBackColor = true;
-            // 
-            // rtb_description
-            // 
-            this.rtb_description.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtb_description.Location = new System.Drawing.Point(16, 269);
-            this.rtb_description.Name = "rtb_description";
-            this.rtb_description.ReadOnly = true;
-            this.rtb_description.Size = new System.Drawing.Size(710, 209);
-            this.rtb_description.TabIndex = 33;
-            this.rtb_description.Text = "";
-            // 
-            // rtb_address
-            // 
-            this.rtb_address.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtb_address.Location = new System.Drawing.Point(16, 83);
-            this.rtb_address.Name = "rtb_address";
-            this.rtb_address.ReadOnly = true;
-            this.rtb_address.Size = new System.Drawing.Size(483, 180);
-            this.rtb_address.TabIndex = 32;
-            this.rtb_address.Text = "";
             // 
             // l_hotelname
             // 
@@ -927,6 +909,26 @@
             this.pb_hotel.TabIndex = 30;
             this.pb_hotel.TabStop = false;
             // 
+            // rtb_address
+            // 
+            this.rtb_address.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtb_address.Location = new System.Drawing.Point(16, 83);
+            this.rtb_address.Name = "rtb_address";
+            this.rtb_address.ReadOnly = true;
+            this.rtb_address.Size = new System.Drawing.Size(483, 180);
+            this.rtb_address.TabIndex = 32;
+            this.rtb_address.Text = "";
+            // 
+            // rtb_description
+            // 
+            this.rtb_description.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtb_description.Location = new System.Drawing.Point(16, 269);
+            this.rtb_description.Name = "rtb_description";
+            this.rtb_description.ReadOnly = true;
+            this.rtb_description.Size = new System.Drawing.Size(710, 209);
+            this.rtb_description.TabIndex = 33;
+            this.rtb_description.Text = "";
+            // 
             // p_bookingdetails
             // 
             this.p_bookingdetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -942,6 +944,19 @@
             this.p_bookingdetails.Size = new System.Drawing.Size(742, 511);
             this.p_bookingdetails.TabIndex = 36;
             this.p_bookingdetails.Visible = false;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.linkLabel1.Location = new System.Drawing.Point(10, 4);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(38, 39);
+            this.linkLabel1.TabIndex = 30;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "<";
             // 
             // dgv_bookings
             // 
@@ -1019,19 +1034,6 @@
             this.l_hotelName_bd.TabIndex = 10;
             this.l_hotelName_bd.Text = "hotel_name";
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.linkLabel1.Location = new System.Drawing.Point(10, 4);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(38, 39);
-            this.linkLabel1.TabIndex = 30;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "<";
-            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1042,10 +1044,10 @@
             this.Controls.Add(this.accInfoButton);
             this.Controls.Add(this.Add_customer_button);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.p_bookingdetails);
-            this.Controls.Add(this.p_accomodationinfo);
             this.Controls.Add(this.p_showcustomer);
             this.Controls.Add(this.p_accomodations);
+            this.Controls.Add(this.p_bookingdetails);
+            this.Controls.Add(this.p_accomodationinfo);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Menu";
             this.Text = "menu";
@@ -1053,10 +1055,10 @@
             this.menuStrip1.PerformLayout();
             this.p_showcustomer.ResumeLayout(false);
             this.p_showcustomer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_customer)).EndInit();
             this.p_accomodations.ResumeLayout(false);
             this.p_accomodations.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_searchaccomodation)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dg_customer)).EndInit();
             this.p_accomodationinfo.ResumeLayout(false);
             this.p_accomodationinfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_hotel)).EndInit();

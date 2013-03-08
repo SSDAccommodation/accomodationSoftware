@@ -81,37 +81,17 @@ namespace accomodationSoftware
                 // call method in db
                 Db.insertNewCustomer(Customer);
             }
-
+            this.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            this.Close();
         }
 
-        private void accShow_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            accomodationInfo accForm = new accomodationInfo();
-            accForm.Show();
-        }
+        
 
-        /*    
-        private void dberstellen()
-        {
-            SQLiteConnection.CreateFile("tourismus.db");
-
-            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
-            connection.Open();
-
-            SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = String.Format("create table customer (cust_id integer not null primary key autoincrement,  title varchar(10) NOT NULL, firstname varchar(30) NOT NULL, surname varchar(30) NOT NULL, birthday date NOT NULL, street varchar(40) NOT NULL, postcode varchar(10) NOT NULL, city varchar(50) DEFAULT NULL, country varchar(50) DEFAULT NULL, cardholder_name varchar(50) DEFAULT NULL, creditcard_number int(11) DEFAULT NULL, expdate_month varchar(20) NOT NULL, expdate_year varchar(4) NOT NULL)", "Adressen");
-            command.ExecuteNonQuery();
-
-
-            connection.Close();   
-        }*/
-
+        
 
     }
 }

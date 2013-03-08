@@ -232,6 +232,54 @@ namespace accomodationSoftware
             }
             return customerList;
         }
+        public List<Customer> getAllCustomers()
+        {
+
+            List<Customer> allCustomerList = new List<Customer>();
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+
+
+                SQLiteCommand cmd = new SQLiteCommand("select * from customer", connection);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        //title, firstname, surname, birthday, street, postcode, city, country, cardholder_name, creditcard_number, expdate_month, expdate_year
+
+
+                        String title = reader.GetString(reader.GetOrdinal("title"));
+                        String surname = reader.GetString(reader.GetOrdinal("surname"));
+                        String firstname = reader.GetString(reader.GetOrdinal("firstname"));
+                        String birthday = reader.GetString(reader.GetOrdinal("birthday"));
+                        String street = reader.GetString(reader.GetOrdinal("street"));
+                        String postcode = reader.GetString(reader.GetOrdinal("postcode"));
+                        String city = reader.GetString(reader.GetOrdinal("city"));
+                        String country = reader.GetString(reader.GetOrdinal("country"));
+                        String cardholder = reader.GetString(reader.GetOrdinal("cardholder_name"));
+                        int creditcardnumber = reader.GetInt32(reader.GetOrdinal("creditcard_number"));//issue
+                        String expdatemonth = reader.GetString(reader.GetOrdinal("expdate_month"));
+                        String expdateyear = reader.GetString(reader.GetOrdinal("expdate_year"));
+
+                        Customer c = new Customer(title, surname, firstname, birthday, street, postcode, city, country, cardholder, "" + creditcardnumber, expdatemonth, expdateyear);
+                        c.custi_id = reader.GetInt32(reader.GetOrdinal("cust_id"));
+                        allCustomerList.Add(c);
+
+                    }
+
+                }
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+            return allCustomerList;
+        }
 
 
 

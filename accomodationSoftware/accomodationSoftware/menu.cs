@@ -18,6 +18,7 @@ namespace accomodationSoftware
         //showCustomer start
         public Db Db;
         public List<Customer> CustomerList { get; set; }
+        public List<Customer> AllcustomerList { get; set; }
         public Customer CurrentCustomer { get; set; }
         //bookingDetails start
         public DateTime StartD { get; set; }
@@ -36,6 +37,7 @@ namespace accomodationSoftware
             //showCustomer start
             Db = new Db();
             CustomerList = new List<Customer>();
+            AllcustomerList = Db.getAllCustomers();// all customers are now in this list for searching
             //showCustomer end
             //bookingdetails start
             startDateRoom = new List<DateTime>();
@@ -59,6 +61,7 @@ namespace accomodationSoftware
             string[] temp = new string[12];
             try
             {
+                dg_customer.RowCount = 1; //to clear the data grid
                 dg_customer.ColumnCount = 12;
                 dg_customer.Columns[0].Name = "Title";
                 dg_customer.Columns[1].Name = "Firstname";
@@ -97,23 +100,23 @@ namespace accomodationSoftware
         }//showCustomer end
         private void Add_customer_button_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            //this.Hide();
             AddCustomer accForm = new AddCustomer();
             accForm.Show();
         }
 
         private void accInfoButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            accomodationInfo accForm = new accomodationInfo();
-            accForm.Show();
+            //this.Hide();
+            //accomodationInfo accForm = new accomodationInfo();
+            //accForm.Show();
         }
 
         private void bookingButton_Click(object sender, EventArgs e)
         {
             if (accommodation_id != 0 && user_id != 0)
             {
-                this.Hide();
+                //this.Hide();
                 //bookingDetails bookForm = new bookingDetails(accommodation_id, user_id);
                 //bookForm.Show();
             }
@@ -121,20 +124,47 @@ namespace accomodationSoftware
 
         private void showCustomerButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            ShowCustomer showCust = new ShowCustomer();
-            showCust.Show();
+            //hide the panels that are not needed and show the right one(here its p_showcustomer)
+            //this.Hide();
+            p_accomodationinfo.Hide();
+            p_accomodations.Hide();
+            p_bookingdetails.Hide();
+            p_showcustomer.Show();
+            showCust(Db.getAllCustomers());
+
+            //ShowCustomer showCust = new ShowCustomer();
+            //showCust.Show();
+        }
+        public List<Customer> customerSearch()
+        {
+            String searchquery = tb_surname.Text;
+
+            List<Customer> foundlist = new List<Customer>();
+
+            foreach (Customer item in AllcustomerList)
+            {
+                if (item.Surname.ToLower().Contains(searchquery.ToLower()))
+                    foundlist.Add(item);
+            }
+            return foundlist;
         }
         //showCustomer start
         private void b_search_Click(object sender, EventArgs e)
         {
-            showCust(Db.getCustomers(tb_surname.Text));
+            showCust(customerSearch());
         }
-
+        private void b_search_ENTER(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                showCust(customerSearch());
+            }
+        }
         private void b_addcustomer_Click(object sender, EventArgs e)
         {
             AddCustomer addCustomerForm = new AddCustomer();
             addCustomerForm.ShowDialog();
+            showCust(Db.getAllCustomers());
         }
 
         private void b_selectcustomer_Click(object sender, EventArgs e)
@@ -158,7 +188,10 @@ namespace accomodationSoftware
 
         private void b_selectaccomodation_Click(object sender, EventArgs e)
         {
-
+            p_accomodationinfo.Show();
+            p_accomodations.Hide();
+            p_bookingdetails.Hide();
+            p_showcustomer.Hide();
         }//SearchAccomodation end
         //bookingdetails start
         private void dTP_startDate_ValueChanged(object sender, EventArgs e)

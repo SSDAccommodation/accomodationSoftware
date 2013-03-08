@@ -59,7 +59,6 @@
             this.tb_city = new System.Windows.Forms.TextBox();
             this.tb_postcode = new System.Windows.Forms.TextBox();
             this.tb_street = new System.Windows.Forms.TextBox();
-            this.accShow = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -776,30 +775,19 @@
             this.tb_street.Size = new System.Drawing.Size(200, 22);
             this.tb_street.TabIndex = 0;
             // 
-            // accShow
-            // 
-            this.accShow.Location = new System.Drawing.Point(11, 479);
-            this.accShow.Name = "accShow";
-            this.accShow.Size = new System.Drawing.Size(94, 23);
-            this.accShow.TabIndex = 6;
-            this.accShow.Text = "acc show test";
-            this.accShow.UseVisualStyleBackColor = true;
-            this.accShow.Click += new System.EventHandler(this.accShow_Click);
-            // 
-            // new_customer
+            // AddCustomer
             // 
             this.AcceptButton = this.b_saveCustomer;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(405, 509);
-            this.Controls.Add(this.accShow);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.b_saveCustomer);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "new_customer";
+            this.Name = "AddCustomer";
             this.Text = "Accomodation Software";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -845,7 +833,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button accShow;
     }
 }
 
