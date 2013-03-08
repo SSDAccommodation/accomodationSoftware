@@ -193,9 +193,31 @@ namespace accomodationSoftware
             p_accomodations.Show();
         }//showCustomer end
         //SearchAccomodation start
+        public void populateComobox()
+        {
+            List<string> Citylist = new List<string>();//for searching
+            List<string> temp1 = new List<string>();
+            List<string> Countylist = new List<string>();// for searching
+            List<string> temp2 = new List<string>();
+            foreach (Accomodation ac in Db.getAllAccommodations())
+            {
+                
+                Citylist.Add(ac.Adress_city);
+                Countylist.Add(ac.Adress_county);
+            }
+
+            cb_accosearchcity.Items.Clear();
+            cb_accosearchcountry.Items.Clear();
+            temp1 = RemoveDoubleListItems<string>(Citylist);
+            temp2 = RemoveDoubleListItems<string>(Countylist);
+            cb_accosearchcity.Items.AddRange(temp1.ToArray());
+            cb_accosearchcountry.Items.AddRange(temp2.ToArray());
+
+        }
         public void showAccommodations(List<Accomodation> a)
         {
             List<Accomodation> AccommodationList = a;
+            
             string[] temp = new string[6];
             try
             {
@@ -218,13 +240,33 @@ namespace accomodationSoftware
                     temp[4] = (ac.Adress_street);
                     temp[5] = (ac.Adress_number);
                     dgv_searchaccomodation.Rows.Add(temp);
+                    
                 }
+                populateComobox();
             }
+            
             catch (Exception e)
             {
                 System.Console.WriteLine(e.ToString());
             }
         }
+
+        public List<string> RemoveDoubleListItems<T>(List<string> list)
+        {
+            var newList = new List<string>();
+            var keys = new Dictionary<string, object>();
+
+            foreach (string listItem in list)
+            {
+                if (!keys.ContainsKey(listItem))
+                {
+                    newList.Add(listItem);
+                    keys.Add(listItem, null);
+                }
+            }
+            return newList;
+        }
+
         // searches through all the accommodations
         public List<Accomodation> accommodationSearch()
         {
@@ -234,15 +276,23 @@ namespace accomodationSoftware
 
             foreach (Accomodation item in Db.getAllAccommodations())
             {
-                if (item.Name.ToLower().Contains(searchquery.ToLower()))
+                if (item.Name.ToLower().Contains(searchquery.ToLower()) && item.Adress_city.Contains(cb_accosearchcity.Text) && item.Adress_county.Contains(cb_accosearchcountry.Text))
                     foundlist.Add(item);
             }
             return foundlist;
+            
         }
 
         private void b_accosearch_Click(object sender, EventArgs e)
         {
             showAccommodations(accommodationSearch());
+        }
+        private void b_accosearch_ENTER(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                showAccommodations(accommodationSearch());
+            }
         }
 
         private void b_selectaccomodation_Click(object sender, EventArgs e)

@@ -72,6 +72,25 @@ namespace accomodationSoftware
                 "acc_picture_url) values ('mega hotel', 'southampton', 'hampshire', 'SO13', " +
                 "'Main Street', '45', 'One of the nicest hotels with lots of rooms', 'hotel2.jpg');");
             command.ExecuteNonQuery();
+            //insert accomodations
+            command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, " +
+                "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
+                "acc_picture_url) values ('Grand Inn', 'London', 'Londonshire', 'LO11', " +
+                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg');");
+            command.ExecuteNonQuery();
+            //insert accomodations
+            command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, " +
+                "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
+                "acc_picture_url) values ('Metro Hotel', 'London', 'Londonshire', 'LO14', " +
+                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg');");
+            command.ExecuteNonQuery();
+            //insert accomodations
+            command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, " +
+                "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
+                "acc_picture_url) values ('City Stay', 'York', 'Yorkshire', 'YO13', " +
+                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg');");
+            command.ExecuteNonQuery();
+
             //insert customers
             command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
                 "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" + 
