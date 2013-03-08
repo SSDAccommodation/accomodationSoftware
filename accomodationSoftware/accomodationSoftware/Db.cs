@@ -75,7 +75,32 @@ namespace accomodationSoftware
             //insert customers
             command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
                 "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" + 
-                " values('Mr', 'Peter', 'Parker', '2010-03-4', 'ParkStreet', 'SO14', 'Southampton', 'United Kingdom', 'Peter Parker', '700000', 'March', '2015');");
+                " values('Mr.', 'Peter', 'Parker', '2010-03-4', '7 KopStreet', 'SO14', 'Southampton', 'United Kingdom', 'Peter Parker', '700000', 'March', '2015');");
+            command.ExecuteNonQuery();
+            //insert customers
+            command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
+                "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" +
+                " values('Mr.', 'Hans', 'Paddel', '2010-03-4', '2 ParkStreet', 'SO14', 'Southampton', 'United Kingdom', 'Hans Paddel', '5002340', 'March', '2015');");
+            command.ExecuteNonQuery();
+            //insert customers
+            command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
+                "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" +
+                " values('Mrs.', 'Ann', 'Smith', '2010-03-4', '4 abroStreet', 'SO15', 'Southampton', 'United Kingdom', 'Ann Smith', '1223450', 'March', '2015');");
+            command.ExecuteNonQuery();
+            //insert customers
+            command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
+                "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" +
+                " values('Mrs.', 'Linda', 'Smoll', '2010-03-4', '23 Tor Road', 'SO19', 'Southampton', 'United Kingdom', 'Linda Smoll', '1288450', 'March', '2015');");
+            command.ExecuteNonQuery();
+            //insert customers
+            command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
+                "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" +
+                " values('Mr.', 'Dieter', 'Peniskopf', '2010-03-4', '45 Penen Road', 'SO19', 'Southampton', 'United Kingdom', 'Dieter Peniskopf', '5288450', 'March', '2015');");
+            command.ExecuteNonQuery();
+            //insert customers
+            command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
+                "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" +
+                " values('Mr.', 'Ulf', 'von der Huren', '2010-03-4', 'Kaeseweg 4', 'asdasd', 'Den haag', 'Netherlands', 'Ulf von der Huren', '6688450', 'March', '2015');");
             command.ExecuteNonQuery();
             //insert rooms
             command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(101, 1, 2);");
