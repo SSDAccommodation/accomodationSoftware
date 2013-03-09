@@ -365,9 +365,6 @@ namespace accomodationSoftware
             return allAccommodationList;
         }
 
-
-
-
         public string getHotelNameDb(string accommodation_id)
         {
             String s = "";
@@ -486,6 +483,44 @@ namespace accomodationSoftware
             }
             connection.Close();
             return d;
+        }
+
+        public List<string> getRoomDetails(string room_id)
+        {
+            List<string> room_details = new List<string>();
+            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+            connection.Open();
+            SQLiteCommand cmd = new SQLiteCommand("select * from rooms where room_id =  " + room_id, connection);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            try
+            {
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        room_details.Add("" + reader.GetInt32(reader.GetOrdinal("room_id")));
+                        room_details.Add("" + reader.GetInt32(reader.GetOrdinal("room_number")));
+                        room_details.Add("" + reader.GetInt32(reader.GetOrdinal("bedcount")));
+                    }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            connection.Close();
+            return room_details;
+        }
+        public void insertBooking(int acc_id, int room_id, int room_number, int cust_id, DateTime start, DateTime end)
+        {
+            SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+            connection.Open();
+
+            SQLiteCommand command = new SQLiteCommand(connection);
+            //insert accomodations
+            command.CommandText = String.Format("insert into bookings ( acc_id, room_id, room_number, " +
+                "cust_id, start_date, end_date) values ("+acc_id+", "+room_id+", "+room_number+", "+cust_id+", " +
+                "'"+start+"', '"+end+"');");
+            command.ExecuteNonQuery();
+            connection.Close();
         }
     }
 }

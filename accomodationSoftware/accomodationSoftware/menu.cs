@@ -190,6 +190,12 @@ namespace accomodationSoftware
 
             }
             p_showcustomer.Hide();
+            //after selecting a customer show accomodations
+            p_accomodationinfo.Hide();
+            p_accomodations.Show();
+            p_bookingdetails.Hide();
+            p_showcustomer.Hide();
+            showAccommodations(Db.getAllAccommodations());
             p_accomodations.Show();
         }//showCustomer end
         //SearchAccomodation start
@@ -297,7 +303,18 @@ namespace accomodationSoftware
 
         private void b_selectaccomodation_Click(object sender, EventArgs e)
         {
-           
+            for (int i = 0; i < AllAccommodationsList.Count; i++)
+            {
+                if (dgv_searchaccomodation.CurrentRow.Cells[0].Value.Equals(AllAccommodationsList[i].Name) &&
+                    dgv_searchaccomodation.CurrentRow.Cells[1].Value.Equals(AllAccommodationsList[i].Adress_city) &&
+                    dgv_searchaccomodation.CurrentRow.Cells[3].Value.Equals(AllAccommodationsList[i].Adress_postcode))
+                {
+                    CurrentAccomodation = AllAccommodationsList[i];
+                }
+            }
+            //open bookings
+            p_accomodations.Hide();
+            p_bookingdetails.Show();
         }
         //SearchAccomodation end
         //bookingdetails start
