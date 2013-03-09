@@ -511,14 +511,46 @@ namespace accomodationSoftware
         }
         public void insertBooking(int acc_id, int room_id, int room_number, int cust_id, DateTime start, DateTime end)
         {
+            int sy, sm, sd, ey, em, ed;
+            string startstring, endstring;
+
+            sy = start.Year;
+            startstring = ""+sy;
+            sm = start.Month;
+            sd = start.Day;
+            ey = end.Year;
+            endstring = ""+ey;
+            em = end.Month;
+            ed = end.Day;
+
+            if (sm < 10)
+                startstring += "-0" + sm;
+            else
+                startstring += "-"+sm;
+            if (sd < 10)
+                startstring += "-0" + sd;
+            else
+                startstring += "-"+sd;
+            if (em < 10)
+                endstring += "-0" + em;
+            else
+                endstring += "-"+em;
+            if (ed < 10)
+                endstring += "-0" + ed;
+            else
+                endstring += "-"+ed;
+
             SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
             connection.Open();
 
             SQLiteCommand command = new SQLiteCommand(connection);
-            //insert accomodations
+            //insert accomodations 2013-01-13
             command.CommandText = String.Format("insert into bookings ( acc_id, room_id, room_number, " +
                 "cust_id, start_date, end_date) values ("+acc_id+", "+room_id+", "+room_number+", "+cust_id+", " +
-                "'"+start+"', '"+end+"');");
+                "'" + startstring +"', '" + endstring +"');");
+            System.Console.WriteLine("insert into bookings ( acc_id, room_id, room_number, " +
+                "cust_id, start_date, end_date) values (" + acc_id + ", " + room_id + ", " + room_number + ", " + cust_id + ", " +
+                "'" + startstring + "', '" + endstring + "');");
             command.ExecuteNonQuery();
             connection.Close();
         }

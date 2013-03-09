@@ -60,12 +60,15 @@ namespace accomodationSoftware
         {
             StartD = dTP_startDate.Value;
             if (EndD < StartD)
-                dTP_endDate.Value = StartD; 
+                dTP_endDate.Value = StartD;
+            dbDateCheck();
         }
 
         private void dTP_endDate_ValueChanged(object sender, EventArgs e)
         {
             EndD = dTP_endDate.Value;
+            if (EndD < DateTime.Now)
+                dTP_endDate.Value = DateTime.Now;
             dbDateCheck();
         }
         private void dbDateCheck()
@@ -91,9 +94,11 @@ namespace accomodationSoftware
                         roomDate = rdate;
                         for (DateTime date = StartD; date <= EndD; date = date.AddDays(1))
                         {
+                            System.Console.WriteLine(" vor if "+date + " == " + roomDate + " / " + roomId[i]);
                             if (date == roomDate)
                             {
                                 rooms.Remove(roomId[i]);
+                                System.Console.WriteLine(date+" == "+roomDate + " / "+roomId[i]);
                             }
                         }
                     }  
