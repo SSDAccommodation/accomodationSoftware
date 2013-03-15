@@ -85,6 +85,7 @@
     <Compile Include="bookingDetails.Designer.cs">
       <DependentUpon>bookingDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bookings.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Details.cs">

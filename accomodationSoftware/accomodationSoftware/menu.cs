@@ -57,6 +57,9 @@ namespace accomodationSoftware
             dTP_endDate.Value = DateTime.Today;
             StartD = dTP_startDate.Value;
             //bookingdetails end
+            populateComobox();
+            showCust(Db.getAllCustomers());
+            p_showbookings.Hide();
         }
         public void showCust(List<Customer> a)
         {
@@ -110,6 +113,7 @@ namespace accomodationSoftware
 
         private void accInfoButton_Click(object sender, EventArgs e)
         {
+            p_showbookings.Hide();
             p_accomodationinfo.Hide();
             p_accomodations.Show();
             p_bookingdetails.Hide();
@@ -248,7 +252,7 @@ namespace accomodationSoftware
                     dgv_searchaccomodation.Rows.Add(temp);
                     
                 }
-                populateComobox();
+                
             }
             
             catch (Exception e)
@@ -257,6 +261,41 @@ namespace accomodationSoftware
             }
         }
 
+        //showbookings is called in b_showbookings_Click and b_bookselected_Click
+        public void showBookings(List<Bookings> b)
+        {
+            List<Bookings> BookingsList = b;
+
+            string[] temp = new string[4];
+            try
+            {
+                dgv_showbookings.RowCount = 1; //to clear the data grid
+                dgv_showbookings.ColumnCount = 4;
+                dgv_showbookings.Columns[0].Name = "Booked by";
+                dgv_showbookings.Columns[1].Name = "Hotel";
+                dgv_showbookings.Columns[2].Name = "From";
+                dgv_showbookings.Columns[3].Name = "Until";
+                
+
+
+                foreach (Bookings bk in b)
+                {
+                    temp[0] = (bk.C.Firstname + " " + bk.C.Surname);
+                    temp[1] = (bk.Name);
+                    temp[2] = (bk.Start_date);
+                    temp[3] = (bk.End_date);
+                    
+                    dgv_showbookings.Rows.Add(temp);
+
+                }
+
+            }
+
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+        }
         public List<string> RemoveDoubleListItems<T>(List<string> list)
         {
             var newList = new List<string>();
@@ -394,6 +433,33 @@ namespace accomodationSoftware
         {
             Details det = new Details(CurrentCustomer, CurrentAccomodation, StartD, EndD, dgv_bookings.CurrentRow.Cells[0].Value.ToString());
             det.ShowDialog();
+            
+            p_showbookings.Show();
+            p_accomodationinfo.Hide();
+            p_accomodations.Hide();
+            p_bookingdetails.Hide();
+            p_showcustomer.Hide();
+
+
+            showBookings(Db.getBookings(CurrentCustomer));
+        }
+
+        private void b_showbookings_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < CustomerList.Count; i++)
+            {
+                if (dg_customer.CurrentRow.Cells[2].Value.Equals(CustomerList[i].Surname))
+                {
+                    CurrentCustomer = CustomerList[i];
+                }
+
+            }
+            p_showbookings.Show();
+            p_accomodationinfo.Hide();
+            p_accomodations.Hide();
+            p_bookingdetails.Hide();
+            p_showcustomer.Hide();
+            showBookings(Db.getBookings(CurrentCustomer));
         }//bookingdetails end
 
     }

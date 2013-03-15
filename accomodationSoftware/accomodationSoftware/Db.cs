@@ -365,6 +365,49 @@ namespace accomodationSoftware
             return allAccommodationList;
         }
 
+        public List<Bookings> getBookings(Customer cust)
+        {
+            List<Bookings> bookingList = new List<Bookings>();
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+
+
+                SQLiteCommand cmd = new SQLiteCommand("select * from bookings natural join accommodations where cust_id = " + cust.custi_id, connection);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        
+                        String acc_name = reader.GetString(reader.GetOrdinal("acc_name"));
+                        int book_id = reader.GetInt32(reader.GetOrdinal("book_id"));
+                        int acc_id = reader.GetInt32(reader.GetOrdinal("acc_id"));
+                        int room_id = reader.GetInt32(reader.GetOrdinal("room_id"));
+                        int room_number = reader.GetInt32(reader.GetOrdinal("room_number"));
+                        String start_date = reader.GetString(reader.GetOrdinal("start_date"));
+                        String end_date = reader.GetString(reader.GetOrdinal("end_date"));
+                        
+
+                        Bookings b = new Bookings(cust,acc_name, book_id, acc_id, room_id, room_number, start_date, end_date);
+                        
+                        bookingList.Add(b);
+
+                    }
+
+                }
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+  
+            return bookingList;
+        }
+
         public string getHotelNameDb(string accommodation_id)
         {
             String s = "";

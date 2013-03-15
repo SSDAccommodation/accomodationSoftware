@@ -72,6 +72,11 @@
             this.dTP_startDate = new System.Windows.Forms.DateTimePicker();
             this.dTP_endDate = new System.Windows.Forms.DateTimePicker();
             this.l_hotelName_bd = new System.Windows.Forms.Label();
+            this.b_showbookings = new System.Windows.Forms.Button();
+            this.p_showbookings = new System.Windows.Forms.Panel();
+            this.dgv_showbookings = new System.Windows.Forms.DataGridView();
+            this.b_showaccommodationdetails = new System.Windows.Forms.Button();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             this.p_showcustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_customer)).BeginInit();
@@ -82,6 +87,8 @@
             this.p_bookingdetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_bookings)).BeginInit();
             this.gB_pickadate.SuspendLayout();
+            this.p_showbookings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_showbookings)).BeginInit();
             this.SuspendLayout();
             // 
             // Add_customer_button
@@ -166,6 +173,7 @@
             this.p_showcustomer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_showcustomer.Controls.Add(this.b_showbookings);
             this.p_showcustomer.Controls.Add(this.b_addcustomer);
             this.p_showcustomer.Controls.Add(this.b_selectcustomer);
             this.p_showcustomer.Controls.Add(this.b_search);
@@ -179,7 +187,7 @@
             // 
             // b_addcustomer
             // 
-            this.b_addcustomer.Location = new System.Drawing.Point(525, 481);
+            this.b_addcustomer.Location = new System.Drawing.Point(16, 481);
             this.b_addcustomer.Name = "b_addcustomer";
             this.b_addcustomer.Size = new System.Drawing.Size(98, 23);
             this.b_addcustomer.TabIndex = 14;
@@ -238,6 +246,7 @@
             this.p_accomodations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_accomodations.Controls.Add(this.b_showaccommodationdetails);
             this.p_accomodations.Controls.Add(this.ll_accosearchback);
             this.p_accomodations.Controls.Add(this.tb_accosearchname);
             this.p_accomodations.Controls.Add(this.cb_accosearchcity);
@@ -529,6 +538,58 @@
             this.l_hotelName_bd.TabIndex = 10;
             this.l_hotelName_bd.Text = "hotel_name";
             // 
+            // b_showbookings
+            // 
+            this.b_showbookings.Location = new System.Drawing.Point(505, 481);
+            this.b_showbookings.Name = "b_showbookings";
+            this.b_showbookings.Size = new System.Drawing.Size(113, 23);
+            this.b_showbookings.TabIndex = 15;
+            this.b_showbookings.Text = "Show Bookings";
+            this.b_showbookings.UseVisualStyleBackColor = true;
+            this.b_showbookings.Click += new System.EventHandler(this.b_showbookings_Click);
+            // 
+            // p_showbookings
+            // 
+            this.p_showbookings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_showbookings.Controls.Add(this.linkLabel2);
+            this.p_showbookings.Controls.Add(this.dgv_showbookings);
+            this.p_showbookings.Location = new System.Drawing.Point(166, 30);
+            this.p_showbookings.Name = "p_showbookings";
+            this.p_showbookings.Size = new System.Drawing.Size(742, 511);
+            this.p_showbookings.TabIndex = 16;
+            // 
+            // dgv_showbookings
+            // 
+            this.dgv_showbookings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_showbookings.Location = new System.Drawing.Point(17, 64);
+            this.dgv_showbookings.Name = "dgv_showbookings";
+            this.dgv_showbookings.Size = new System.Drawing.Size(710, 411);
+            this.dgv_showbookings.TabIndex = 5;
+            // 
+            // b_showaccommodationdetails
+            // 
+            this.b_showaccommodationdetails.Location = new System.Drawing.Point(505, 485);
+            this.b_showaccommodationdetails.Name = "b_showaccommodationdetails";
+            this.b_showaccommodationdetails.Size = new System.Drawing.Size(94, 23);
+            this.b_showaccommodationdetails.TabIndex = 29;
+            this.b_showaccommodationdetails.Text = "Show Details";
+            this.b_showaccommodationdetails.UseVisualStyleBackColor = true;
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.linkLabel2.Location = new System.Drawing.Point(17, 9);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(38, 39);
+            this.linkLabel2.TabIndex = 29;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "<";
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -539,10 +600,11 @@
             this.Controls.Add(this.accInfoButton);
             this.Controls.Add(this.Add_customer_button);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.p_showcustomer);
             this.Controls.Add(this.p_accomodations);
             this.Controls.Add(this.p_bookingdetails);
             this.Controls.Add(this.p_accomodationinfo);
-            this.Controls.Add(this.p_showcustomer);
+            this.Controls.Add(this.p_showbookings);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Menu";
             this.Text = "menu";
@@ -562,6 +624,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_bookings)).EndInit();
             this.gB_pickadate.ResumeLayout(false);
             this.gB_pickadate.PerformLayout();
+            this.p_showbookings.ResumeLayout(false);
+            this.p_showbookings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_showbookings)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -613,5 +678,10 @@
         private System.Windows.Forms.DateTimePicker dTP_endDate;
         private System.Windows.Forms.Label l_hotelName_bd;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button b_showbookings;
+        private System.Windows.Forms.Panel p_showbookings;
+        private System.Windows.Forms.DataGridView dgv_showbookings;
+        private System.Windows.Forms.Button b_showaccommodationdetails;
+        private System.Windows.Forms.LinkLabel linkLabel2;
     }
 }
