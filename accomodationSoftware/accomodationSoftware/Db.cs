@@ -55,8 +55,10 @@ namespace accomodationSoftware
                     "expdate_month varchar(20) NOT NULL, expdate_year varchar(4) NOT NULL)");
                 command.ExecuteNonQuery();
                 command.CommandText = String.Format("CREATE TABLE IF NOT EXISTS facility (fac_id integer NOT NULL primary key autoincrement,"+
-                    "name varchar(100) NOT NULL, type varchar(50) NOT NULL, address varchar(300) NOT NULL, information varchar(800), "+
-                    "feedback varchar(800), picture_url varchar(80) )");
+                    "name varchar(100) NOT NULL, type varchar(50) NOT NULL, adress_city varchar(300) NOT NULL, "+
+                    "adress_country varchar(50) NOT NULL, adress_postcode varchar(6) NOT NULL,"+
+                    " adress_street varchar(50) NOT NULL, adress_number varchar(5) NOT NULL, "+
+                    "information varchar(800), feedback varchar(800), picture_url varchar(80) )");
                 command.ExecuteNonQuery();
                 connection.Close();
              
@@ -171,14 +173,16 @@ namespace accomodationSoftware
                 "cust_id, start_date, end_date) values(1, 1, 101, 1, '2013-01-13', '2013-02-01');");
             command.ExecuteNonQuery();
             //insert facility
-            command.CommandText = String.Format("insert into facility (name, type, address, information, "+
-                "feedback, picture_url) values('Big Ape','Restaurant','Arthur Road 101 SO155DZ', "+
+            command.CommandText = String.Format("insert into facility (name, type, adress_city,adress_country,"+
+                "adress_postcode,adress_street,adress_number, information, feedback, picture_url) values"+
+                "('Big Ape','Restaurant','Southampton','Hampshire','SO13','Arthur Road','101', "+
                 "'friendly with sea view','lovely fish soupe','hotel1.jpg')");
             command.ExecuteNonQuery();
             //insert facility
-            command.CommandText = String.Format("insert into facility (name, type, address, information, " +
-                "feedback, picture_url) values('Big Drink','Bar','Arthur Road 102 SO155DZ', " +
-                "'dark','German beer available','hotel1.jpg')");
+            command.CommandText = String.Format("insert into facility (name, type, adress_city,adress_country," +
+                "adress_postcode,adress_street,adress_number, information, feedback, picture_url) values" +
+                "('Big Drink','Bar','Southampton','Hampshire','SO13','Arthur Road','105', " +
+                "'dark','good german beer','hotel1.jpg')");
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -648,7 +652,7 @@ namespace accomodationSoftware
         }
 
         public void closeCustomerAccount(Customer c)
-        {//mario: eyyyyyyyyyyyyyyyy der der das angefangen hat soll das bitte zuende  machen
+        {
             throw new NotImplementedException();
         }
         //get the data about one facility out of the db and returns an Facility object
@@ -658,18 +662,21 @@ namespace accomodationSoftware
             {
                 SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
                 connection.Open();
-                SQLiteCommand cmd = new SQLiteCommand("select * from facility");
+                SQLiteCommand cmd = new SQLiteCommand("select * from facility",connection);
                 SQLiteDataReader reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
                     while (reader.Read())
                     {
-                        list.Add(new Facility(System.Convert.ToString(reader.GetInt32(reader.GetOrdinal("id"))), 
-                            reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name")), 
-                            reader.GetString(reader.GetOrdinal("address")), 
-                            reader.GetString(reader.GetOrdinal("information")), 
-                            reader.GetString(reader.GetOrdinal("feedback")), 
-                            reader.GetString(reader.GetOrdinal("picture_url"))));
+                        Facility ftemp = new Facility(System.Convert.ToString(reader.GetInt32(reader.GetOrdinal("fac_id"))),
+                            reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name")),
+                            reader.GetString(reader.GetOrdinal("adress_city")), reader.GetString(reader.GetOrdinal("adress_country")),
+                            reader.GetString(reader.GetOrdinal("adress_postcode")), reader.GetString(reader.GetOrdinal("adress_street")),
+                            reader.GetString(reader.GetOrdinal("adress_number")),
+                            reader.GetString(reader.GetOrdinal("information")),
+                            reader.GetString(reader.GetOrdinal("feedback")),
+                            reader.GetString(reader.GetOrdinal("picture_url")));
+                        list.Add(ftemp);
                     }
 
                 connection.Close();

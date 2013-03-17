@@ -78,6 +78,7 @@
             this.p_showbookings = new System.Windows.Forms.Panel();
             this.ll_showbookingsback = new System.Windows.Forms.LinkLabel();
             this.dgv_showbookings = new System.Windows.Forms.DataGridView();
+            this.b_showFacilities = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.p_showcustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_customer)).BeginInit();
@@ -608,11 +609,22 @@
             this.dgv_showbookings.Size = new System.Drawing.Size(710, 411);
             this.dgv_showbookings.TabIndex = 5;
             // 
+            // b_showFacilities
+            // 
+            this.b_showFacilities.Location = new System.Drawing.Point(12, 189);
+            this.b_showFacilities.Name = "b_showFacilities";
+            this.b_showFacilities.Size = new System.Drawing.Size(150, 23);
+            this.b_showFacilities.TabIndex = 37;
+            this.b_showFacilities.Text = "Show Facilities";
+            this.b_showFacilities.UseVisualStyleBackColor = true;
+            this.b_showFacilities.Click += new System.EventHandler(this.b_showFacilities_Click);
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(921, 551);
+            this.Controls.Add(this.b_showFacilities);
             this.Controls.Add(this.showCustomerButton);
             this.Controls.Add(this.bookingButton);
             this.Controls.Add(this.accInfoButton);
@@ -702,5 +714,6 @@
         private System.Windows.Forms.Button b_showaccommodationdetails;
         private System.Windows.Forms.LinkLabel ll_showbookingsback;
         private System.Windows.Forms.Button b_editcustomer;
+        private System.Windows.Forms.Button b_showFacilities;
     }
 }

@@ -22,6 +22,10 @@ namespace accomodationSoftware
         public Customer CurrentCustomer { get; set; }
         //show accommodations
         public List<Accomodation> AllAccommodationsList { get; set; }
+        public Accomodation CurrentAccomodation { get; set; }
+        //show facilities
+        public List<Facility> AllFacilities { get; set; }
+        public Facility CurrentFacility { get; set; }
         //bookingDetails start
         public DateTime StartD { get; set; }
         public DateTime EndD { get; set; }
@@ -29,7 +33,6 @@ namespace accomodationSoftware
         public List<DateTime> endDateRoom { get; set; }
         public List<int> roomId { get; set; }
         public Dictionary<int, int> rooms { get; set; }
-        public Accomodation CurrentAccomodation { get; set; }
         public string AddOrEdit { get; set; }
         //bookingDetails end
         public Menu()
@@ -120,6 +123,7 @@ namespace accomodationSoftware
             p_showbookings.Hide();
             p_accomodationinfo.Hide();
             p_accomodations.Show();
+            b_selectaccomodation.Show();
             p_bookingdetails.Hide();
             p_showcustomer.Hide();
             showAccommodations(Db.getAllAccommodations());
@@ -512,17 +516,81 @@ namespace accomodationSoftware
 
         private void b_showaccommodationdetails_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < AllAccommodationsList.Count; i++)
+            if (dgv_searchaccomodation.ColumnCount == 8)
             {
-                if (dgv_searchaccomodation.CurrentRow.Cells[0].Value.Equals(AllAccommodationsList[i].Name) &&
-                    dgv_searchaccomodation.CurrentRow.Cells[1].Value.Equals(AllAccommodationsList[i].Adress_city) &&
-                    dgv_searchaccomodation.CurrentRow.Cells[3].Value.Equals(AllAccommodationsList[i].Adress_postcode))
+                for (int i = 0; i < AllFacilities.Count; i++)
                 {
-                    CurrentAccomodation = AllAccommodationsList[i];
+                    if (dgv_searchaccomodation.CurrentRow.Cells[0].Value.Equals(AllFacilities[i].Name) &&
+                        dgv_searchaccomodation.CurrentRow.Cells[1].Value.Equals(AllFacilities[i].Type) &&
+                        dgv_searchaccomodation.CurrentRow.Cells[2].Value.Equals(AllFacilities[i].Adress_city))
+                    {
+                        CurrentFacility = AllFacilities[i];
+                    }
                 }
+                Form acc = new accomodationInfo(CurrentFacility);
+                acc.Show();
             }
-            Form acc = new accomodationInfo(CurrentCustomer, CurrentAccomodation);
-            acc.Show();
+            else
+            {
+                for (int i = 0; i < AllAccommodationsList.Count; i++)
+                {
+                    if (dgv_searchaccomodation.CurrentRow.Cells[0].Value.Equals(AllAccommodationsList[i].Name) &&
+                        dgv_searchaccomodation.CurrentRow.Cells[1].Value.Equals(AllAccommodationsList[i].Adress_city) &&
+                        dgv_searchaccomodation.CurrentRow.Cells[3].Value.Equals(AllAccommodationsList[i].Adress_postcode))
+                    {
+                        CurrentAccomodation = AllAccommodationsList[i];
+                    }
+                }
+                Form acc = new accomodationInfo(CurrentCustomer, CurrentAccomodation);
+                acc.Show();
+            }
+        }
+
+        private void b_showFacilities_Click(object sender, EventArgs e)
+        {
+            p_showbookings.Hide();
+            p_accomodationinfo.Hide();
+            p_accomodations.Show();
+            b_selectaccomodation.Hide();
+            p_bookingdetails.Hide();
+            p_showcustomer.Hide();
+
+            AllFacilities = Db.getFacility();
+            string[] temp = new string[8];
+            try
+            {
+                dgv_searchaccomodation.RowCount = 1; //to clear the data grid
+                dgv_searchaccomodation.ColumnCount = 8;
+                dgv_searchaccomodation.Columns[0].Name = "Name";
+                dgv_searchaccomodation.Columns[1].Name = "Type";
+                dgv_searchaccomodation.Columns[2].Name = "City";
+                dgv_searchaccomodation.Columns[3].Name = "Country";
+                dgv_searchaccomodation.Columns[4].Name = "Postcode";
+                dgv_searchaccomodation.Columns[5].Name = "Street";
+                dgv_searchaccomodation.Columns[6].Name = "Information";
+                dgv_searchaccomodation.Columns[7].Name = "Feedback";
+
+
+                foreach (Facility f in AllFacilities)
+                {
+                    temp[0] = (f.Name);
+                    temp[1] = (f.Type);
+                    temp[2] = (f.Adress_city);
+                    temp[3] = (f.Adress_county);
+                    temp[4] = (f.Adress_postcode);
+                    temp[5] = (f.Adress_street)+" "+(f.Adress_number);
+                    temp[6] = (f.Description);
+                    temp[7] = (f.Feedback);
+                    dgv_searchaccomodation.Rows.Add(temp);
+
+                }
+
+            }
+
+            catch (Exception ef)
+            {
+                System.Console.WriteLine(ef.ToString());
+            }
         }
 
     }

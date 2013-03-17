@@ -6,23 +6,16 @@ using System.Threading.Tasks;
 
 namespace accomodationSoftware
 {
-    class Facility : Institution
+    public class Facility : Institution
     {
-        public string ID { get; set; }
         public string Type { get; set; }
-        public string Name { get; set; }
         public string PicPath { get; set; }
-        public string Address { get; set; }
-        public string Information { get; set; }
-        public string Feedback { get; set; }
 
-        public Facility(string id, string type, string name, string address, string info, string feedback, string pic)
+        public Facility(string id, string type, string name, string city,string country, 
+            string postcode, string street, string number, string info, string feedback, string pic)
+            :base(id,city,name,country,postcode,street,number,info,feedback)
         {
-            ID = id;
             Type = type;
-            Address = address;
-            Information = info;
-            Feedback = feedback;
             PicPath = pic;
         }
     }
