@@ -49,7 +49,7 @@
             this.tb_cardholder = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.b_saveCustomer = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.l_formtitle = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -59,6 +59,7 @@
             this.tb_city = new System.Windows.Forms.TextBox();
             this.tb_postcode = new System.Windows.Forms.TextBox();
             this.tb_street = new System.Windows.Forms.TextBox();
+            this.b_closeAccount = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -77,7 +78,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(11, 61);
+            this.groupBox1.Location = new System.Drawing.Point(12, 74);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(383, 140);
             this.groupBox1.TabIndex = 0;
@@ -331,7 +332,7 @@
             this.groupBox2.Controls.Add(this.tb_creditnum);
             this.groupBox2.Controls.Add(this.tb_cardholder);
             this.groupBox2.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(11, 359);
+            this.groupBox2.Location = new System.Drawing.Point(12, 372);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(382, 114);
             this.groupBox2.TabIndex = 1;
@@ -420,7 +421,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(318, 479);
+            this.button1.Location = new System.Drawing.Point(319, 492);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -430,7 +431,7 @@
             // 
             // b_saveCustomer
             // 
-            this.b_saveCustomer.Location = new System.Drawing.Point(237, 479);
+            this.b_saveCustomer.Location = new System.Drawing.Point(238, 492);
             this.b_saveCustomer.Name = "b_saveCustomer";
             this.b_saveCustomer.Size = new System.Drawing.Size(75, 23);
             this.b_saveCustomer.TabIndex = 3;
@@ -438,15 +439,15 @@
             this.b_saveCustomer.UseVisualStyleBackColor = true;
             this.b_saveCustomer.Click += new System.EventHandler(this.b_saveCustomer_Click);
             // 
-            // label1
+            // l_formtitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(13, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(187, 25);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Add a new Customer";
+            this.l_formtitle.AutoSize = true;
+            this.l_formtitle.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_formtitle.Location = new System.Drawing.Point(13, 13);
+            this.l_formtitle.Name = "l_formtitle";
+            this.l_formtitle.Size = new System.Drawing.Size(187, 25);
+            this.l_formtitle.TabIndex = 4;
+            this.l_formtitle.Text = "Add a new Customer";
             // 
             // groupBox3
             // 
@@ -459,7 +460,7 @@
             this.groupBox3.Controls.Add(this.tb_postcode);
             this.groupBox3.Controls.Add(this.tb_street);
             this.groupBox3.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(13, 208);
+            this.groupBox3.Location = new System.Drawing.Point(14, 221);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(381, 145);
             this.groupBox3.TabIndex = 5;
@@ -775,14 +776,26 @@
             this.tb_street.Size = new System.Drawing.Size(200, 22);
             this.tb_street.TabIndex = 0;
             // 
+            // b_closeAccount
+            // 
+            this.b_closeAccount.Location = new System.Drawing.Point(12, 42);
+            this.b_closeAccount.Name = "b_closeAccount";
+            this.b_closeAccount.Size = new System.Drawing.Size(383, 26);
+            this.b_closeAccount.TabIndex = 6;
+            this.b_closeAccount.Text = "Close Account";
+            this.b_closeAccount.UseVisualStyleBackColor = true;
+            this.b_closeAccount.Visible = false;
+            this.b_closeAccount.Click += new System.EventHandler(this.b_closeAccount_Click);
+            // 
             // AddCustomer
             // 
             this.AcceptButton = this.b_saveCustomer;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(405, 509);
+            this.ClientSize = new System.Drawing.Size(405, 522);
+            this.Controls.Add(this.b_closeAccount);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.l_formtitle);
             this.Controls.Add(this.b_saveCustomer);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
@@ -808,7 +821,7 @@
         private System.Windows.Forms.Button b_saveCustomer;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label l_formtitle;
         private System.Windows.Forms.ComboBox cb_title;
         private System.Windows.Forms.TextBox tb_firstname;
         private System.Windows.Forms.Label label4;
@@ -833,6 +846,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button b_closeAccount;
     }
 }
 

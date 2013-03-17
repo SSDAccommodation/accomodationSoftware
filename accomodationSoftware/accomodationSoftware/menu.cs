@@ -30,6 +30,7 @@ namespace accomodationSoftware
         public List<int> roomId { get; set; }
         public Dictionary<int, int> rooms { get; set; }
         public Accomodation CurrentAccomodation { get; set; }
+        public string AddOrEdit { get; set; }
         //bookingDetails end
         public Menu()
         {
@@ -60,6 +61,7 @@ namespace accomodationSoftware
             populateComobox();
             showCust(Db.getAllCustomers());
             p_showbookings.Hide();
+            AddOrEdit = "";
         }
         public void showCust(List<Customer> a)
         {
@@ -461,6 +463,50 @@ namespace accomodationSoftware
             p_showcustomer.Hide();
             showBookings(Db.getBookings(CurrentCustomer));
         }//bookingdetails end
+
+        private void ll_accosearchback_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            p_accomodations.Hide();
+            p_showcustomer.Show();
+        }
+
+        private void ll_showaccoinfoback_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            p_accomodations.Show();
+            p_accomodationinfo.Hide();
+        }
+
+        private void ll_showbookingsback_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            p_showbookings.Hide();
+            p_showcustomer.Show();
+        }
+
+        private void ll_bookingdetailback_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            p_accomodations.Show();
+            p_bookingdetails.Hide();
+        }
+
+        private void b_editcustomer_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < CustomerList.Count; i++)
+            {
+                if (dg_customer.CurrentRow.Cells[2].Value.Equals(CustomerList[i].Surname))
+                {
+                    CurrentCustomer = CustomerList[i];
+                }
+
+            }
+            if (CurrentCustomer != null)
+            {
+                AddCustomer ac = new AddCustomer(CurrentCustomer);
+                ac.ShowDialog();
+                showCust(Db.getAllCustomers());
+            }
+            else
+                MessageBox.Show("Please select a customer first.");
+        }
 
     }
 }

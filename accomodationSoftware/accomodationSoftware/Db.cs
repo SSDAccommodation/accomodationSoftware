@@ -31,7 +31,7 @@ namespace accomodationSoftware
                     "birthday date NOT NULL, street varchar(40) NOT NULL, postcode varchar(10) NOT NULL, " +
                     "city varchar(50) DEFAULT NULL, country varchar(50) DEFAULT NULL, " +
                     "cardholder_name varchar(50) DEFAULT NULL, creditcard_number integer DEFAULT NULL, " +
-                    "expdate_month varchar(20) NOT NULL, expdate_year varchar(4) NOT NULL)", "Adressen");
+                    "expdate_month varchar(20) NOT NULL, expdate_year varchar(4) NOT NULL)");// , "Adressen"
                 command.ExecuteNonQuery();
                 command.CommandText = String.Format("create table if not exists accommodations (acc_id integer primary key autoincrement," +
                     " acc_name varchar(40) not null, acc_adress_city varchar(50) not null, "+
@@ -46,6 +46,13 @@ namespace accomodationSoftware
                     "acc_id integer references accommodations not null, room_id integer references rooms, "+
                     "room_number integer references rooms, cust_id integer references customer, "+
                     "start_date date not null, end_date date not null)");
+                command.ExecuteNonQuery();
+                command.CommandText = String.Format("create table if not exists closedaccounts (cust_id integer not null primary key, " +
+                    " title varchar(10) NOT NULL, firstname varchar(30) NOT NULL, surname varchar(30) NOT NULL, " +
+                    "birthday date NOT NULL, street varchar(40) NOT NULL, postcode varchar(10) NOT NULL, " +
+                    "city varchar(50) DEFAULT NULL, country varchar(50) DEFAULT NULL, " +
+                    "cardholder_name varchar(50) DEFAULT NULL, creditcard_number integer DEFAULT NULL, " +
+                    "expdate_month varchar(20) NOT NULL, expdate_year varchar(4) NOT NULL)");
                 command.ExecuteNonQuery();
                 connection.Close();
              
@@ -161,29 +168,60 @@ namespace accomodationSoftware
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void insertNewCustomer(Customer c)
+        public void insertOrEditCustomer(Customer c)
         {
             try
             {
                 SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
                 connection.Open();
 
-                string myInsertQuery = 
-                    "INSERT INTO customer (title, firstname, surname, birthday, street, postcode, city, country,"+
-                    " cardholder_name, creditcard_number, expdate_month, expdate_year )";
-                myInsertQuery += " VALUES('" + c.Title + "','" + c.Firstname + "','" + 
-                    c.Surname + "','" + c.Birthday + "','" + 
-                    c.Street + "','" + c.Postcode + "','" + c.City + "','" + c.Country + "','" + 
-                    c.CardholderName + "','" + c.Cardnumber + "','" + c.Expiremonth + "','" + c.Expireyear + "')";
-
-
+                SQLiteCommand cmd = new SQLiteCommand("select cust_id from customer where firstname =  '" + c.Firstname+"' and surname = '"+c.Surname+"' and cardholder_name = '"+c.CardholderName+"' and creditcard_number = '"+c.Cardnumber+"'", connection);
+                Console.WriteLine("select cust_id from customer where firstname =  '" + c.Firstname + "' and surname = '" + c.Surname + "' and cardholder_name = '" + c.CardholderName + "' and creditcard_number = " + c.Cardnumber + "");
+                SQLiteDataReader reader = cmd.ExecuteReader();
                 SQLiteCommand command = new SQLiteCommand(connection);
-
-                command.CommandText = myInsertQuery;
-                command.ExecuteNonQuery();
+                if (!reader.HasRows)
+                {
+                    string myInsertQuery =
+                        "INSERT INTO customer (title, firstname, surname, birthday, street, postcode, city, country," +
+                        " cardholder_name, creditcard_number, expdate_month, expdate_year )";
+                    myInsertQuery += " VALUES('" + c.Title + "','" + c.Firstname + "','" +
+                        c.Surname + "','" + c.Birthday + "','" +
+                        c.Street + "','" + c.Postcode + "','" + c.City + "','" + c.Country + "','" +
+                        c.CardholderName + "','" + c.Cardnumber + "','" + c.Expiremonth + "','" + c.Expireyear + "')";
+                        command.CommandText = myInsertQuery;
+                        command.ExecuteNonQuery();
+                        Console.WriteLine("Insert");
+                }
+                else
+                {
+                    if (reader.Read())
+                        c.Custi_id = reader.GetInt32(reader.GetOrdinal("cust_id"));
+                    //string editQuery =
+                      //  "UPDATE customer set title = '"+c.Title+"', set firstname = '"+c.Firstname+"', set surname = '"+c.Surname+"', set birthday = '"+c.Birthday+"',set street = '"+c.Street+"', set postcode = '"+c.Postcode+"', set city = '"+c.City+"', set country = '"+c.Country+"'," +
+                        //"set cardholder_name = '"+c.CardholderName+"',set creditcard_number = "+c.Cardnumber+",set expdate_month = '"+c.Expiremonth+"',set expdate_year = '"+c.Expireyear+"' WHERE cust_id = "+c.Custi_id+"";
+                        //command.CommandText = editQuery;
+                        Console.WriteLine("Update");
+                        using (SQLiteCommand cmd2 = new SQLiteCommand("UPDATE customer SET Title=@NewTitle, Firstname=@NewFirstname, Surname=@NewSurname, Birthday=@NewBirthday, Street=@NewStreet, Postcode=@NewPostcode, City=@NewCity, Country=@NewCountry, Cardholder_name=@NewCardholder_name, Creditcard_number=@NewCreditcard_number, Expdate_month=@NewExpdate_month, Expdate_year=@NewExpdate_year WHERE Cust_id=@Cust_id", connection))
+                        {
+                            cmd2.Parameters.AddWithValue("@Cust_id", c.Custi_id);
+                            cmd2.Parameters.AddWithValue("@Firstname", c.Firstname);
+                            cmd2.Parameters.AddWithValue("@Surname", c.Surname);
+                            cmd2.Parameters.AddWithValue("@Birthday", c.Birthday);
+                            cmd2.Parameters.AddWithValue("@Street", c.Street);
+                            cmd2.Parameters.AddWithValue("@Postcode", c.Postcode);
+                            cmd2.Parameters.AddWithValue("@City", c.City);
+                            cmd2.Parameters.AddWithValue("@Country", c.Country);
+                            cmd2.Parameters.AddWithValue("@Cardholder_name", c.CardholderName);
+                            cmd2.Parameters.AddWithValue("@Creditcard_number", c.Cardnumber);
+                            cmd2.Parameters.AddWithValue("@Expdate_month", c.Expiremonth);
+                            cmd2.Parameters.AddWithValue("@Expdate_year", c.Expireyear);
+                            int rows = cmd2.ExecuteNonQuery();
+                        }
+                }
+                
 
                 connection.Close();
-                MessageBox.Show("A new user" + c.Firstname + " " + c.Surname + "has been created!");
+               
             }
             catch (Exception et)
             {
@@ -230,7 +268,7 @@ namespace accomodationSoftware
             } 
             return null;
         }
-        public List<Customer> getCustomers(string sur)
+        public List<Customer> getCustomersBySurename(string sur)
         {
 
             List<Customer> customerList = new List<Customer>();
@@ -263,7 +301,7 @@ namespace accomodationSoftware
                         String expdateyear = reader.GetString(reader.GetOrdinal("expdate_year"));
 
                         Customer c = new Customer(title, surname, firstname, birthday, street, postcode, city, country, cardholder, "" + creditcardnumber, expdatemonth, expdateyear);
-                        c.custi_id = reader.GetInt32(reader.GetOrdinal("cust_id"));
+                        c.Custi_id = reader.GetInt32(reader.GetOrdinal("cust_id"));
                         customerList.Add(c);
 
                     }
@@ -310,7 +348,7 @@ namespace accomodationSoftware
                         String expdateyear = reader.GetString(reader.GetOrdinal("expdate_year"));
 
                         Customer c = new Customer(title, surname, firstname, birthday, street, postcode, city, country, cardholder, "" + creditcardnumber, expdatemonth, expdateyear);
-                        c.custi_id = reader.GetInt32(reader.GetOrdinal("cust_id"));
+                        c.Custi_id = reader.GetInt32(reader.GetOrdinal("cust_id"));
                         allCustomerList.Add(c);
 
                     }
@@ -374,7 +412,7 @@ namespace accomodationSoftware
                 connection.Open();
 
 
-                SQLiteCommand cmd = new SQLiteCommand("select * from bookings natural join accommodations where cust_id = " + cust.custi_id, connection);
+                SQLiteCommand cmd = new SQLiteCommand("select * from bookings natural join accommodations where cust_id = " + cust.Custi_id, connection);
                 SQLiteDataReader reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -596,6 +634,11 @@ namespace accomodationSoftware
                 "'" + startstring + "', '" + endstring + "');");
             command.ExecuteNonQuery();
             connection.Close();
+        }
+
+        public void closeCustomerAccount(Customer c)
+        {
+            throw new NotImplementedException();
         }
     }
 }

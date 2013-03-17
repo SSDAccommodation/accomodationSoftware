@@ -47,7 +47,7 @@ namespace accomodationSoftware
             InitializeComponent();
             CurrentCustomer = c;
             accommodation_id = ""+1;
-            user_id = c.custi_id;
+            user_id = c.Custi_id;
 
             db = new Db();
             //db.createDB();

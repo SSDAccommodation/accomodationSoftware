@@ -47,7 +47,7 @@ namespace accomodationSoftware
         {
             try{
                 Database.insertBooking(Convert.ToInt32(CurrentAccomodation.ID),Convert.ToInt32(Room_details[0]),
-                    Convert.ToInt32(Room_details[1]),Convert.ToInt32(CurrentCustomer.custi_id),StartD,EndD);
+                    Convert.ToInt32(Room_details[1]),Convert.ToInt32(CurrentCustomer.Custi_id),StartD,EndD);
                 this.Close();
             }catch(Exception ex){
                 MessageBox.Show(ex.ToString());

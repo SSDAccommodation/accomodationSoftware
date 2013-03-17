@@ -70,7 +70,7 @@ namespace accomodationSoftware
 
         private void b_search_Click(object sender, EventArgs e)
         {
-            showCust(Db.getCustomers(tb_surname.Text));
+            showCust(Db.getCustomersBySurename(tb_surname.Text));
         }
 
         private void dg_customer_DoubleClick(object sender, EventArgs e)

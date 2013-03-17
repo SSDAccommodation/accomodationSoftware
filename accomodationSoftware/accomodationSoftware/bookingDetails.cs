@@ -37,7 +37,7 @@ namespace accomodationSoftware
             CurrentAccomodation = a;
 
             accommodation_id = a.ID;
-            user_id = c.custi_id;
+            user_id = c.Custi_id;
             Database = new Db();
             dgv_bookings.ColumnCount = 2;
             dgv_bookings.Columns[0].Name = "Room ID";

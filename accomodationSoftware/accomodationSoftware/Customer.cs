@@ -8,7 +8,7 @@ namespace accomodationSoftware
 {
     public class Customer
     {
-        public int custi_id { get; set; } // for further need
+        public int Custi_id { get; set; } // for further need
         public string Title { get; set; }
         public string Surname { get; set; }
         public string Firstname { get; set; }
