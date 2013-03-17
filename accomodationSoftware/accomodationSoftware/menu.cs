@@ -338,7 +338,10 @@ namespace accomodationSoftware
 
         private void b_accosearch_Click(object sender, EventArgs e)
         {
-            showAccommodations(accommodationSearch());
+            if (dgv_searchaccomodation.ColumnCount == 8)
+                populateFacilities(searchFacilities());
+            else
+                showAccommodations(accommodationSearch());
         }
         
         private void b_accosearch_ENTER(object sender, KeyEventArgs e)
@@ -545,7 +548,7 @@ namespace accomodationSoftware
                 acc.Show();
             }
         }
-
+        //set DataGridView Header, get AllFacilities
         private void b_showFacilities_Click(object sender, EventArgs e)
         {
             p_showbookings.Hide();
@@ -556,6 +559,12 @@ namespace accomodationSoftware
             p_showcustomer.Hide();
 
             AllFacilities = Db.getFacility();
+            populateFacilities(AllFacilities);
+
+        }
+        //present the facilities in a DataGridView
+        public void populateFacilities(List<Facility> list)
+        {
             string[] temp = new string[8];
             try
             {
@@ -569,28 +578,37 @@ namespace accomodationSoftware
                 dgv_searchaccomodation.Columns[5].Name = "Street";
                 dgv_searchaccomodation.Columns[6].Name = "Information";
                 dgv_searchaccomodation.Columns[7].Name = "Feedback";
-
-
-                foreach (Facility f in AllFacilities)
+                foreach (Facility f in list)
                 {
                     temp[0] = (f.Name);
                     temp[1] = (f.Type);
                     temp[2] = (f.Adress_city);
                     temp[3] = (f.Adress_county);
                     temp[4] = (f.Adress_postcode);
-                    temp[5] = (f.Adress_street)+" "+(f.Adress_number);
+                    temp[5] = (f.Adress_street) + " " + (f.Adress_number);
                     temp[6] = (f.Description);
                     temp[7] = (f.Feedback);
                     dgv_searchaccomodation.Rows.Add(temp);
-
                 }
-
             }
-
             catch (Exception ef)
             {
                 System.Console.WriteLine(ef.ToString());
             }
+        }
+        //search
+        public List<Facility> searchFacilities()
+        {
+            List<Facility> temp = new List<Facility>();
+            for (int i = 0; i < AllFacilities.Count; i++ ){
+                if (AllFacilities[i].Name.ToLower().Contains(tb_accosearchname.Text.ToLower()) &&
+                    AllFacilities[i].Adress_city.Contains(cb_accosearchcity.Text) &&
+                    AllFacilities[i].Adress_county.Contains(cb_accosearchcountry.Text))
+                {
+                    temp.Add(AllFacilities[i]);
+                }
+            }
+                    return temp;
         }
 
     }
