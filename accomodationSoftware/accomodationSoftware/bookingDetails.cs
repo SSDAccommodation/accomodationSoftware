@@ -45,7 +45,7 @@ namespace accomodationSoftware
             dgv_bookings.Columns[0].Width = dgv_bookings.Width / 2 - 22;
             dgv_bookings.Columns[1].Width = dgv_bookings.Width / 2 - 21;
             l_hotelName_bd.Text = Database.getHotelNameDb(accommodation_id);
-            
+            dbDateCheck();
 
         }
 

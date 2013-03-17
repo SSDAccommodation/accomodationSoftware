@@ -85,12 +85,13 @@ namespace accomodationSoftware
             }
             b_acc.Visible = true;
         }
-
+        
         private void b_acc_Click(object sender, EventArgs e)
         {
+            /*
             this.Hide();
             accomodationInfo accForm = new accomodationInfo(CurrentCustomer);
-            accForm.Show();
+            accForm.Show();*/
         }
 
 

@@ -63,6 +63,7 @@ namespace accomodationSoftware
             p_showbookings.Hide();
             AddOrEdit = "";
         }
+        
         public void showCust(List<Customer> a)
         {
             CustomerList = a;
@@ -106,6 +107,7 @@ namespace accomodationSoftware
                 System.Console.WriteLine(e.ToString());
             }
         }//showCustomer end
+        
         private void Add_customer_button_Click(object sender, EventArgs e)
         {
             //this.Hide();
@@ -136,10 +138,7 @@ namespace accomodationSoftware
                 //bookForm.Show();
             }
         }
-
-
-
-        
+    
         private void showCustomerButton_Click(object sender, EventArgs e)
         {
             //hide the panels that are not needed and show the right one(here its p_showcustomer)
@@ -153,6 +152,7 @@ namespace accomodationSoftware
             //ShowCustomer showCust = new ShowCustomer();
             //showCust.Show();
         }
+        
         public List<Customer> customerSearch()
         {
             String searchquery = tb_surname.Text;
@@ -171,6 +171,7 @@ namespace accomodationSoftware
         {
             showCust(customerSearch());
         }
+        
         private void b_search_ENTER(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -178,6 +179,7 @@ namespace accomodationSoftware
                 showCust(customerSearch());
             }
         }
+        
         private void b_addcustomer_Click(object sender, EventArgs e)
         {
             AddCustomer addCustomerForm = new AddCustomer();
@@ -226,6 +228,7 @@ namespace accomodationSoftware
             cb_accosearchcountry.Items.AddRange(temp2.ToArray());
 
         }
+        
         public void showAccommodations(List<Accomodation> a)
         {
             List<Accomodation> AccommodationList = a;
@@ -262,7 +265,6 @@ namespace accomodationSoftware
                 System.Console.WriteLine(e.ToString());
             }
         }
-
         //showbookings is called in b_showbookings_Click and b_bookselected_Click
         public void showBookings(List<Bookings> b)
         {
@@ -298,6 +300,7 @@ namespace accomodationSoftware
                 System.Console.WriteLine(e.ToString());
             }
         }
+        
         public List<string> RemoveDoubleListItems<T>(List<string> list)
         {
             var newList = new List<string>();
@@ -313,7 +316,6 @@ namespace accomodationSoftware
             }
             return newList;
         }
-
         // searches through all the accommodations
         public List<Accomodation> accommodationSearch()
         {
@@ -334,6 +336,7 @@ namespace accomodationSoftware
         {
             showAccommodations(accommodationSearch());
         }
+        
         private void b_accosearch_ENTER(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -371,12 +374,10 @@ namespace accomodationSoftware
             EndD = dTP_endDate.Value;
             dbDateCheck();
         }
+        
         private void dbDateCheck()
         {
             //Check Db for selected Date
-            //SELECT startdate, enddate, beadnumber, romm_id FROM tourismus.rooms Where hotelID = XXX
-            //       10-01-2013,12-01-2013, 2      , 101
-            //       15-01-2013,20.01-2013, 3      , 102      rooms not yet booked (103,104,105)
             roomId = Db.getBookingRoomId(accommodation_id+"");
             startDateRoom = Db.getbookingStartDateRoom(accommodation_id+"");
             endDateRoom = Db.getbookingEndDateRoom(accommodation_id+"");
@@ -408,6 +409,7 @@ namespace accomodationSoftware
                 MessageBox.Show(e.ToString());
             }
         }
+        
         private void populateBookingDgv()
         {
             dgv_bookings.RowCount = 1;
@@ -506,6 +508,21 @@ namespace accomodationSoftware
             }
             else
                 MessageBox.Show("Please select a customer first.");
+        }
+
+        private void b_showaccommodationdetails_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < AllAccommodationsList.Count; i++)
+            {
+                if (dgv_searchaccomodation.CurrentRow.Cells[0].Value.Equals(AllAccommodationsList[i].Name) &&
+                    dgv_searchaccomodation.CurrentRow.Cells[1].Value.Equals(AllAccommodationsList[i].Adress_city) &&
+                    dgv_searchaccomodation.CurrentRow.Cells[3].Value.Equals(AllAccommodationsList[i].Adress_postcode))
+                {
+                    CurrentAccomodation = AllAccommodationsList[i];
+                }
+            }
+            Form acc = new accomodationInfo(CurrentCustomer, CurrentAccomodation);
+            acc.Show();
         }
 
     }

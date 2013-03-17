@@ -16,64 +16,49 @@ namespace accomodationSoftware
 {
     public partial class accomodationInfo : Form
     {
-        public string accommodation_id { get; set; }
-        public int user_id { get; set; }
         public Db db { get; set; }
-        public Accomodation ac;
+        public Accomodation CurrentAccomondation { get; set; }
         public Customer CurrentCustomer { get; set; }
+        public Facility CurrentFacility { get; set; }
 
-        public accomodationInfo()
-        {
-            InitializeComponent();
-            accommodation_id = "" +1;
-            user_id = 1;
 
-            db = new Db();
-            //db.createDB();
-            //method that returns the accommodation_id
-            try
-            {
-                ac = db.searchAccomodation(accommodation_id);
-                Console.WriteLine(ac.ID);
-            }
-            catch (Exception e)
-            {
-                System.Console.WriteLine(e.ToString());
-            }
-            showAccommodationData(ac);
-        }
-        public accomodationInfo(Customer c)
+        public accomodationInfo(Customer c, Accomodation a)
         {
             InitializeComponent();
             CurrentCustomer = c;
-            accommodation_id = ""+1;
-            user_id = c.Custi_id;
+            CurrentAccomondation = a;
 
             db = new Db();
-            //db.createDB();
-            //method that returns the accommodation_id
             try
             {
-                ac = db.searchAccomodation(accommodation_id);
+                CurrentAccomondation = db.searchAccomodation(CurrentAccomondation.ID);
                 
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
-            showAccommodationData(ac);
+            showAccommodationData();
+        }
+        public accomodationInfo(Facility f)
+        {
+            InitializeComponent();
+            db = new Db();
+            CurrentFacility = f;
+            
         }
 
-        public void showAccommodationData(Accomodation acc)
+        public void showAccommodationData()
         {
-            ac = acc;
 
             //Daten in form einfügen
-            l_hotelname.Text = ac.Name;
-            
-            rtb_address.Text = ac.Name + "\n" + ac.Adress_street + " " + ac.Adress_number + "\n" + ac.Adress_city + "\n" + ac.Adress_postcode + "\n" + ac.Adress_county;
-            rtb_description.Text = ac.Description;
-            pb_hotel.Load("pictures\\" + ac.Picture_url);
+            l_hotelname.Text = CurrentAccomondation.Name;
+
+            rtb_address.Text = CurrentAccomondation.Name + "\n" + CurrentAccomondation.Adress_street + " " 
+                + CurrentAccomondation.Adress_number + "\n" + CurrentAccomondation.Adress_city + "\n" 
+                + CurrentAccomondation.Adress_postcode + "\n" + CurrentAccomondation.Adress_county;
+            rtb_description.Text = CurrentAccomondation.Description;
+            pb_hotel.Load("pictures\\" + CurrentAccomondation.Picture_url);
 
         }
 
@@ -87,7 +72,7 @@ namespace accomodationSoftware
         private void b_bookingDetails_Click(object sender, EventArgs e)
         {
             this.Hide();
-            bookingDetails bookForm = new bookingDetails(db.searchAccomodation(accommodation_id), CurrentCustomer);
+            bookingDetails bookForm = new bookingDetails(db.searchAccomodation(CurrentAccomondation.ID), CurrentCustomer);
             bookForm.Show();
         }
 

@@ -54,6 +54,10 @@ namespace accomodationSoftware
                     "cardholder_name varchar(50) DEFAULT NULL, creditcard_number integer DEFAULT NULL, " +
                     "expdate_month varchar(20) NOT NULL, expdate_year varchar(4) NOT NULL)");
                 command.ExecuteNonQuery();
+                command.CommandText = String.Format("CREATE TABLE IF NOT EXISTS facility (fac_id integer NOT NULL primary key autoincrement,"+
+                    "name varchar(100) NOT NULL, type varchar(50) NOT NULL, address varchar(300) NOT NULL, information varchar(800), "+
+                    "feedback varchar(800), picture_url varchar(80) )");
+                command.ExecuteNonQuery();
                 connection.Close();
              
                 //insertTestValues();
@@ -165,6 +169,16 @@ namespace accomodationSoftware
             //insert bookings
             command.CommandText = String.Format("insert into bookings (acc_id, room_id, room_number, " +
                 "cust_id, start_date, end_date) values(1, 1, 101, 1, '2013-01-13', '2013-02-01');");
+            command.ExecuteNonQuery();
+            //insert facility
+            command.CommandText = String.Format("insert into facility (name, type, address, information, "+
+                "feedback, picture_url) values('Big Ape','Restaurant','Arthur Road 101 SO155DZ', "+
+                "'friendly with sea view','lovely fish soupe','hotel1.jpg')");
+            command.ExecuteNonQuery();
+            //insert facility
+            command.CommandText = String.Format("insert into facility (name, type, address, information, " +
+                "feedback, picture_url) values('Big Drink','Bar','Arthur Road 102 SO155DZ', " +
+                "'dark','German beer available','hotel1.jpg')");
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -629,16 +643,42 @@ namespace accomodationSoftware
             command.CommandText = String.Format("insert into bookings ( acc_id, room_id, room_number, " +
                 "cust_id, start_date, end_date) values ("+acc_id+", "+room_id+", "+room_number+", "+cust_id+", " +
                 "'" + startstring +"', '" + endstring +"');");
-            System.Console.WriteLine("insert into bookings ( acc_id, room_id, room_number, " +
-                "cust_id, start_date, end_date) values (" + acc_id + ", " + room_id + ", " + room_number + ", " + cust_id + ", " +
-                "'" + startstring + "', '" + endstring + "');");
             command.ExecuteNonQuery();
             connection.Close();
         }
 
         public void closeCustomerAccount(Customer c)
-        {
+        {//mario: eyyyyyyyyyyyyyyyy der der das angefangen hat soll das bitte zuende  machen
             throw new NotImplementedException();
+        }
+        //get the data about one facility out of the db and returns an Facility object
+        public List<Facility> getFacility(){
+            List<Facility> list = new List<Facility>();
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+                SQLiteCommand cmd = new SQLiteCommand("select * from facility");
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        list.Add(new Facility(System.Convert.ToString(reader.GetInt32(reader.GetOrdinal("id"))), 
+                            reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name")), 
+                            reader.GetString(reader.GetOrdinal("address")), 
+                            reader.GetString(reader.GetOrdinal("information")), 
+                            reader.GetString(reader.GetOrdinal("feedback")), 
+                            reader.GetString(reader.GetOrdinal("picture_url"))));
+                    }
+
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+            return list;
         }
     }
 }

@@ -38,6 +38,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.p_showcustomer = new System.Windows.Forms.Panel();
+            this.b_editcustomer = new System.Windows.Forms.Button();
             this.b_showbookings = new System.Windows.Forms.Button();
             this.b_addcustomer = new System.Windows.Forms.Button();
             this.b_selectcustomer = new System.Windows.Forms.Button();
@@ -77,7 +78,6 @@
             this.p_showbookings = new System.Windows.Forms.Panel();
             this.ll_showbookingsback = new System.Windows.Forms.LinkLabel();
             this.dgv_showbookings = new System.Windows.Forms.DataGridView();
-            this.b_editcustomer = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.p_showcustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_customer)).BeginInit();
@@ -187,6 +187,16 @@
             this.p_showcustomer.Size = new System.Drawing.Size(742, 511);
             this.p_showcustomer.TabIndex = 5;
             // 
+            // b_editcustomer
+            // 
+            this.b_editcustomer.Location = new System.Drawing.Point(120, 481);
+            this.b_editcustomer.Name = "b_editcustomer";
+            this.b_editcustomer.Size = new System.Drawing.Size(98, 23);
+            this.b_editcustomer.TabIndex = 16;
+            this.b_editcustomer.Text = "Edit Customer";
+            this.b_editcustomer.UseVisualStyleBackColor = true;
+            this.b_editcustomer.Click += new System.EventHandler(this.b_editcustomer_Click);
+            // 
             // b_showbookings
             // 
             this.b_showbookings.Location = new System.Drawing.Point(505, 481);
@@ -283,6 +293,7 @@
             this.b_showaccommodationdetails.TabIndex = 29;
             this.b_showaccommodationdetails.Text = "Show Details";
             this.b_showaccommodationdetails.UseVisualStyleBackColor = true;
+            this.b_showaccommodationdetails.Click += new System.EventHandler(this.b_showaccommodationdetails_Click);
             // 
             // ll_accosearchback
             // 
@@ -597,16 +608,6 @@
             this.dgv_showbookings.Size = new System.Drawing.Size(710, 411);
             this.dgv_showbookings.TabIndex = 5;
             // 
-            // b_editcustomer
-            // 
-            this.b_editcustomer.Location = new System.Drawing.Point(120, 481);
-            this.b_editcustomer.Name = "b_editcustomer";
-            this.b_editcustomer.Size = new System.Drawing.Size(98, 23);
-            this.b_editcustomer.TabIndex = 16;
-            this.b_editcustomer.Text = "Edit Customer";
-            this.b_editcustomer.UseVisualStyleBackColor = true;
-            this.b_editcustomer.Click += new System.EventHandler(this.b_editcustomer_Click);
-            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -617,11 +618,11 @@
             this.Controls.Add(this.accInfoButton);
             this.Controls.Add(this.Add_customer_button);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.p_showcustomer);
             this.Controls.Add(this.p_accomodations);
             this.Controls.Add(this.p_bookingdetails);
             this.Controls.Add(this.p_accomodationinfo);
             this.Controls.Add(this.p_showbookings);
+            this.Controls.Add(this.p_showcustomer);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Menu";
             this.Text = "menu";
