@@ -24,7 +24,7 @@ namespace accomodationSoftware
         public int user_id { get; set; }
         public Customer CurrentCustomer { get; set; }
         public Accomodation CurrentAccomodation { get; set; }
-        public Db Database { get; set; }
+        public Database Database { get; set; }
 
         public bookingDetails(Accomodation a, Customer c)
         {
@@ -38,7 +38,7 @@ namespace accomodationSoftware
 
             accommodation_id = a.ID;
             user_id = c.Custi_id;
-            Database = new Db();
+            Database = new Database();
             dgv_bookings.ColumnCount = 2;
             dgv_bookings.Columns[0].Name = "Room ID";
             dgv_bookings.Columns[1].Name = "Room Number";

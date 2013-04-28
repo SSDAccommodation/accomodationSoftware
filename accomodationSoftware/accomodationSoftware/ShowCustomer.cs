@@ -13,14 +13,14 @@ namespace accomodationSoftware
     public partial class ShowCustomer : Form
     {
 
-        public Db Db;
+        public Database Db;
         public List<Customer> CustomerList { get; set; }
         public Customer CurrentCustomer { get; set; }
         
         public ShowCustomer()
         {
             InitializeComponent();
-            Db = new Db();
+            Db = new Database();
             CustomerList = new List<Customer>();
             b_acc.Visible = false;
         }

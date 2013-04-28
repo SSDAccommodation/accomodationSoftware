@@ -11,7 +11,7 @@ namespace accomodationSoftware
 {
     public partial class Details : Form
     {
-        public Db Database { get; set; }
+        public Database Database { get; set; }
         public Customer CurrentCustomer { get; set; }
         public Accomodation CurrentAccomodation { get; set; }
         public DateTime StartD { get; set; }
@@ -27,7 +27,7 @@ namespace accomodationSoftware
             StartD = start;
             EndD = end;
             RoomID = roomID;
-            Database = new Db();
+            Database = new Database();
             populateDetails();      
 
         }

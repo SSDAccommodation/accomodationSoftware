@@ -16,7 +16,7 @@ namespace accomodationSoftware
         public int accommodation_id { get; set; }
         public int user_id { get; set; }
         //showCustomer start
-        public Db Db;
+        public Database Db;
         public List<Customer> CustomerList { get; set; }
         public List<Customer> AllcustomerList { get; set; }
         public Customer CurrentCustomer { get; set; }
@@ -34,6 +34,7 @@ namespace accomodationSoftware
         public List<int> roomId { get; set; }
         public Dictionary<int, int> rooms { get; set; }
         public string AddOrEdit { get; set; }
+        public List<Bookings> BookingsList { get; set; }
         //bookingDetails end
         public Menu()
         {
@@ -41,7 +42,7 @@ namespace accomodationSoftware
             accommodation_id = 1;
             user_id = 1;
             //showCustomer start
-            Db = new Db();
+            Db = new Database();
             CustomerList = new List<Customer>();
             AllcustomerList = Db.getAllCustomers();// all customers are now in this list for searching
             AllAccommodationsList = Db.getAllAccommodations();// all accommodations are now in this list for searching
@@ -115,7 +116,7 @@ namespace accomodationSoftware
         {
             //this.Hide();
             AddCustomer accForm = new AddCustomer();
-            accForm.Show();
+            accForm.ShowDialog();
         }
 
         private void accInfoButton_Click(object sender, EventArgs e)
@@ -201,14 +202,20 @@ namespace accomodationSoftware
                 }
 
             }
-            p_showcustomer.Hide();
-            //after selecting a customer show accomodations
-            p_accomodationinfo.Hide();
-            p_accomodations.Show();
-            p_bookingdetails.Hide();
-            p_showcustomer.Hide();
-            showAccommodations(Db.getAllAccommodations());
-            p_accomodations.Show();
+            Form custVal = new CustomerValidation(CurrentCustomer);
+            DialogResult dr = custVal.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                p_showcustomer.Hide();
+                //after selecting a customer show accomodations
+                p_accomodationinfo.Hide();
+                p_bookingdetails.Hide();
+                p_showcustomer.Hide();
+                showAccommodations(Db.getAllAccommodations());
+                p_accomodations.Show();
+            }
+            else
+                MessageBox.Show("Validation Failed!");
         }//showCustomer end
         //SearchAccomodation start
         public void populateComobox()
@@ -272,7 +279,7 @@ namespace accomodationSoftware
         //showbookings is called in b_showbookings_Click and b_bookselected_Click
         public void showBookings(List<Bookings> b)
         {
-            List<Bookings> BookingsList = b;
+            BookingsList = b;
 
             string[] temp = new string[4];
             try
@@ -538,7 +545,7 @@ namespace accomodationSoftware
                     }
                 }
                 Form acc = new accomodationInfo(CurrentFacility);
-                acc.Show();
+                acc.ShowDialog();
             }
             else
             {
@@ -552,7 +559,7 @@ namespace accomodationSoftware
                     }
                 }
                 Form acc = new accomodationInfo(CurrentCustomer, CurrentAccomodation);
-                acc.Show();
+                acc.ShowDialog();
             }
         }
         //set DataGridView Header, get AllFacilities
@@ -580,7 +587,7 @@ namespace accomodationSoftware
                 dgv_searchaccomodation.Columns[0].Name = "Name";
                 dgv_searchaccomodation.Columns[1].Name = "Type";
                 dgv_searchaccomodation.Columns[2].Name = "City";
-                dgv_searchaccomodation.Columns[3].Name = "Country";
+                dgv_searchaccomodation.Columns[3].Name = "Province"; //
                 dgv_searchaccomodation.Columns[4].Name = "Postcode";
                 dgv_searchaccomodation.Columns[5].Name = "Street";
                 dgv_searchaccomodation.Columns[6].Name = "Information";
@@ -616,6 +623,49 @@ namespace accomodationSoftware
                 }
             }
                     return temp;
+        }
+
+        private void b_deleteBooking_Click(object sender, EventArgs e)
+        {
+            Bookings current = null;
+            for (int i = 0; i < BookingsList.Count; i++)
+            {
+                if (dgv_showbookings.CurrentRow.Cells[1].Value.Equals(BookingsList[i].A.Name) && dgv_showbookings.CurrentRow.Cells[2].Value.Equals(BookingsList[i].Start_date)
+                    && dgv_showbookings.CurrentRow.Cells[3].Value.Equals(BookingsList[i].End_date))
+                {
+                    current = BookingsList[i];
+                }
+
+            }
+            Db.deleteBooking(current);
+            showBookings(Db.getBookings(CurrentCustomer));
+        }
+
+        private void customersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showCust(Db.getAllCustomers());
+            p_showbookings.Hide();
+            p_accomodationinfo.Hide();
+            p_accomodations.Hide();
+            b_selectaccomodation.Hide();
+            p_bookingdetails.Hide();
+            p_showcustomer.Show();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void addCustomerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form addC = new AddCustomer();
+            addC.ShowDialog();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Accomodation Software\nby\nMario Schwandt\nMarvin Lava\nMaximilian Fischer");
         }
 
     }

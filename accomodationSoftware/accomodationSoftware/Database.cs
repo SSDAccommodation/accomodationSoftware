@@ -6,15 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 
 namespace accomodationSoftware
 {
-    public class Db
+    public class Database
     {
-        public Db()
+        public Database()
         {
-            createDB();
+            if (!File.Exists("tourismus.db"))
+                createDB();
         }
         public void createDB()
         {
@@ -37,7 +39,7 @@ namespace accomodationSoftware
                     " acc_name varchar(40) not null, acc_adress_city varchar(50) not null, "+
                     "acc_adress_county varchar(50) not null, acc_adress_postcode varchar(6) not null, "+
                     "acc_adress_street varchar(50) not null,acc_adress_number varchar(5) not null, "+
-                    "acc_description  varchar(800) not null,acc_picture_url varchar(80) not null)");
+                    "acc_description  varchar(800) not null,acc_picture_url varchar(80) not null, acco_feedback varchar(800) not null)");
                 command.ExecuteNonQuery();
                 command.CommandText = String.Format("create table if not exists rooms (room_id integer primary key autoincrement, "+
                     "room_number integer not null, acc_id integer references accommodations not null,bedcount integer not null)");
@@ -58,11 +60,11 @@ namespace accomodationSoftware
                     "name varchar(100) NOT NULL, type varchar(50) NOT NULL, adress_city varchar(300) NOT NULL, "+
                     "adress_country varchar(50) NOT NULL, adress_postcode varchar(6) NOT NULL,"+
                     " adress_street varchar(50) NOT NULL, adress_number varchar(5) NOT NULL, "+
-                    "information varchar(800), feedback varchar(800), picture_url varchar(80) )");
+                    "information varchar(800), feedback varchar(800) not null, picture_url varchar(80) not null )");
                 command.ExecuteNonQuery();
                 connection.Close();
              
-                //insertTestValues();
+                insertTestValues();
             }catch(Exception e){
                 System.Console.WriteLine(e.ToString());
             }
@@ -76,32 +78,32 @@ namespace accomodationSoftware
             //insert accomodations
             command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, " +
                 "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
-                "acc_picture_url) values ('super hotel', 'southampton', 'hampshire', 'SO13', " +
-                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg');");
+                "acc_picture_url, acco_feedback) values ('super hotel', 'southampton', 'hampshire', 'SO13', " +
+                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg','');");
             command.ExecuteNonQuery();
             //insert accomodations
             command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, "+
                 "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
-                "acc_picture_url) values ('mega hotel', 'southampton', 'hampshire', 'SO13', " +
-                "'Main Street', '45', 'One of the nicest hotels with lots of rooms', 'hotel2.jpg');");
+                "acc_picture_url, acco_feedback) values ('mega hotel', 'southampton', 'hampshire', 'SO13', " +
+                "'Main Street', '45', 'One of the nicest hotels with lots of rooms', 'hotel2.jpg','');");
             command.ExecuteNonQuery();
             //insert accomodations
             command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, " +
                 "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
-                "acc_picture_url) values ('Grand Inn', 'London', 'Londonshire', 'LO11', " +
-                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg');");
+                "acc_picture_url, acco_feedback) values ('Grand Inn', 'London', 'Londonshire', 'LO11', " +
+                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg','');");
             command.ExecuteNonQuery();
             //insert accomodations
             command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, " +
                 "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
-                "acc_picture_url) values ('Metro Hotel', 'London', 'Londonshire', 'LO14', " +
-                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg');");
+                "acc_picture_url, acco_feedback) values ('Metro Hotel', 'London', 'Londonshire', 'LO14', " +
+                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg', '');");
             command.ExecuteNonQuery();
             //insert accomodations
             command.CommandText = String.Format("insert into accommodations ( acc_name, acc_adress_city, acc_adress_county, " +
                 "acc_adress_postcode, acc_adress_street, acc_adress_number, acc_description, " +
-                "acc_picture_url) values ('City Stay', 'York', 'Yorkshire', 'YO13', " +
-                "'Main Street', '4a', 'A very neat hotel', 'hotel1.jpg');");
+                "acc_picture_url, acco_feedback) values ('City Stay', 'York', 'Yorkshire', 'YO13', " +
+                "'Main Street', '4a', 'A very neat hotel', 'hotel2.jpg','');");
             command.ExecuteNonQuery();
 
             //insert customers
@@ -127,12 +129,12 @@ namespace accomodationSoftware
             //insert customers
             command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
                 "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" +
-                " values('Mr.', 'Dieter', 'Peniskopf', '2010-03-4', '45 Penen Road', 'SO19', 'Southampton', 'United Kingdom', 'Dieter Peniskopf', '5288450', 'March', '2015');");
+                " values('Mr.', 'Dieter', 'Dietrich', '2010-03-4', '45 Penen Road', 'SO19', 'Southampton', 'United Kingdom', 'Dieter Dietrich', '5288450', 'March', '2015');");
             command.ExecuteNonQuery();
             //insert customers
             command.CommandText = String.Format("insert into customer (title, firstname, surname, birthday, street, postcode, city, " +
                 "country, cardholder_name, creditcard_number, expdate_month, expdate_year)" +
-                " values('Mr.', 'Ulf', 'von der Huren', '2010-03-4', 'Kaeseweg 4', 'asdasd', 'Den haag', 'Netherlands', 'Ulf von der Huren', '6688450', 'March', '2015');");
+                " values('Mr.', 'Ulf', 'von der Alm', '2010-03-4', 'Kaeseweg 4', 'asdasd', 'Den haag', 'Netherlands', 'Ulf von der Alm', '6688450', 'March', '2015');");
             command.ExecuteNonQuery();
             //insert rooms
             command.CommandText = String.Format("insert into rooms (room_number, acc_id, bedcount) values(101, 1, 2);");
@@ -186,20 +188,14 @@ namespace accomodationSoftware
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void insertOrEditCustomer(Customer c)
+        public void insertCustomer(Customer c)
         {
             try
             {
                 SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
                 connection.Open();
-
-                SQLiteCommand cmd = new SQLiteCommand("select cust_id from customer where firstname =  '" + c.Firstname+"' and surname = '"+c.Surname+"' and cardholder_name = '"+c.CardholderName+"' and creditcard_number = '"+c.Cardnumber+"'", connection);
-                Console.WriteLine("select cust_id from customer where firstname =  '" + c.Firstname + "' and surname = '" + c.Surname + "' and cardholder_name = '" + c.CardholderName + "' and creditcard_number = " + c.Cardnumber + "");
-                SQLiteDataReader reader = cmd.ExecuteReader();
                 SQLiteCommand command = new SQLiteCommand(connection);
-                if (!reader.HasRows)
-                {
-                    string myInsertQuery =
+                   string myInsertQuery =
                         "INSERT INTO customer (title, firstname, surname, birthday, street, postcode, city, country," +
                         " cardholder_name, creditcard_number, expdate_month, expdate_year )";
                     myInsertQuery += " VALUES('" + c.Title + "','" + c.Firstname + "','" +
@@ -208,34 +204,7 @@ namespace accomodationSoftware
                         c.CardholderName + "','" + c.Cardnumber + "','" + c.Expiremonth + "','" + c.Expireyear + "')";
                         command.CommandText = myInsertQuery;
                         command.ExecuteNonQuery();
-                        Console.WriteLine("Insert");
-                }
-                else
-                {
-                    if (reader.Read())
-                        c.Custi_id = reader.GetInt32(reader.GetOrdinal("cust_id"));
-                    //string editQuery =
-                      //  "UPDATE customer set title = '"+c.Title+"', set firstname = '"+c.Firstname+"', set surname = '"+c.Surname+"', set birthday = '"+c.Birthday+"',set street = '"+c.Street+"', set postcode = '"+c.Postcode+"', set city = '"+c.City+"', set country = '"+c.Country+"'," +
-                        //"set cardholder_name = '"+c.CardholderName+"',set creditcard_number = "+c.Cardnumber+",set expdate_month = '"+c.Expiremonth+"',set expdate_year = '"+c.Expireyear+"' WHERE cust_id = "+c.Custi_id+"";
-                        //command.CommandText = editQuery;
-                        Console.WriteLine("Update");
-                        using (SQLiteCommand cmd2 = new SQLiteCommand("UPDATE customer SET Title=@NewTitle, Firstname=@NewFirstname, Surname=@NewSurname, Birthday=@NewBirthday, Street=@NewStreet, Postcode=@NewPostcode, City=@NewCity, Country=@NewCountry, Cardholder_name=@NewCardholder_name, Creditcard_number=@NewCreditcard_number, Expdate_month=@NewExpdate_month, Expdate_year=@NewExpdate_year WHERE Cust_id=@Cust_id", connection))
-                        {
-                            cmd2.Parameters.AddWithValue("@Cust_id", c.Custi_id);
-                            cmd2.Parameters.AddWithValue("@Firstname", c.Firstname);
-                            cmd2.Parameters.AddWithValue("@Surname", c.Surname);
-                            cmd2.Parameters.AddWithValue("@Birthday", c.Birthday);
-                            cmd2.Parameters.AddWithValue("@Street", c.Street);
-                            cmd2.Parameters.AddWithValue("@Postcode", c.Postcode);
-                            cmd2.Parameters.AddWithValue("@City", c.City);
-                            cmd2.Parameters.AddWithValue("@Country", c.Country);
-                            cmd2.Parameters.AddWithValue("@Cardholder_name", c.CardholderName);
-                            cmd2.Parameters.AddWithValue("@Creditcard_number", c.Cardnumber);
-                            cmd2.Parameters.AddWithValue("@Expdate_month", c.Expiremonth);
-                            cmd2.Parameters.AddWithValue("@Expdate_year", c.Expireyear);
-                            int rows = cmd2.ExecuteNonQuery();
-                        }
-                }
+             
                 
 
                 connection.Close();
@@ -246,6 +215,68 @@ namespace accomodationSoftware
                 Console.WriteLine(et.ToString());
             }
             
+        }
+public void editCustomer(Customer c, int cust_id)
+        {
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(connection);
+                        
+ 
+                        string myEditQuery =
+                            "UPDATE customer SET title='" + c.Title + "', firstname='" + c.Firstname + "', surname='" + c.Surname + "', birthday='" + c.Birthday + "', street='" +
+                            c.Street + "', postcode='" + c.Postcode + "', city='" + c.City + "', country='" + c.Country + "',"+
+                            "cardholder_name='" + c.CardholderName + "', creditcard_number='" + c.Cardnumber + "', expdate_month='" + c.Expiremonth + "', expdate_year='" + c.Expireyear + "' WHERE cust_id="+cust_id;
+
+                        command.CommandText = myEditQuery;
+                        command.ExecuteNonQuery();
+                
+                
+
+                connection.Close();
+               
+            }
+            catch (Exception et)
+            {
+                Console.WriteLine(et.ToString());
+            }
+            
+        }
+        public void closeCustomerAccount(Customer c)
+        {
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(connection);
+                string myInsertQuery =
+                     "INSERT INTO closedaccounts (title, firstname, surname, birthday, street, postcode, city, country," +
+                     " cardholder_name, creditcard_number, expdate_month, expdate_year )";
+                myInsertQuery += " VALUES('" + c.Title + "','" + c.Firstname + "','" +
+                    c.Surname + "','" + c.Birthday + "','" +
+                    c.Street + "','" + c.Postcode + "','" + c.City + "','" + c.Country + "','" +
+                    c.CardholderName + "','" + c.Cardnumber + "','" + c.Expiremonth + "','" + c.Expireyear + "')";
+                command.CommandText = myInsertQuery;
+                command.ExecuteNonQuery();
+
+
+                connection.Close();
+                SQLiteConnection connection2 = new SQLiteConnection("Data Source=tourismus.db");
+                connection2.Open();
+                SQLiteCommand command2 = new SQLiteCommand(connection);
+                string myInsertQuery2 =
+                     "DELETE FROM customer where cust_id="+c.Custi_id;
+                command2.CommandText = myInsertQuery2;
+                command2.ExecuteNonQuery();
+                connection2.Close();
+
+            }
+            catch (Exception et)
+            {
+                Console.WriteLine(et.ToString());
+            }
         }
         public Accomodation searchAccomodation(string acc_id)
         {
@@ -272,7 +303,8 @@ namespace accomodationSoftware
                         string adress_number = reader.GetString(reader.GetOrdinal("acc_adress_number"));
                         string description = reader.GetString(reader.GetOrdinal("acc_description"));
                         string picture_url = reader.GetString(reader.GetOrdinal("acc_picture_url"));
-                        ac = new Accomodation(""+acc_id,name, adress_city, adress_county, adress_postcode, adress_street, adress_number, description, picture_url);   
+                        string feedback = reader.GetString(reader.GetOrdinal("acco_feedback"));
+                        ac = new Accomodation(""+acc_id,name, adress_city, adress_county, adress_postcode, adress_street, adress_number, description,picture_url, feedback);   
                     }
 
                 }
@@ -407,7 +439,8 @@ namespace accomodationSoftware
                         string adress_number = reader.GetString(reader.GetOrdinal("acc_adress_number"));
                         string description = reader.GetString(reader.GetOrdinal("acc_description"));
                         string picture_url = reader.GetString(reader.GetOrdinal("acc_picture_url"));
-                        ac = new Accomodation("" + acc_id, name, adress_city, adress_county, adress_postcode, adress_street, adress_number, description, picture_url);
+                        string feedback = reader.GetString(reader.GetOrdinal("acco_feedback"));
+                        ac = new Accomodation("" + acc_id, name, adress_city, adress_county, adress_postcode, adress_street, adress_number, description, picture_url,feedback);
                         allAccommodationList.Add(ac);
                     }
 
@@ -462,6 +495,23 @@ namespace accomodationSoftware
             }
   
             return bookingList;
+        }
+        public void deleteBooking(Bookings b)
+        {
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(connection);
+                string myInsertQuery =
+                     "DELETE FROM bookings where book_id="+b.Book_id;
+                command.CommandText = myInsertQuery;
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch(Exception){
+
+            }
         }
 
         public string getHotelNameDb(string accommodation_id)
@@ -651,10 +701,7 @@ namespace accomodationSoftware
             connection.Close();
         }
 
-        public void closeCustomerAccount(Customer c)
-        {
-            throw new NotImplementedException();
-        }
+
         //get the data about one facility out of the db and returns an Facility object
         public List<Facility> getFacility(){
             List<Facility> list = new List<Facility>();
@@ -686,6 +733,79 @@ namespace accomodationSoftware
                 System.Console.WriteLine(e.ToString());
             }
             return list;
+        }
+        public Facility selectFacility(string fac_id)
+        {
+            Facility ftemp = null;
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+                SQLiteCommand cmd = new SQLiteCommand("select * from facility where fac_id="+fac_id, connection);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        ftemp = new Facility(System.Convert.ToString(reader.GetInt32(reader.GetOrdinal("fac_id"))),
+                            reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name")),
+                            reader.GetString(reader.GetOrdinal("adress_city")), reader.GetString(reader.GetOrdinal("adress_country")),
+                            reader.GetString(reader.GetOrdinal("adress_postcode")), reader.GetString(reader.GetOrdinal("adress_street")),
+                            reader.GetString(reader.GetOrdinal("adress_number")),
+                            reader.GetString(reader.GetOrdinal("information")),
+                            reader.GetString(reader.GetOrdinal("feedback")),
+                            reader.GetString(reader.GetOrdinal("picture_url")));
+                    }
+
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+            return ftemp;
+        }
+        public void updateFacFeedback(Facility f)
+        {
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(connection);
+
+                string myEditQuery =
+                    "UPDATE facility SET feedback='" + f.Feedback + "' WHERE fac_id=" + f.ID;
+
+                command.CommandText = myEditQuery;
+                command.ExecuteNonQuery();
+                connection.Close();
+
+            }
+            catch (Exception et)
+            {
+                Console.WriteLine(et.ToString());
+            }
+        }
+        public void updateAccFeedback(Accomodation a)
+        {
+            try
+            {
+                SQLiteConnection connection = new SQLiteConnection("Data Source=tourismus.db");
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(connection);
+
+                string myEditQuery =
+                    "UPDATE accommodations SET acco_feedback='" + a.Feedback + "' WHERE acc_id=" + a.ID;
+
+                command.CommandText = myEditQuery;
+                command.ExecuteNonQuery();
+                connection.Close();
+
+            }
+            catch (Exception et)
+            {
+                Console.WriteLine(et.ToString());
+            }
         }
     }
 }

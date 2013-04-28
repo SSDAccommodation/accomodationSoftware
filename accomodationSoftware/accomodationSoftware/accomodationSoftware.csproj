@@ -79,6 +79,12 @@
     <Compile Include="AddCustomer.Designer.cs">
       <DependentUpon>AddCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="addFeedback.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addFeedback.Designer.cs">
+      <DependentUpon>addFeedback.cs</DependentUpon>
+    </Compile>
     <Compile Include="bookingDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,7 +93,13 @@
     </Compile>
     <Compile Include="Bookings.cs" />
     <Compile Include="Customer.cs" />
-    <Compile Include="Db.cs" />
+    <Compile Include="CustomerValidation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerValidation.Designer.cs">
+      <DependentUpon>CustomerValidation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Database.cs" />
     <Compile Include="Details.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,8 +128,14 @@
     <EmbeddedResource Include="AddCustomer.resx">
       <DependentUpon>AddCustomer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="addFeedback.resx">
+      <DependentUpon>addFeedback.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="bookingDetails.resx">
       <DependentUpon>bookingDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomerValidation.resx">
+      <DependentUpon>CustomerValidation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Details.resx">
       <DependentUpon>Details.cs</DependentUpon>

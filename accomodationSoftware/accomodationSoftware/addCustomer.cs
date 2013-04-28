@@ -20,23 +20,25 @@ namespace accomodationSoftware
         public string Bmonth { get; set; }
         public Customer Customer { get; set; }
         public string Type { get; set; }
-        public Db Db;
+        public Database Db;
+        public int Cust_id { get; set; }
 
         public AddCustomer()
         {
             InitializeComponent();
-            Db = new Db();
+            Db = new Database();
             //overwrites the db
             //dberstellen();
-
             b_closeAccount.Hide();
+            Cust_id = -1;
 
         }
         public AddCustomer(Customer c)
         {
             Customer = c;
+            Cust_id = c.Custi_id;
             InitializeComponent();
-            Db = new Db();
+            Db = new Database();
             l_formtitle.Text = "Edit customer";
             b_closeAccount.Show();
             cb_title.Text = c.Title;
@@ -145,8 +147,10 @@ namespace accomodationSoftware
                 Customer = new Customer(cb_title.Text, tb_surname.Text, tb_firstname.Text, cb_byear.Text + "-" + Bmonth +
                     "-" + cb_bday.Text, tb_street.Text, tb_postcode.Text, tb_city.Text, cb_country.Text, tb_cardholder.Text, tb_creditnum.Text, cb_expiremonth.Text, cb_expireyear.Text);//title,surname,firstname,birthday,street,postcode,city,country,cardholder,cardnumber,expire);
                 // call method in db
-                
-                Db.insertOrEditCustomer(Customer);
+                if (Cust_id == -1)
+                    Db.insertCustomer(Customer);
+                else
+                    Db.editCustomer(Customer, Cust_id);
             }
             this.Close();
         }
@@ -159,6 +163,7 @@ namespace accomodationSoftware
         private void b_closeAccount_Click(object sender, EventArgs e)
         {
             Db.closeCustomerAccount(Customer);
+            this.Close();
         }
 
         

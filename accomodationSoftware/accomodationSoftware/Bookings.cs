@@ -16,6 +16,7 @@ namespace accomodationSoftware
         public int Room_number { get; set; }
         public string Start_date{ get; set; }
         public string End_date { get; set; }
+        public Database Db { get; set; }
 
 
         public Bookings(Customer c, Accomodation a, int book_id, int acc_id, int room_id, int room_number, string start_date, string end_date)
@@ -33,7 +34,9 @@ namespace accomodationSoftware
 
         public Bookings(Customer c, string name, int book_id, int acc_id, int room_id, int room_number, string start_date, string end_date)
         {
+            Db = new Database();
             C = c;
+            A = Db.searchAccomodation(""+acc_id);
             Name = name;
             Book_id = book_id;
             Acc_id = acc_id;
