@@ -265,7 +265,7 @@ public void editCustomer(Customer c, int cust_id)
                 connection.Close();
                 SQLiteConnection connection2 = new SQLiteConnection("Data Source=tourismus.db");
                 connection2.Open();
-                SQLiteCommand command2 = new SQLiteCommand(connection);
+                SQLiteCommand command2 = new SQLiteCommand(connection2);
                 string myInsertQuery2 =
                      "DELETE FROM customer where cust_id="+c.Custi_id;
                 command2.CommandText = myInsertQuery2;
