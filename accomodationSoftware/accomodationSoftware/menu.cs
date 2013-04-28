@@ -499,22 +499,29 @@ namespace accomodationSoftware
 
         private void b_editcustomer_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < CustomerList.Count; i++)
+            try
             {
-                if (dg_customer.CurrentRow.Cells[2].Value.Equals(CustomerList[i].Surname))
+                for (int i = 0; i < CustomerList.Count; i++)
                 {
-                    CurrentCustomer = CustomerList[i];
+                    if (dg_customer.CurrentRow.Cells[2].Value.Equals(CustomerList[i].Surname))
+                    {
+                        CurrentCustomer = CustomerList[i];
+                    }
+
                 }
+                if (CurrentCustomer != null)
+                {
+                    AddCustomer ac = new AddCustomer(CurrentCustomer);
+                    ac.ShowDialog();
+                    showCust(Db.getAllCustomers());
+                }
+                else
+                    MessageBox.Show("Please select a customer first.");
+            }
+            catch (Exception ex)
+            {
 
             }
-            if (CurrentCustomer != null)
-            {
-                AddCustomer ac = new AddCustomer(CurrentCustomer);
-                ac.ShowDialog();
-                showCust(Db.getAllCustomers());
-            }
-            else
-                MessageBox.Show("Please select a customer first.");
         }
 
         private void b_showaccommodationdetails_Click(object sender, EventArgs e)

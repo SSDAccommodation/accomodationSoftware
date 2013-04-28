@@ -630,11 +630,11 @@
             this.Controls.Add(this.accInfoButton);
             this.Controls.Add(this.Add_customer_button);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.p_showcustomer);
             this.Controls.Add(this.p_accomodations);
             this.Controls.Add(this.p_bookingdetails);
             this.Controls.Add(this.p_accomodationinfo);
             this.Controls.Add(this.p_showbookings);
-            this.Controls.Add(this.p_showcustomer);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Menu";
             this.Text = "menu";
