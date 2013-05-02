@@ -13,25 +13,28 @@ namespace accomodationSoftware
     {
         private Facility CurrentFacility;
         private Accomodation CurrentAccomondation;
+        private Customer CurrentCustomer;
         public Database Db { get; set; }
 
-        public addFeedback(Facility currentFacility)
+        public addFeedback(Facility currentFacility, Customer currentCust)
         {
             // TODO: Complete member initialization
             InitializeComponent();
             CurrentFacility = currentFacility;
             CurrentAccomondation = null;
             rtb_feedback.Text = CurrentFacility.Feedback;
+            CurrentCustomer = currentCust;
             Db = new Database();
         }
 
-        public addFeedback(Accomodation currentAccomondation)
+        public addFeedback(Accomodation currentAccomondation, Customer currentCust)
         {
             // TODO: Complete member initialization
             InitializeComponent();
             CurrentFacility = null;
             CurrentAccomondation = currentAccomondation;
             rtb_feedback.Text = CurrentAccomondation.Feedback;
+            CurrentCustomer = currentCust;
             Db = new Database();
         }
 
@@ -47,7 +50,7 @@ namespace accomodationSoftware
                 try
                 {
                     CurrentAccomondation.Feedback = rtb_feedback.Text;
-                    Db.updateAccFeedback(CurrentAccomondation);
+                    Db.updateAccFeedback(CurrentAccomondation, CurrentCustomer);
                 }
                 catch (Exception easd)
                 {
@@ -58,7 +61,7 @@ namespace accomodationSoftware
             else
             {
                 CurrentFacility.Feedback = rtb_feedback.Text;
-                Db.updateFacFeedback(CurrentFacility);
+                Db.updateFacFeedback(CurrentFacility, CurrentCustomer);
             }
             this.Close();
         }

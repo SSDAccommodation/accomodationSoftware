@@ -13,10 +13,14 @@ namespace accomodationSoftware
 {
     public class Database
     {
+
+        public Log logger { get; set; }
+
         public Database()
         {
             if (!File.Exists("tourismus.db"))
                 createDB();
+            logger = new Log();
         }
         public void createDB()
         {
@@ -208,7 +212,43 @@ namespace accomodationSoftware
                 
 
                 connection.Close();
-               
+
+
+                //get the id for the log
+                SQLiteConnection connection2 = new SQLiteConnection("Data Source=tourismus.db");
+                connection2.Open();
+                int cust_id = 0;
+                  
+                        
+                SQLiteCommand cmd = new SQLiteCommand("SELECT cust_id from customer where firstname = '" + c.Firstname + "' and surname = '"+ c.Surname + "' and birthday = '" + c.Birthday + "'", connection2);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        
+                        cust_id = reader.GetInt32(reader.GetOrdinal("cust_id"));
+                        
+                    }
+
+                }
+                connection2.Close();
+
+                // 1 = Account created +
+                // 2 = Account updated +
+                // 3 = Account deleted +
+                // 4 = Aquired accommodation information
+                // 5 = Aquired facility information
+                // 6 = Booked an accommodation +
+                // 7 = Deleted a booking +
+                // 8 = Gave feedback about accommodation
+                // 9 = Gave feedback about facility
+                // 10 = Start of session
+                // 11 = End of session
+
+                //log(string custname, int custId, int action)
+                logger.log(cust_id, 1);
             }
             catch (Exception et)
             {
@@ -236,6 +276,22 @@ public void editCustomer(Customer c, int cust_id)
                 
 
                 connection.Close();
+
+
+                // 1 = Account created +
+                // 2 = Account updated +
+                // 3 = Account deleted +
+                // 4 = Aquired accommodation information
+                // 5 = Aquired facility information
+                // 6 = Booked an accommodation +
+                // 7 = Deleted a booking +
+                // 8 = Gave feedback about accommodation
+                // 9 = Gave feedback about facility
+                // 10 = Start of session
+                // 11 = End of session
+
+                //log(string custname, int custId, int action)
+                logger.log( cust_id, 2);
                
             }
             catch (Exception et)
@@ -271,6 +327,21 @@ public void editCustomer(Customer c, int cust_id)
                 command2.CommandText = myInsertQuery2;
                 command2.ExecuteNonQuery();
                 connection2.Close();
+
+                // 1 = Account created +
+                // 2 = Account updated +
+                // 3 = Account deleted +
+                // 4 = Aquired accommodation information
+                // 5 = Aquired facility information
+                // 6 = Booked an accommodation +
+                // 7 = Deleted a booking +
+                // 8 = Gave feedback about accommodation
+                // 9 = Gave feedback about facility
+                // 10 = Start of session
+                // 11 = End of session
+
+                //log(string custname, int custId, int action)
+                logger.log(c.Custi_id, 3);
 
             }
             catch (Exception et)
@@ -508,6 +579,22 @@ public void editCustomer(Customer c, int cust_id)
                 command.CommandText = myInsertQuery;
                 command.ExecuteNonQuery();
                 connection.Close();
+
+                // 1 = Account created +
+                // 2 = Account updated +
+                // 3 = Account deleted +
+                // 4 = Aquired accommodation information
+                // 5 = Aquired facility information
+                // 6 = Booked an accommodation +
+                // 7 = Deleted a booking +
+                // 8 = Gave feedback about accommodation
+                // 9 = Gave feedback about facility
+                // 10 = Start of session
+                // 11 = End of session
+
+                //log(string custname, int custId, int action)
+                logger.log( b.C.Custi_id, 7); ////////////needs ids
+                
             }
             catch(Exception){
 
@@ -699,6 +786,22 @@ public void editCustomer(Customer c, int cust_id)
                 "'" + startstring +"', '" + endstring +"');");
             command.ExecuteNonQuery();
             connection.Close();
+
+            // 1 = Account created +
+            // 2 = Account updated +
+            // 3 = Account deleted +
+            // 4 = Aquired accommodation information
+            // 5 = Aquired facility information
+            // 6 = Booked an accommodation +
+            // 7 = Deleted a booking +
+            // 8 = Gave feedback about accommodation
+            // 9 = Gave feedback about facility
+            // 10 = Start of session
+            // 11 = End of session
+
+            //log(string custname, int custId, int action)
+            logger.log(cust_id, 6);
+
         }
 
 
@@ -734,7 +837,7 @@ public void editCustomer(Customer c, int cust_id)
             }
             return list;
         }
-        public Facility selectFacility(string fac_id)
+        public Facility selectFacility(string fac_id, Customer c)
         {
             Facility ftemp = null;
             try
@@ -758,6 +861,20 @@ public void editCustomer(Customer c, int cust_id)
                     }
 
                 connection.Close();
+                // 1 = Account created +
+                // 2 = Account updated +
+                // 3 = Account deleted +
+                // 4 = Aquired accommodation information
+                // 5 = Aquired facility information + 
+                // 6 = Booked an accommodation +
+                // 7 = Deleted a booking +
+                // 8 = Gave feedback about accommodation
+                // 9 = Gave feedback about facility
+                // 10 = Start of session
+                // 11 = End of session
+
+                //log(string custname, int custId, int action)
+                logger.log(c.Custi_id, 5);
             }
             catch (Exception e)
             {
@@ -765,7 +882,7 @@ public void editCustomer(Customer c, int cust_id)
             }
             return ftemp;
         }
-        public void updateFacFeedback(Facility f)
+        public void updateFacFeedback(Facility f, Customer c)
         {
             try
             {
@@ -780,13 +897,28 @@ public void editCustomer(Customer c, int cust_id)
                 command.ExecuteNonQuery();
                 connection.Close();
 
+                // 1 = Account created +
+                // 2 = Account updated +
+                // 3 = Account deleted +
+                // 4 = Aquired accommodation information
+                // 5 = Aquired facility information + 
+                // 6 = Booked an accommodation +
+                // 7 = Deleted a booking +
+                // 8 = Gave feedback about accommodation
+                // 9 = Gave feedback about facility + 
+                // 10 = Start of session
+                // 11 = End of session
+
+                //log(string custname, int custId, int action)
+                logger.log(c.Custi_id, 9);
+
             }
             catch (Exception et)
             {
                 Console.WriteLine(et.ToString());
             }
         }
-        public void updateAccFeedback(Accomodation a)
+        public void updateAccFeedback(Accomodation a, Customer c)
         {
             try
             {
@@ -800,6 +932,21 @@ public void editCustomer(Customer c, int cust_id)
                 command.CommandText = myEditQuery;
                 command.ExecuteNonQuery();
                 connection.Close();
+
+                // 1 = Account created +
+                // 2 = Account updated +
+                // 3 = Account deleted +
+                // 4 = Aquired accommodation information
+                // 5 = Aquired facility information + 
+                // 6 = Booked an accommodation +
+                // 7 = Deleted a booking +
+                // 8 = Gave feedback about accommodation +
+                // 9 = Gave feedback about facility + 
+                // 10 = Start of session
+                // 11 = End of session
+
+                //log(string custname, int custId, int action)
+                logger.log(c.Custi_id, 8);
 
             }
             catch (Exception et)

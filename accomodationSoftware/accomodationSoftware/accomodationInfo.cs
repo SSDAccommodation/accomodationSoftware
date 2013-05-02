@@ -91,14 +91,14 @@ namespace accomodationSoftware
         {
             if (CurrentAccomondation == null)
             {
-                Form feedback = new addFeedback(CurrentFacility);
+                Form feedback = new addFeedback(CurrentFacility, CurrentCustomer);
                 feedback.ShowDialog();
-                CurrentFacility = db.selectFacility(CurrentFacility.ID);
+                CurrentFacility = db.selectFacility(CurrentFacility.ID, CurrentCustomer);
                 showFacilityData();
             }
             else
             {
-                Form feedback = new addFeedback(CurrentAccomondation);
+                Form feedback = new addFeedback(CurrentAccomondation, CurrentCustomer);
                 feedback.ShowDialog();
                 CurrentAccomondation = db.searchAccomodation(CurrentAccomondation.ID);
                 showAccommodationData();

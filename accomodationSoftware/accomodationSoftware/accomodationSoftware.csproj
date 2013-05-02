@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1E8EC7D4-A962-4F74-868E-4A387AE48BB7}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>accomodationSoftware</RootNamespace>
     <AssemblyName>accomodationSoftware</AssemblyName>
@@ -110,6 +110,7 @@
       <DependentUpon>Details.cs</DependentUpon>
     </Compile>
     <Compile Include="Facility.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="menu.cs">
       <SubType>Form</SubType>
     </Compile>
