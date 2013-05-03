@@ -679,5 +679,18 @@ namespace accomodationSoftware
             MessageBox.Show("Accomodation Software\nby\nMario Schwandt\nMarvin Lava\nMaximilian Fischer");
         }
 
+        private void showFacilitiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            p_showbookings.Hide();
+            p_accomodationinfo.Hide();
+            p_accomodations.Show();
+            b_selectaccomodation.Hide();
+            p_bookingdetails.Hide();
+            p_showcustomer.Hide();
+
+            AllFacilities = Db.getFacility();
+            populateFacilities(AllFacilities);
+        }
+
     }
 }
