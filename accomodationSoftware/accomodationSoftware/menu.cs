@@ -202,22 +202,40 @@ namespace accomodationSoftware
                 }
 
             }
+            customer_Validation("select");
+        }//showCustomer end
+        //SearchAccomodation start
+        public void customer_Validation(String s)
+        {
             Form custVal = new CustomerValidation(CurrentCustomer);
             DialogResult dr = custVal.ShowDialog();
             if (dr == DialogResult.OK)
             {
-                p_showcustomer.Hide();
-                //after selecting a customer show accomodations
-                p_accomodationinfo.Hide();
-                p_bookingdetails.Hide();
-                p_showcustomer.Hide();
-                showAccommodations(Db.getAllAccommodations());
-                p_accomodations.Show();
+                if (s.Equals("select"))
+                {
+                    p_showcustomer.Hide();
+                    //after selecting a customer show accomodations
+                    p_accomodationinfo.Hide();
+                    p_bookingdetails.Hide();
+                    p_showcustomer.Hide();
+                    showAccommodations(Db.getAllAccommodations());
+                    p_accomodations.Show();
+                }
+                else
+                {
+                    if (CurrentCustomer != null)
+                    {
+                        AddCustomer ac = new AddCustomer(CurrentCustomer);
+                        ac.ShowDialog();
+                        showCust(Db.getAllCustomers());
+                    }
+                    else
+                        MessageBox.Show("Please select a customer first.");
+                }
             }
             else
                 MessageBox.Show("Validation Failed!");
-        }//showCustomer end
-        //SearchAccomodation start
+        }
         public void populateComobox()
         {
             List<string> Citylist = new List<string>();//for searching
@@ -516,14 +534,7 @@ namespace accomodationSoftware
                     }
 
                 }
-                if (CurrentCustomer != null)
-                {
-                    AddCustomer ac = new AddCustomer(CurrentCustomer);
-                    ac.ShowDialog();
-                    showCust(Db.getAllCustomers());
-                }
-                else
-                    MessageBox.Show("Please select a customer first.");
+                customer_Validation("edit");
             }
             catch (Exception ex)
             {
